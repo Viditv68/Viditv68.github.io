@@ -34,20 +34,5 @@ function validate() {
   //   error_message.innerHTML = text;
   //   return false;
   // }
-
-  var request = new XMLHttpRequest();
-  request.open("POST", "https://hook.integromat.com/9eihytj3ukms4xt7i3ibmhht32r6vsr5");
-  request.setRequestHeader('Content-type', 'application/json');
-
-  var params = {
-    name,
-    phone,
-    email,
-    message
-}
-
-  request.send(JSON.stringify(params));
-
-  alert("Form Submitted Successfully!");
   return true;
 }
