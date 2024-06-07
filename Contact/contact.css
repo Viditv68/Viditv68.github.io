@@ -8,6 +8,7 @@
 .fullBody {
   background-image: radial-gradient(#0077b6, #2c394b);
   height: 100%;
+  margin: 0;
   /* background-image: radial-gradient(#2c394b,#2c394b); */
 }
 /* Navbar */

@@ -8,7 +8,6 @@
 .fullBody {
   background-image: radial-gradient(#0077b6, #2c394b);
   height: 100%;
-  
   /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;
@@ -241,6 +240,7 @@ h4 {
 #copyright {
   color: #fff;
   margin-left: 85%;
+  padding-top: 100px;
   padding-bottom: 10px;
   position: relative;
   opacity: 50%;
