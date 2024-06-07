@@ -8,7 +8,7 @@
 .fullBody {
   background-image: radial-gradient(#0077b6, #2c394b);
   height: 100%;
-
+  
   /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;
@@ -46,7 +46,7 @@
   margin-left: auto;
   margin-right: auto;
   position: relative;
-  margin-top: -10%;
+  margin-top: 5%;
 }
 h4 {
   margin-left: 10%;
@@ -87,7 +87,8 @@ h4 {
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  padding-bottom: 30px;
+  padding-top: 5%;
+  padding-bottom: 10px;
 }
 .navbar-dark li a {
   color: #fff !important;
@@ -97,7 +98,7 @@ h4 {
   opacity: 50%;
 }
 .nav-link {
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   margin-right: 30px;
   margin-left: 30px;
 }
@@ -187,7 +188,7 @@ h4 {
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 .hr1 {
-  margin-top: 1%;
+  margin-top: 2%;
   color: #fff;
   border: 2px solid;
   width: 40%;
@@ -209,6 +210,7 @@ h4 {
 }
 /* Contact section */
 .get-in-touch {
+  margin-top: 2%;
   position: relative;
   font-weight: 400;
   opacity: 60%;

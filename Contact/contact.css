@@ -7,6 +7,7 @@
 }
 .fullBody {
   background-image: radial-gradient(#0077b6, #2c394b);
+  height: 100%;
   /* background-image: radial-gradient(#2c394b,#2c394b); */
 }
 /* Navbar */
@@ -25,19 +26,20 @@
 }
 /* First Backgound */
 .secondbackground {
-  margin-top: 30px;
+  margin-top: 120px;
   margin-left: auto;
   margin-right: auto;
   width: 50vw;
   background-image: radial-gradient(#0077b6, #28446b);
-  border-radius: 8px;
+  border-radius: 12px;
   text-align: center;
 }
 
 .title-image {
   border: 2px solid #9ba4b4;
-  border-radius: 10px;
-  width: 130px;
+  border-radius: 20px;
+  width: 180px;
+  height: 120px;
   margin-top: 7%;
   position: relative;
 }
@@ -175,6 +177,7 @@
 }
 /* Footer */
 #footer {
+  margin-top: 200px;
   height: 80px;
   /* background: #2C394B; */
   width: 100%;
