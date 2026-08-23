@@ -221,7 +221,8 @@
       </div>
 
       <div class="loadout">
-        <div class="loadout__slot" data-reveal>
+        <div class="loadout__slot brackets" data-reveal>
+          <span class="loadout__rule" aria-hidden="true"></span>
           <span class="loadout__idx">Slot 01</span>
           <h3>Engines &amp; Languages</h3>
           <div class="loadout__chips">
@@ -230,7 +231,8 @@
           </div>
         </div>
 
-        <div class="loadout__slot" data-reveal>
+        <div class="loadout__slot brackets" data-reveal>
+          <span class="loadout__rule" aria-hidden="true"></span>
           <span class="loadout__idx">Slot 02</span>
           <h3>Gameplay Systems</h3>
           <div class="loadout__chips">
@@ -239,7 +241,8 @@
           </div>
         </div>
 
-        <div class="loadout__slot" data-reveal>
+        <div class="loadout__slot brackets" data-reveal>
+          <span class="loadout__rule" aria-hidden="true"></span>
           <span class="loadout__idx">Slot 03</span>
           <h3>Design Patterns</h3>
           <div class="loadout__chips">
@@ -248,7 +251,8 @@
           </div>
         </div>
 
-        <div class="loadout__slot" data-reveal>
+        <div class="loadout__slot brackets" data-reveal>
+          <span class="loadout__rule" aria-hidden="true"></span>
           <span class="loadout__idx">Slot 04</span>
           <h3>Services &amp; Libraries</h3>
           <div class="loadout__chips">
@@ -269,62 +273,60 @@
         <p>Prototypes where I take one system apart at a time — enemy AI, input handling, camera work, gameplay architecture.</p>
       </div>
 
-      <div class="log">
+      <div class="card-grid">
 
-        <article class="log__row" data-reveal>
-          <img class="log__thumb" src="program/Posters/Top-Down-Shooter-card.jpg" alt="" loading="lazy" width="800" height="450">
-          <div>
-            <div class="log__head">
-              <span class="log__idx">// 01</span>
-              <h3 class="log__title">Top-Down Shooter</h3>
-            </div>
-            <p class="log__desc">Movement, firing and weapon swapping on the new Input System, with Cinemachine pulling the camera back per weapon and single / auto / burst fire modes.</p>
+        <article class="card brackets" data-reveal>
+          <div class="card__media">
+            <span class="card__pip card__pip--lab">Prototype</span>
+            <img src="program/Posters/Top-Down-Shooter-card.jpg" alt="Top-Down Shooter prototype: a character firing in a blockout level" loading="lazy" width="800" height="450">
           </div>
-          <div class="tags"><span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">Cinemachine</span></div>
-          <svg class="log__go" aria-hidden="true"><use href="#i-arrow"/></svg>
-          <a class="log__link" href="program/program.html#top-down-shooter" aria-label="Top-Down Shooter — read more"></a>
+          <div class="card__body">
+            <h3 class="card__title">Top-Down Shooter</h3>
+            <p class="card__desc">
+              Movement, firing and weapon swapping on the new Input System, with Cinemachine
+              pulling the camera back per weapon and single / auto / burst fire modes.
+            </p>
+            <div class="tags">
+              <span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">Cinemachine</span>
+            </div>
+          </div>
+          <a class="card__link" href="program/program.html#top-down-shooter" aria-label="Top-Down Shooter — read more"></a>
         </article>
 
-        <article class="log__row" data-reveal>
-          <img class="log__thumb" src="program/Posters/BattleTank.jpg" alt="" loading="lazy" width="960" height="540">
-          <div>
-            <div class="log__head">
-              <span class="log__idx">// 02</span>
-              <h3 class="log__title">Battle Tank</h3>
-            </div>
-            <p class="log__desc">An architecture study: MVC for tanks and bullets, a generic singleton and object pool, and a state machine driving enemy patrol, chase and attack.</p>
+        <article class="card brackets" data-reveal>
+          <div class="card__media">
+            <span class="card__pip card__pip--lab">Prototype</span>
+            <img src="program/Posters/BattleTank.jpg" alt="Battle Tank prototype: a green tank in a desert level" loading="lazy" width="960" height="540">
           </div>
-          <div class="tags"><span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">NavMesh</span></div>
-          <svg class="log__go" aria-hidden="true"><use href="#i-arrow"/></svg>
-          <a class="log__link" href="program/program.html#battle-tank" aria-label="Battle Tank — read more"></a>
+          <div class="card__body">
+            <h3 class="card__title">Battle Tank</h3>
+            <p class="card__desc">
+              An architecture study: MVC for tanks and bullets, a generic singleton and object
+              pool, and a state machine driving enemy patrol, chase and attack.
+            </p>
+            <div class="tags">
+              <span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">NavMesh</span>
+            </div>
+          </div>
+          <a class="card__link" href="program/program.html#battle-tank" aria-label="Battle Tank — read more"></a>
         </article>
 
-        <article class="log__row" data-reveal>
-          <img class="log__thumb" src="program/Posters/Shooter.jpg" alt="" loading="lazy" width="960" height="540">
-          <div>
-            <div class="log__head">
-              <span class="log__idx">// 03</span>
-              <h3 class="log__title">Simple Shooter</h3>
-            </div>
-            <p class="log__desc">Third-person movement and animation in Unreal, shooting mechanics, health and death for player and enemies, and enemy AI built on behaviour trees.</p>
+        <article class="card brackets" data-reveal>
+          <div class="card__media">
+            <span class="card__pip card__pip--lab">Prototype</span>
+            <img src="program/Posters/Shooter.jpg" alt="Simple Shooter prototype: a character in a sci-fi corridor" loading="lazy" width="960" height="540">
           </div>
-          <div class="tags"><span class="tag tag--accent">C++</span><span class="tag">Unreal</span><span class="tag">Behaviour Trees</span></div>
-          <svg class="log__go" aria-hidden="true"><use href="#i-arrow"/></svg>
-          <a class="log__link" href="program/program.html#simple-shooter" aria-label="Simple Shooter — read more"></a>
-        </article>
-
-        <article class="log__row" data-reveal>
-          <img class="log__thumb" src="program/Posters/Outland.jpg" alt="" loading="lazy" width="960" height="540">
-          <div>
-            <div class="log__head">
-              <span class="log__idx">// 04</span>
-              <h3 class="log__title">Outland</h3>
+          <div class="card__body">
+            <h3 class="card__title">Simple Shooter</h3>
+            <p class="card__desc">
+              Third-person movement and animation in Unreal, shooting mechanics, health and
+              death for player and enemies, and enemy AI built on behaviour trees.
+            </p>
+            <div class="tags">
+              <span class="tag tag--accent">C++</span><span class="tag">Unreal</span><span class="tag">Behaviour Trees</span>
             </div>
-            <p class="log__desc">A third-person adventure prototype in Unreal — traversal, combat feel and the camera work that holds the two together.</p>
           </div>
-          <div class="tags"><span class="tag tag--accent">C++</span><span class="tag">Unreal</span><span class="tag">Blueprints</span></div>
-          <svg class="log__go" aria-hidden="true"><use href="#i-arrow"/></svg>
-          <a class="log__link" href="program/program.html#outland" aria-label="Outland — read more"></a>
+          <a class="card__link" href="program/program.html#simple-shooter" aria-label="Simple Shooter — read more"></a>
         </article>
 
       </div>
