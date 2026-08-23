@@ -16,6 +16,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
 <script src="assets/site.js" defer></script>
+
+<!-- Scroll companion. An import map plus a module script — no bundler, so it
+     stays a plain GitHub Pages site. Browsers without import-map support
+     simply skip the module and the page is unaffected. -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+  import { mountCompanion } from "./assets/companion.js";
+  mountCompanion();
+</script>
 </head>
 <body>
 
@@ -38,17 +54,16 @@
 <header class="hud-nav">
   <div class="hud-nav__inner">
     <a class="hud-nav__brand" href="index.html">
-      <span class="hud-nav__dot"></span> Vidit Rawat
+      <span class="hud-nav__badge">VR</span> Vidit Rawat
     </a>
     <button class="hud-nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation">
       <svg class="icon-open"><use href="#i-menu"/></svg>
       <svg class="icon-close"><use href="#i-close"/></svg>
     </button>
     <nav class="hud-nav__links" id="nav-links" aria-label="Main">
-      <a class="hud-nav__link" href="#work">Work</a>
-      <a class="hud-nav__link" href="#stack">Stack</a>
-      <a class="hud-nav__link" href="#lab">Lab</a>
-      <a class="hud-nav__link" href="Resume/ViditRawat_Resume.pdf">Résumé</a>
+      <a class="hud-nav__link" href="Projects/program.html">Projects</a>
+      <a class="hud-nav__link" href="program/program.html">Side Projects</a>
+      <a class="hud-nav__link" href="Resume/ViditRawat_Resume.pdf">Resume</a>
       <a class="hud-nav__link" href="Contact/contact.html">Contact</a>
     </nav>
   </div>
@@ -58,13 +73,24 @@
 
   <!-- ===== HERO ===== -->
   <section class="hero">
-    <canvas class="hero__vortex" aria-hidden="true"></canvas>
-    <div class="hero__bg" aria-hidden="true"></div>
-    <div class="hero__spot" aria-hidden="true"></div>
+    <div class="hero-fx" aria-hidden="true">
+      <div class="hero-fx__conic hero-fx__conic--cw"></div>
+      <div class="hero-fx__conic hero-fx__conic--ccw"></div>
+      <div class="hero-fx__tendril hero-fx__tendril--a"></div>
+      <div class="hero-fx__tendril hero-fx__tendril--b"></div>
+      <div class="hero-fx__tendril hero-fx__tendril--c"></div>
+      <div class="hero-fx__arc hero-fx__arc--1"></div>
+      <div class="hero-fx__arc hero-fx__arc--2"></div>
+      <div class="hero-fx__bloom"></div>
+      <div class="hero-fx__scrim"></div>
+    </div>
     <div class="wrap hero__stage">
 
       <article class="glass-card" data-reveal="scale">
-        <p class="status-pill" data-reveal style="--i:0">Open to work</p>
+        <p class="hero-eyebrow" data-reveal style="--i:0">
+          <span class="hero-eyebrow__tag">Portfolio 2026</span>
+          <span class="hero-eyebrow__tech">Unity · Unreal · C# · C++</span>
+        </p>
 
         <figure class="glass-card__avatar" data-reveal style="--i:1">
           <img src="assets/avatar.jpg" alt="Vidit Rawat" width="400" height="400">

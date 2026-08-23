@@ -16,18 +16,30 @@
   --muted: #93a3bd;
   --dim: #64748b;
 
-  --accent: #00e5ff;
-  --accent-deep: #00a5bd;
-  --accent2: #a06bff;
+  /* Electric blue and purple carry the whole site. The `-rgb` pairs exist so
+     colour-mixed alphas can be written inline without hard-coding channels
+     in fifty places. */
+  --accent: #2f7bff;
+  --accent-rgb: 47, 123, 255;
+  --accent-deep: #1b4fbd;
+  --accent2: #8b3cff;
+  --accent2-rgb: 139, 60, 255;
 
-  --glow-sm: 0 0 12px rgba(0, 229, 255, 0.25);
-  --glow-md: 0 0 28px rgba(0, 229, 255, 0.22);
-  --glow-lg: 0 0 60px rgba(0, 229, 255, 0.18);
+  /* #2f7bff clears AA on the near-black background, but only just, and
+     #8b3cff does not. Small text uses these lifted tints instead; the base
+     hues stay for borders, glows and large display type. */
+  --accent-text: #6ba4ff;
+  --accent2-text: #b98cff;
+
+  --glow-sm: 0 0 12px rgba(47, 123, 255, 0.3);
+  --glow-md: 0 0 28px rgba(47, 123, 255, 0.26);
+  --glow-lg: 0 0 60px rgba(47, 123, 255, 0.2);
 
   --font-display: "Chakra Petch", "Segoe UI", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Consolas, monospace;
   --font-body: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
 
+  --nav-h: 68px;
   --maxw: 1180px;
   --pad: clamp(20px, 5vw, 48px);
   --radius: 4px;
@@ -62,8 +74,8 @@ body {
   overflow-x: clip;
   /* fixed atmospheric wash behind everything */
   background-image:
-    radial-gradient(1000px 620px at 78% -8%, rgba(0, 229, 255, 0.10), transparent 62%),
-    radial-gradient(880px 560px at 10% 12%, rgba(160, 107, 255, 0.09), transparent 60%),
+    radial-gradient(1000px 620px at 78% -8%, rgba(var(--accent-rgb), 0.10), transparent 62%),
+    radial-gradient(880px 560px at 10% 12%, rgba(var(--accent2-rgb), 0.09), transparent 60%),
     linear-gradient(180deg, var(--bg-2), var(--bg) 42%);
   background-attachment: fixed;
   background-repeat: no-repeat;
@@ -116,7 +128,7 @@ ul {
 }
 
 ::selection {
-  background: rgba(0, 229, 255, 0.28);
+  background: rgba(var(--accent-rgb), 0.28);
   color: #fff;
 }
 
@@ -205,53 +217,87 @@ ul {
   border-top: 0;
 }
 
-/* --- HUD nav ----------------------------------------------------------- */
+/* --- HUD nav -----------------------------------------------------------
+   Transparent over the hero, then it earns a blurred backdrop once the page
+   scrolls under it. `is-stuck` is set from JS on a passive scroll listener. */
 .hud-nav {
   position: sticky;
   top: 0;
   z-index: 60;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background-color 0.3s var(--ease), border-color 0.3s var(--ease),
+    backdrop-filter 0.3s var(--ease);
+}
+
+.hud-nav.is-stuck {
+  background: rgba(8, 11, 20, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom-color: rgba(var(--accent-rgb), 0.16);
+}
+
+/* Subpages open mid-content, so they get the solid treatment immediately. */
+.hud-nav--solid {
   background: rgba(8, 11, 20, 0.78);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--line);
+  border-bottom-color: var(--line);
 }
 
 .hud-nav__inner {
   display: flex;
   align-items: center;
   gap: 16px;
-  height: 64px;
+  height: 68px;
   max-width: var(--maxw);
   margin-inline: auto;
   padding-inline: var(--pad);
 }
 
 .hud-nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-right: auto;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 1.05rem;
+  font-size: 1rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text);
-  margin-right: auto;
-  display: flex;
-  align-items: center;
-  gap: 10px;
   white-space: nowrap;
 }
 
-.hud-nav__brand:hover {
-  color: var(--accent);
+/* initials badge */
+.hud-nav__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex: none;
+  border-radius: 11px;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  color: #eaf2ff;
+  background: linear-gradient(140deg, rgba(var(--accent-rgb), 0.9), rgba(var(--accent2-rgb), 0.85));
+  box-shadow:
+    0 0 18px rgba(var(--accent-rgb), 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
 
-/* small pulsing "online" dot */
-.hud-nav__dot {
-  width: 8px;
-  height: 8px;
-  flex: none;
-  background: var(--accent);
-  box-shadow: 0 0 10px var(--accent);
-  animation: pulse 2.4s ease-in-out infinite;
+.hud-nav__brand:hover .hud-nav__badge,
+.hud-nav__brand:focus-visible .hud-nav__badge {
+  transform: translateY(-2px) rotate(-4deg);
+  box-shadow:
+    0 0 26px rgba(var(--accent-rgb), 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
+}
+
+.hud-nav__brand:hover {
+  color: var(--accent-text);
 }
 
 @keyframes pulse {
@@ -295,7 +341,7 @@ ul {
 .hud-nav__link:hover,
 .hud-nav__link:focus-visible,
 .hud-nav__link[aria-current="page"] {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .hud-nav__link:hover {
@@ -391,7 +437,7 @@ ul {
   font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-text);
   margin: 0 0 14px;
 }
 
@@ -420,7 +466,10 @@ ul {
   text-shadow: var(--glow-md);
 }
 
-.sec-head p {
+/* Scoped away from .kicker: a bare `.sec-head p` also matches the kicker
+   paragraph and, being one specificity point heavier, was quietly greying
+   it out. */
+.sec-head p:not(.kicker) {
   color: var(--muted);
   margin-top: 14px;
   font-size: 1.02rem;
@@ -460,7 +509,7 @@ ul {
 .btn--ghost:hover,
 .btn--ghost:focus-visible {
   border-color: var(--accent);
-  background: rgba(0, 229, 255, 0.08);
+  background: rgba(var(--accent-rgb), 0.08);
 }
 
 .btn svg {
@@ -511,130 +560,269 @@ ul {
 /* --- Hero -------------------------------------------------------------- */
 .hero {
   position: relative;
-  padding-block: clamp(56px, 8vw, 104px) clamp(56px, 8vw, 96px);
+  /* Runs up under the sticky nav so the background art is unbroken from the
+     very top of the page and the nav reads as floating over it. */
+  margin-top: calc(var(--nav-h) * -1);
+  padding-block: calc(var(--nav-h) + clamp(40px, 6vw, 72px)) clamp(56px, 8vw, 96px);
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
   overflow: hidden;
 }
 
-/* ---- Animated hero background: editor dot grid + scan glow -------------
-   Two layers. The dim dot grid never moves or repaints. The glow is a
-   fixed-size box moved with translate3d only — a composited transform, so
-   there is no layout or paint work per frame. It brightens the dots beneath
-   it via `screen` blending rather than drawing its own dots, which sidesteps
-   any alignment problem between a moving layer and the static grid. */
-.hero__bg {
+/* ==========================================================================
+   Animated hero background — pure CSS, no canvas, no WebGL.
+
+   Six stacked layers over a near-black base:
+     1. two counter-rotating blurred conic circles
+     2. three drifting radial "tendril" blobs on staggered delays
+     3. two thin diagonal arcs that flicker
+     4. a convergence bloom that breathes at the centre
+     5. a vignette + bottom fade so the card's text stays legible
+
+   Everything animates `transform` and `opacity` only — no layout, no paint.
+   The blurs are the expensive part, so each blurred layer is promoted with
+   will-change and then merely rotated or translated, which lets the
+   compositor rasterise the blur once and reuse it every frame.
+   ========================================================================== */
+.hero-fx {
   position: absolute;
   inset: 0;
   z-index: 0;
-  pointer-events: none;
   overflow: hidden;
-  /* static snap-point grid */
-  background-image: radial-gradient(
-    circle at center,
-    rgba(0, 229, 255, 0.21) 1.1px,
-    transparent 1.4px
-  );
-  background-size: 26px 26px;
-  /* fade the grid out at the edges so it never crowds the text */
-  mask-image: radial-gradient(92% 82% at 50% 45%, #000 0%, transparent 92%);
-  -webkit-mask-image: radial-gradient(92% 82% at 50% 45%, #000 0%, transparent 92%);
-}
-
-/* --- WebGL neural vortex ------------------------------------------------
-   Hidden until a context is actually up: `has-vortex` is only added once
-   the shader compiles and links, so a WebGL failure silently leaves the
-   pure-CSS scan glow below in charge. */
-.hero__vortex {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  display: none;
   pointer-events: none;
-  mix-blend-mode: screen;
+  /* A paint container: without it the huge blurred children would enlarge
+     the hero's ink overflow and force the compositor to keep far more
+     texture around than is ever visible. Deliberately not `strict`: that
+     adds size containment, and this box is sized by its insets. */
+  contain: layout paint;
 }
 
-.hero.has-vortex .hero__vortex {
-  display: block;
-}
-
-/* The vortex replaces the scan glow, and the dot grid steps back so the
-   two textures don't fight each other. */
-.hero.has-vortex .hero__spot {
-  display: none;
-}
-
-.hero.has-vortex .hero__bg {
-  opacity: 0.5;
-}
-
-/* A sibling of .hero__bg rather than a child: the dot grid's edge mask would
-   otherwise clip the glow's outer reach, so it could never spill past the card.
-   Wider than the glass card (760px) on purpose — it has to frame the card,
-   not just sit behind it. */
-.hero__spot {
+/* --- 1. counter-rotating conic circles ---------------------------------- */
+.hero-fx__conic {
   position: absolute;
-  z-index: 0;
-  pointer-events: none;
+  top: 50%;
   left: 50%;
-  top: 45%;
-  width: 1000px;
-  height: 1000px;
-  /* centre the box on its anchor with margins, leaving `transform`
-     free to carry nothing but the translation */
-  margin-left: -500px;
-  margin-top: -500px;
+  width: var(--fx-conic, min(135vmax, 1900px));
+  height: var(--fx-conic, min(135vmax, 1900px));
+  margin-top: calc(var(--fx-conic, min(135vmax, 1900px)) / -2);
+  margin-left: calc(var(--fx-conic, min(135vmax, 1900px)) / -2);
   border-radius: 50%;
-  transform: translate3d(0, 0, 0);
+  filter: blur(var(--fx-conic-blur, 90px));
   will-change: transform;
-  mix-blend-mode: screen;
+}
+
+.hero-fx__conic--cw {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(var(--accent-rgb), 0.95) 48deg,
+    transparent 122deg,
+    rgba(var(--accent2-rgb), 0.85) 196deg,
+    transparent 268deg,
+    rgba(var(--accent-rgb), 0.6) 322deg,
+    transparent 360deg
+  );
+  animation: fxSpin 44s linear infinite;
+}
+
+/* Offset from centre and a different period, so the two never lock into a
+   visible beat pattern. */
+.hero-fx__conic--ccw {
+  margin-left: calc(var(--fx-conic, min(135vmax, 1900px)) / -2 + 9%);
+  margin-top: calc(var(--fx-conic, min(135vmax, 1900px)) / -2 - 6%);
+  opacity: 0.82;
+  background: conic-gradient(
+    from 140deg,
+    transparent 0deg,
+    rgba(var(--accent2-rgb), 0.9) 62deg,
+    transparent 140deg,
+    rgba(var(--accent-rgb), 0.8) 214deg,
+    transparent 290deg,
+    rgba(var(--accent2-rgb), 0.55) 336deg,
+    transparent 360deg
+  );
+  animation: fxSpinReverse 61s linear infinite;
+}
+
+@keyframes fxSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes fxSpinReverse {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+/* --- 2. drifting tendril blobs ------------------------------------------ */
+.hero-fx__tendril {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(var(--fx-tendril-blur, 70px));
+  will-change: transform, opacity;
+  animation: fxDrift 34s ease-in-out infinite;
+}
+
+.hero-fx__tendril--a {
+  width: 46%;
+  height: 62%;
+  top: -12%;
+  left: 4%;
+  background: radial-gradient(circle at 50% 50%, rgba(var(--accent-rgb), 0.85), transparent 66%);
+  animation-duration: 34s;
+  animation-delay: -2s;
+}
+
+.hero-fx__tendril--b {
+  width: 52%;
+  height: 55%;
+  bottom: -16%;
+  right: 2%;
+  background: radial-gradient(circle at 50% 50%, rgba(var(--accent2-rgb), 0.8), transparent 66%);
+  animation-duration: 41s;
+  animation-delay: -13s;
+  animation-direction: reverse;
+}
+
+.hero-fx__tendril--c {
+  width: 38%;
+  height: 44%;
+  top: 26%;
+  right: 24%;
+  background: radial-gradient(circle at 50% 50%, rgba(64, 214, 255, 0.6), transparent 68%);
+  animation-duration: 28s;
+  animation-delay: -21s;
+}
+
+@keyframes fxDrift {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); opacity: 0.55; }
+  25%  { transform: translate3d(14%, 9%, 0) rotate(90deg) scale(1.12); opacity: 0.85; }
+  50%  { transform: translate3d(-8%, 16%, 0) rotate(180deg) scale(0.94); opacity: 0.6; }
+  75%  { transform: translate3d(-15%, -7%, 0) rotate(270deg) scale(1.08); opacity: 0.8; }
+  100% { transform: translate3d(0, 0, 0) rotate(360deg) scale(1); opacity: 0.55; }
+}
+
+/* --- 3. flickering lightning arcs --------------------------------------- */
+.hero-fx__arc {
+  position: absolute;
+  left: -10%;
+  width: 120%;
+  height: 1px;
+  opacity: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(var(--accent-rgb), 0) 18%,
+    rgba(var(--accent-rgb), 0.85) 38%,
+    rgba(255, 255, 255, 0.9) 50%,
+    rgba(var(--accent2-rgb), 0.8) 62%,
+    rgba(var(--accent2-rgb), 0) 82%,
+    transparent 100%
+  );
+  will-change: opacity;
+}
+
+.hero-fx__arc--1 {
+  top: 34%;
+  transform: rotate(-17deg);
+  box-shadow: 0 0 14px rgba(var(--accent-rgb), 0.55);
+  animation: fxArc 9s ease-in-out infinite;
+}
+
+.hero-fx__arc--2 {
+  top: 63%;
+  transform: rotate(11deg);
+  box-shadow: 0 0 14px rgba(var(--accent2-rgb), 0.5);
+  animation: fxArc 11.5s ease-in-out infinite;
+  animation-delay: -5.5s;
+}
+
+/* Deliberately uneven: a clean sine reads as a pulse, these gaps read as
+   something arcing and catching. */
+@keyframes fxArc {
+  0%, 8%    { opacity: 0; }
+  10%       { opacity: 0.85; }
+  12%       { opacity: 0.1; }
+  14%       { opacity: 0.7; }
+  17%       { opacity: 0; }
+  46%       { opacity: 0; }
+  48%       { opacity: 0.55; }
+  50%       { opacity: 0.05; }
+  53%       { opacity: 0.4; }
+  57%, 100% { opacity: 0; }
+}
+
+/* --- 4. convergence bloom ------------------------------------------------ */
+.hero-fx__bloom {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  width: min(80vmax, 900px);
+  height: min(80vmax, 900px);
+  margin-top: calc(min(80vmax, 900px) / -2);
+  margin-left: calc(min(80vmax, 900px) / -2);
+  border-radius: 50%;
   background: radial-gradient(
     circle at center,
-    rgba(0, 229, 255, 0.22) 0%,
-    rgba(0, 229, 255, 0.13) 28%,
-    rgba(160, 107, 255, 0.08) 50%,
+    rgba(170, 208, 255, 0.5) 0%,
+    rgba(var(--accent-rgb), 0.4) 24%,
+    rgba(var(--accent2-rgb), 0.22) 48%,
     transparent 70%
   );
+  filter: blur(var(--fx-bloom-blur, 40px));
+  will-change: transform, opacity;
+  animation: fxBloom 12s ease-in-out infinite;
 }
 
-/* Touch / no-pointer devices get a slow composited drift instead of
-   cursor tracking — no JS loop runs at all on those. */
-.hero.is-drifting .hero__spot {
-  animation: heroDrift 26s ease-in-out infinite;
+@keyframes fxBloom {
+  0%, 100% { transform: scale(0.86); opacity: 0.5; }
+  50%      { transform: scale(1.12); opacity: 0.95; }
 }
 
-/* Paused while the tab is in the background. */
-.hero.is-paused .hero__spot {
+/* --- 5. vignette + bottom fade ------------------------------------------ */
+.hero-fx__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(80% 64% at 50% 44%, transparent 0%, rgba(4, 6, 12, 0.24) 58%, rgba(4, 6, 12, 0.78) 100%),
+    linear-gradient(180deg, rgba(8, 11, 20, 0.55) 0%, transparent 22%, transparent 62%, var(--bg) 100%);
+}
+
+/* --- motion + performance ------------------------------------------------ */
+.hero.is-paused .hero-fx * {
   animation-play-state: paused;
 }
 
-/* Starts and ends at the resting position, so the JS pointer-tracking loop
-   can hand off to this animation (and take it back) without a visible jump. */
-@keyframes heroDrift {
-  0%   { transform: translate3d(0, 0, 0); }
-  25%  { transform: translate3d(24%, 13%, 0); }
-  50%  { transform: translate3d(28%, -16%, 0); }
-  75%  { transform: translate3d(-22%, 16%, 0); }
-  100% { transform: translate3d(0, 0, 0); }
-}
+/* Phones pay the most for large blurs and gain the least from them: the
+   radii come down, the third tendril and both arcs go entirely. */
+@media (max-width: 760px) {
+  .hero-fx {
+    --fx-conic: min(140vmax, 900px);
+    --fx-conic-blur: 55px;
+    --fx-tendril-blur: 45px;
+    --fx-bloom-blur: 30px;
+  }
 
-@media (max-width: 700px) {
-  .hero__spot {
-    width: 620px;
-    height: 620px;
-    margin-left: -310px;
-    margin-top: -310px;
+  .hero-fx__tendril--c,
+  .hero-fx__arc {
+    display: none;
   }
 }
 
-/* Centred stage: the glass card sits on the axis of the background glow. */
-.hero__stage {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+/* A still frame of the same composition — same colours, same layering,
+   nothing moving. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-fx__conic,
+  .hero-fx__tendril,
+  .hero-fx__bloom,
+  .hero-fx__arc {
+    animation: none;
+  }
+
+  .hero-fx__arc {
+    opacity: 0.45;
+  }
 }
 
 /* --- Glass card --------------------------------------------------------- */
@@ -677,25 +865,34 @@ ul {
   z-index: 1;
 }
 
-/* availability chip */
-.status-pill {
+/* eyebrow: the year tag, an availability dot, and the tech line, all on
+   one row that wraps to two on narrow screens */
+.hero-eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 14px;
+  margin: 0 0 22px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.hero-eyebrow__tag {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  margin-bottom: 20px;
   padding: 5px 13px;
   border-radius: 999px;
-  border: 1px solid rgba(0, 229, 255, 0.32);
-  background: rgba(0, 229, 255, 0.07);
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
+  border: 1px solid rgba(var(--accent-rgb), 0.4);
+  background: rgba(var(--accent-rgb), 0.09);
+  color: var(--accent-text);
 }
 
-.status-pill::before {
+.hero-eyebrow__tag::before {
   content: "";
   width: 6px;
   height: 6px;
@@ -703,6 +900,10 @@ ul {
   background: var(--accent);
   box-shadow: 0 0 8px var(--accent);
   animation: pulse 2.4s ease-in-out infinite;
+}
+
+.hero-eyebrow__tech {
+  color: var(--dim);
 }
 
 /* portrait, ringed in the brand gradient */
@@ -713,7 +914,7 @@ ul {
   padding: 2px;
   border-radius: 50%;
   background: linear-gradient(140deg, var(--accent), var(--accent2));
-  box-shadow: 0 0 34px rgba(0, 229, 255, 0.26);
+  box-shadow: 0 0 34px rgba(var(--accent-rgb), 0.26);
 }
 
 .glass-card__avatar img {
@@ -730,7 +931,7 @@ ul {
   letter-spacing: -0.02em;
   line-height: 1;
   margin-bottom: 12px;
-  text-shadow: 0 0 44px rgba(0, 229, 255, 0.35);
+  text-shadow: 0 0 44px rgba(var(--accent-rgb), 0.35);
 }
 
 .glass-card__role {
@@ -776,41 +977,69 @@ ul {
 .glass-card .socials a:hover,
 .glass-card .socials a:focus-visible {
   border-color: var(--accent);
-  background: rgba(0, 229, 255, 0.10);
+  background: rgba(var(--accent-rgb), 0.10);
 }
 
-/* --- Glass button ------------------------------------------------------- */
+/* --- Hero CTAs: pill buttons lit by their border, never filled ---------
+   The glow is a second, blurred copy of the border sitting behind the
+   button. Animating its opacity is free; animating a box-shadow's spread
+   would repaint every frame. */
 .btn--glass {
+  position: relative;
   border-radius: 999px;
-  padding: 13px 28px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(0, 229, 255, 0.32);
-  color: var(--accent);
+  padding: 14px 30px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(var(--accent-rgb), 0.55);
+  color: var(--accent-text);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
+  overflow: visible;
+}
+
+.btn--glass::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid var(--accent);
+  box-shadow:
+    0 0 18px rgba(var(--accent-rgb), 0.7),
+    inset 0 0 12px rgba(var(--accent-rgb), 0.35);
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+  pointer-events: none;
 }
 
 .btn--glass:hover,
 .btn--glass:focus-visible {
-  background: rgba(0, 229, 255, 0.11);
-  border-color: var(--accent);
-  color: #d8fbff;
+  color: #ddeaff;
+  background: rgba(var(--accent-rgb), 0.13);
   transform: translateY(-3px);
-  box-shadow: var(--glow-md);
+  box-shadow: none;
 }
 
-/* the second action reads quieter than the first */
+.btn--glass:hover::after,
+.btn--glass:focus-visible::after {
+  opacity: 1;
+}
+
+/* the second action reads quieter, and glows purple instead */
 .btn--glass.is-secondary {
-  border-color: rgba(255, 255, 255, 0.16);
-  color: var(--text);
+  border-color: rgba(var(--accent2-rgb), 0.45);
+  color: var(--accent2-text);
+}
+
+.btn--glass.is-secondary::after {
+  border-color: var(--accent2);
+  box-shadow:
+    0 0 18px rgba(var(--accent2-rgb), 0.65),
+    inset 0 0 12px rgba(var(--accent2-rgb), 0.3);
 }
 
 .btn--glass.is-secondary:hover,
 .btn--glass.is-secondary:focus-visible {
-  border-color: rgba(160, 107, 255, 0.6);
-  color: #e2d6ff;
-  background: rgba(160, 107, 255, 0.12);
-  box-shadow: 0 0 26px rgba(160, 107, 255, 0.25);
+  color: #ecdfff;
+  background: rgba(var(--accent2-rgb), 0.15);
 }
 
 /* --- Stat strip under the card ------------------------------------------ */
@@ -926,7 +1155,7 @@ ul {
 .card:hover,
 .card:focus-within {
   transform: translateY(-6px);
-  border-color: rgba(0, 229, 255, 0.55);
+  border-color: rgba(var(--accent-rgb), 0.55);
   box-shadow: var(--glow-md), 0 22px 44px rgba(0, 0, 0, 0.5);
 }
 
@@ -1032,14 +1261,14 @@ ul {
   text-transform: uppercase;
   padding: 4px 9px;
   border: 1px solid var(--line-2);
-  background: rgba(160, 107, 255, 0.08);
+  background: rgba(var(--accent2-rgb), 0.08);
   color: #c4a8ff;
   white-space: nowrap;
 }
 
 .tag--accent {
-  background: rgba(0, 229, 255, 0.08);
-  border-color: rgba(0, 229, 255, 0.35);
+  background: rgba(var(--accent-rgb), 0.08);
+  border-color: rgba(var(--accent-rgb), 0.35);
   color: var(--accent);
 }
 
@@ -1221,7 +1450,7 @@ ul {
 
 .tech-col:hover {
   transform: translateY(-4px);
-  border-color: rgba(0, 229, 255, 0.45);
+  border-color: rgba(var(--accent-rgb), 0.45);
   box-shadow: var(--glow-sm), 0 16px 34px rgba(0, 0, 0, 0.4);
 }
 
@@ -1276,7 +1505,7 @@ ul {
     90deg,
     transparent,
     var(--line-2) 18%,
-    rgba(0, 229, 255, 0.5) 50%,
+    rgba(var(--accent-rgb), 0.5) 50%,
     var(--line-2) 82%,
     transparent
   );
@@ -1288,7 +1517,7 @@ ul {
   text-align: center;
   border: 1px solid var(--line-2);
   background:
-    radial-gradient(560px 220px at 50% 0%, rgba(0, 229, 255, 0.10), transparent 70%),
+    radial-gradient(560px 220px at 50% 0%, rgba(var(--accent-rgb), 0.10), transparent 70%),
     var(--panel);
   padding: clamp(40px, 6vw, 72px) var(--pad);
 }
@@ -1299,7 +1528,7 @@ ul {
   margin-bottom: 14px;
 }
 
-.cta p {
+.cta p:not(.kicker) {
   color: var(--muted);
   max-width: 52ch;
   margin-inline: auto;
@@ -1494,7 +1723,7 @@ ul {
   text-shadow: var(--glow-md);
 }
 
-.page-head p {
+.page-head p:not(.kicker) {
   color: var(--muted);
   max-width: 60ch;
   margin-top: 16px;
@@ -1541,13 +1770,6 @@ ul {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
-  }
-
-  /* Hero glow: no drift, no cursor tracking — park it on its anchor
-     so it reads as a static ambient wash. */
-  .hero__spot {
-    animation: none !important;
-    transform: translate3d(0, 0, 0) !important;
   }
 
   *,
