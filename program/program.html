@@ -27,7 +27,8 @@
 </script>
 <script type="module">
   import { mountCompanion } from "../assets/companion.js";
-  mountCompanion();
+  /* Exposed so site.js can tell him to bounce while a card is spotlit. */
+  window.__companion = mountCompanion();
 </script>
 </head>
 <body>

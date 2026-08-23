@@ -30,7 +30,8 @@
 </script>
 <script type="module">
   import { mountCompanion } from "./assets/companion.js";
-  mountCompanion();
+  /* Exposed so site.js can tell him to bounce while a card is spotlit. */
+  window.__companion = mountCompanion();
 </script>
 </head>
 <body>
@@ -147,7 +148,7 @@
 
       <div class="card-grid">
 
-        <article class="card brackets" data-reveal>
+        <article class="card brackets" data-video="assets/previews/crowd-sort.mp4" data-reveal>
           <div class="card__media">
             <span class="card__pip">Shipped</span>
             <img src="Projects/Posters/CrowdSort-card.jpg" alt="Crowd Sort gameplay: a crowd of characters beside hexagonal tiles" loading="lazy" width="800" height="450">
@@ -166,7 +167,7 @@
           <a class="card__link" href="Projects/program.html#crowd-sort" aria-label="Crowd Sort — read more"></a>
         </article>
 
-        <article class="card brackets" data-reveal>
+        <article class="card brackets" data-video="assets/previews/chef-diary.mp4" data-reveal>
           <div class="card__media">
             <span class="card__pip">Shipped</span>
             <img src="Projects/Posters/ChefDiary.jpg" alt="Chef Diary gameplay: a restaurant floor with seated customers" loading="lazy" width="960" height="442">
@@ -185,7 +186,7 @@
           <a class="card__link" href="Projects/program.html#chef-diary" aria-label="Chef Diary — read more"></a>
         </article>
 
-        <article class="card brackets" data-reveal>
+        <article class="card brackets" data-video="assets/previews/pet-shelter.mp4" data-reveal>
           <div class="card__media">
             <span class="card__pip">Shipped</span>
             <img src="Projects/Posters/PetShelter-card.jpg" alt="Pet Shelter Mania gameplay: pets waiting at a grooming counter" loading="lazy" width="800" height="450">
@@ -275,7 +276,7 @@
 
       <div class="card-grid">
 
-        <article class="card brackets" data-reveal>
+        <article class="card brackets" data-video="assets/previews/top-down-shooter.mp4" data-reveal>
           <div class="card__media">
             <span class="card__pip card__pip--lab">Prototype</span>
             <img src="program/Posters/Top-Down-Shooter-card.jpg" alt="Top-Down Shooter prototype: a character firing in a blockout level" loading="lazy" width="800" height="450">
@@ -293,7 +294,7 @@
           <a class="card__link" href="program/program.html#top-down-shooter" aria-label="Top-Down Shooter — read more"></a>
         </article>
 
-        <article class="card brackets" data-reveal>
+        <article class="card brackets" data-video="assets/previews/battle-tank.mp4" data-reveal>
           <div class="card__media">
             <span class="card__pip card__pip--lab">Prototype</span>
             <img src="program/Posters/BattleTank.jpg" alt="Battle Tank prototype: a green tank in a desert level" loading="lazy" width="960" height="540">
@@ -311,7 +312,7 @@
           <a class="card__link" href="program/program.html#battle-tank" aria-label="Battle Tank — read more"></a>
         </article>
 
-        <article class="card brackets" data-reveal>
+        <article class="card brackets" data-video="assets/previews/simple-shooter.mp4" data-reveal>
           <div class="card__media">
             <span class="card__pip card__pip--lab">Prototype</span>
             <img src="program/Posters/Shooter.jpg" alt="Simple Shooter prototype: a character in a sci-fi corridor" loading="lazy" width="960" height="540">

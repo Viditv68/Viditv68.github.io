@@ -173,6 +173,128 @@
     });
   }
 
+  /* --- Card spotlight ----------------------------------------------------
+     Hover a project card: it lifts out of the grid, the still cross-fades to
+     the clip, the rest of the page blurs behind a scrim, and the companion
+     is told to bounce. Pointer devices only — see the media query in the CSS
+     and the guard below. */
+  function initSpotlight() {
+    var cards = Array.prototype.slice.call(document.querySelectorAll(".card[data-video]"));
+    if (!cards.length || reduceMotion) return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+    var scrim = document.createElement("div");
+    scrim.className = "spotlight-scrim";
+    scrim.setAttribute("aria-hidden", "true");
+    document.body.appendChild(scrim);
+
+    var active = null;
+    var openTimer = 0;
+
+    /* Nudge the card back inside the viewport if scaling it would push it
+       off the edge — the outer column of a three-up grid otherwise grows
+       straight past the right-hand side. */
+    function positionFor(card, scale) {
+      var r = card.getBoundingClientRect();
+      var grow = (r.width * (scale - 1)) / 2;
+      var pad = 16;
+      var overLeft = pad - (r.left - grow);
+      var overRight = (r.right + grow) - (window.innerWidth - pad);
+      var dx = 0;
+      if (overLeft > 0) dx = overLeft;
+      else if (overRight > 0) dx = -overRight;
+      card.style.setProperty("--sx", dx.toFixed(1) + "px");
+      card.style.setProperty("--scale", String(scale));
+    }
+
+    /* The clip is only fetched the first time a card is actually hovered, so
+       a page of cards costs nothing until someone shows interest. */
+    function videoFor(card) {
+      var existing = card.querySelector(".card__video");
+      if (existing) return existing;
+
+      var src = card.getAttribute("data-video");
+      if (!src) return null;
+
+      var v = document.createElement("video");
+      v.className = "card__video";
+      v.muted = true;
+      v.loop = true;
+      v.playsInline = true;
+      v.preload = "none";
+      v.setAttribute("aria-hidden", "true");
+      v.tabIndex = -1;
+      v.src = src;
+      v.addEventListener("playing", function () { v.classList.add("is-ready"); });
+      card.querySelector(".card__media").appendChild(v);
+      return v;
+    }
+
+    function open(card) {
+      if (active === card) return;
+      if (active) close(active);
+      active = card;
+
+      positionFor(card, 1.28);
+      card.classList.add("is-spotlit");
+      scrim.classList.add("is-on");
+
+      var v = videoFor(card);
+      if (v) {
+        var p = v.play();
+        if (p && p.catch) p.catch(function () { /* autoplay refused: keep the still */ });
+      }
+      if (window.__companion && window.__companion.setExcited) {
+        window.__companion.setExcited(true);
+      }
+    }
+
+    function close(card) {
+      card.classList.remove("is-spotlit");
+      card.style.removeProperty("--sx");
+      card.style.removeProperty("--scale");
+
+      var v = card.querySelector(".card__video");
+      if (v) {
+        v.classList.remove("is-ready");
+        v.pause();
+        v.currentTime = 0;
+      }
+      if (active === card) active = null;
+      if (!active) {
+        scrim.classList.remove("is-on");
+        if (window.__companion && window.__companion.setExcited) {
+          window.__companion.setExcited(false);
+        }
+      }
+    }
+
+    cards.forEach(function (card) {
+      card.addEventListener("mouseenter", function () {
+        clearTimeout(openTimer);
+        /* Short intent delay so sweeping the cursor across the grid doesn't
+           strobe every card on the way past. */
+        openTimer = setTimeout(function () { open(card); }, 140);
+      });
+
+      card.addEventListener("mouseleave", function () {
+        clearTimeout(openTimer);
+        if (card.classList.contains("is-spotlit")) close(card);
+      });
+    });
+
+    /* The card sits in normal flow, so vertical scrolling carries it along
+       and nothing goes stale — only a width change invalidates the edge
+       compensation, and by then the grid has reflowed anyway. */
+    window.addEventListener("resize", function () {
+      if (active) close(active);
+    }, { passive: true });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && active) close(active);
+    });
+  }
+
   /* --- Footer year ------------------------------------------------------ */
   function initYear() {
     document.querySelectorAll("[data-year]").forEach(function (el) {
@@ -187,6 +309,7 @@
     initVideos();
     initNavState();
     initHeroBackground();
+    initSpotlight();
     initYear();
   }
 

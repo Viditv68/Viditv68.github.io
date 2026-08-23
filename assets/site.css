@@ -1252,6 +1252,103 @@ ul {
   z-index: 3;
 }
 
+/* --- Card spotlight ------------------------------------------------------
+   Hovering a project card lifts it out of the grid, swaps the still for the
+   clip, and blurs everything behind it.
+
+   The z-order is the whole trick. backdrop-filter blurs only what is painted
+   *below* the element carrying it, so:
+     scrim  70  — blurs the page
+     card   80  — above the scrim, stays sharp
+     robot  90  — set in companion.js, so he stays sharp too and keeps
+                  bouncing over the top of the blur
+   ========================================================================== */
+.spotlight-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  opacity: 0;
+  background: rgba(4, 6, 12, 0.55);
+  backdrop-filter: blur(14px) saturate(0.85);
+  -webkit-backdrop-filter: blur(14px) saturate(0.85);
+  transition: opacity 0.35s var(--ease);
+}
+
+.spotlight-scrim.is-on {
+  opacity: 1;
+}
+
+/* Deliberately the independent `scale` and `translate` properties rather
+   than `transform`. The reveal system already owns transform on everything
+   it animates — `.js [data-reveal].is-visible { transform: none }` outranks
+   any sane selector here — and these compose with it instead of fighting
+   for the same declaration. They also stack cleanly with the card's own
+   hover lift.
+
+   --sx is set from JS: cards near the viewport edge get nudged inwards so
+   the enlarged card never runs off the side. */
+.card.is-spotlit {
+  z-index: 80;
+  scale: var(--scale, 1.28);
+  translate: var(--sx, 0px) 0;
+  border-color: rgba(var(--accent-rgb), 0.7);
+  box-shadow:
+    0 0 0 1px rgba(var(--accent-rgb), 0.35),
+    0 40px 90px rgba(0, 0, 0, 0.7),
+    var(--glow-lg);
+}
+
+.card {
+  transition: transform 0.35s var(--ease), border-color 0.35s var(--ease),
+    box-shadow 0.35s var(--ease), scale 0.35s var(--ease),
+    translate 0.35s var(--ease);
+}
+
+.card__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+  pointer-events: none;
+}
+
+.card.is-spotlit .card__video.is-ready {
+  opacity: 1;
+}
+
+/* The still stays underneath as the poster, so there is never a blank frame
+   while the clip buffers. */
+.card.is-spotlit .card__media img {
+  filter: none;
+}
+
+/* Only on real pointers. Touch has no hover, and firing this on tap would
+   fight the card's own link. */
+@media (hover: none), (pointer: coarse) {
+  .card.is-spotlit {
+    scale: 1;
+    translate: 0;
+  }
+
+  .card__video { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spotlight-scrim,
+  .card__video {
+    display: none;
+  }
+
+  .card.is-spotlit {
+    scale: 1;
+    translate: 0;
+  }
+}
+
 /* --- Tags -------------------------------------------------------------- */
 .tags {
   display: flex;

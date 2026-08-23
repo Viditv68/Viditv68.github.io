@@ -173,6 +173,7 @@ function unavailableCompanion(err) {
     ready: p,
     unavailable: true,
     setState: function () {},
+    setExcited: function () {},
     getPhase: function () { return null; },
     getState: function () { return null; },
     isRunning: function () { return false; },
@@ -213,7 +214,10 @@ export function createCompanion(options) {
     height: canvasHeight + "px",
     display: "block",
     pointerEvents: "none",
-    zIndex: "60"
+    /* Above the card spotlight's blur scrim (70) and the spotlit card (80).
+       backdrop-filter only blurs what is painted below it, so sitting above
+       the scrim is what keeps the robot sharp while the page goes soft. */
+    zIndex: "90"
   });
 
   var renderer;
@@ -357,7 +361,9 @@ export function createCompanion(options) {
     next.setEffectiveTimeScale(1);
     next.setEffectiveWeight(1);
 
-    if (ONE_SHOT[name]) {
+    /* `loop` deliberately overrides ONE_SHOT: the excited state runs Jump on
+       repeat, which is the same clip that is normally fired once. */
+    if (ONE_SHOT[name] && !opts.loop) {
       next.setLoop(THREE.LoopOnce, 1);
       next.clampWhenFinished = true;
     } else {
@@ -431,6 +437,10 @@ export function createCompanion(options) {
   function onClipFinished() {
     finishCount++;
     if (disposed) return;
+    /* A gesture interrupted by setExcited() keeps playing at falling weight
+       and still reports finished. Ignore it, or he would bounce once and
+       then wander off mid-spotlight. */
+    if (phase === "excited") return;
     beginDwell();
   }
 
@@ -486,6 +496,12 @@ export function createCompanion(options) {
 
       case "gesture":
         /* Held by the one-shot; onClipFinished moves us on. */
+        facingTarget = 0;
+        speed = 0;
+        break;
+
+      case "excited":
+        /* Held until the page lets go of him. Faces the viewer and bounces. */
         facingTarget = 0;
         speed = 0;
         break;
@@ -711,6 +727,22 @@ export function createCompanion(options) {
     ready: ready,
     canvas: canvas,
     setState: apiSetState,
+
+    /* Bounce on the spot, facing the viewer, until told to stop. The page
+       uses this while a project card is spotlit. */
+    setExcited: function (on) {
+      if (reduceMotion || disposed || !mixer) return;
+      if (on) {
+        if (phase === "excited") return;
+        phase = "excited";
+        facingTarget = 0;
+        play("jump", { force: true, loop: true });
+        if (!running) start();
+      } else if (phase === "excited") {
+        beginDwell();
+      }
+    },
+
     getState: function () { return current; },
     getPhase: function () { return phase; },
     isRunning: function () { return running; },
