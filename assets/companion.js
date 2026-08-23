@@ -6,24 +6,22 @@
    so the site keeps working if three.js reshuffles its examples folder.
    Every clip we need already lives in that one file — no rigging step.
 
-   Two ideas worth knowing before reading the rest.
+   He is autonomous: nothing about him is tied to scrolling. He picks a
+   random spot along the bottom edge, walks or runs there, turns to face the
+   viewer and mulls it over, waits a beat, then picks somewhere new.
 
-   ONE — the route. The page is divided into panels, and each panel gets one
-   complete edge-to-edge crossing. Direction alternates with the panel index,
-   so panel N finishes exactly where panel N+1 begins and the whole route
-   joins up end to end with no teleporting. His target X is a pure function
-   of window.scrollY, not something accumulated from scroll deltas, so it
-   cannot drift and scrolling back up retraces the path exactly.
+   Two details worth knowing before reading the rest.
 
-   TWO — the stride. Playback rate is always ground speed / the clip's
-   reference speed, so the feet match the ground at any pace. Crossing a
-   whole lane while one panel scrolls past is about nine body-lengths, which
-   is a run rather than a walk, so there are two locomotion clips with a
-   hysteretic threshold between them.
+   ONE — he faces the viewer whenever he is not travelling. Idle, the
+   greeting wave and every gesture all square up to camera; only walking and
+   running turn him side-on, in the direction he is actually going.
+
+   TWO — the stride is always ground speed over the clip's own reference
+   speed, so the feet match the ground at every point of the accelerate /
+   cruise / decelerate curve rather than only at full pelt.
 
    Public API:
-     ready / setState / notifyScroll / setSections / getState /
-     resolveAmbient / isRunning / resize / dispose / debug
+     ready / setState / getState / isRunning / resize / dispose / debug
    ========================================================================= */
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -40,17 +38,29 @@ export const CLIPS = {
   walk: "Walking",
   run: "Running",
   wave: "Wave",
-  jump: "Jump"
+  jump: "Jump",
+  /* RobotExpressive ships no "Think" clip. Yes and No are a nod and a head
+     shake, which are the closest thing in the file to visible deliberation,
+     so those two stand in for thinking. */
+  yes: "Yes",
+  no: "No",
+  thumbsUp: "ThumbsUp"
 };
 
-export const STATES = ["wave", "idle", "walk", "run", "jump"];
+export const STATES = ["wave", "idle", "walk", "run", "jump", "yes", "no", "thumbsUp"];
+
+/* Played once on arrival, then he goes back to idling. */
+const THINKING = ["yes", "no"];
 
 /* Clips that move him along the ground, as opposed to poses and one-shots. */
 function isLocomotion(name) { return name === "walk" || name === "run"; }
 
-/* One-shots hold the floor until their clip finishes, then hand back to
-   whichever ambient state the scroll situation calls for. */
-const ONE_SHOT = { wave: true, jump: true };
+/* One-shots hold the floor until their clip finishes, at which point the
+   wander loop takes over again. Anything listed here MUST be here — a clip
+   played on LoopRepeat never fires "finished", so the loop would stall. */
+const ONE_SHOT = {
+  wave: true, jump: true, yes: true, no: true, thumbsUp: true
+};
 
 const TUNING = {
   viewHeight: 3.2,     // world units visible top-to-bottom in the canvas
@@ -59,65 +69,43 @@ const TUNING = {
   edgeGap: 0.18,       // clear space between his silhouette and the viewport
   bodyHalfGuess: 0.8,  // stands in for his half-width until the model loads
 
-  /* How hard he chases the position the scroll asks for. Higher is tighter;
-     lower lets him lag and glide. Capped by refSpeed * maxRate regardless. */
-  followRate: 9,
+  /* --- wandering ---------------------------------------------------------
+     A trip has to be long enough to be worth watching and short enough not
+     to become the main event, so targets are drawn from a band of the lane
+     rather than anywhere in it. */
+  minTravel: 0.22,     // fraction of the lane, shortest trip he will bother with
+  maxTravel: 0.78,     // ...and the longest
+  runAbove: 0.46,      // trips longer than this fraction of the lane get a run
 
-  /* Chase harder once the user stops, so he settles rather than creeping. */
-  followRateSettling: 14,
+  dwellMin: 2600,      // ms of standing about after a gesture, before moving on
+  dwellMax: 6200,
 
-  /* How close to a panel edge he has to be, when the panel changes, for the
-     boundary to be worth a hop-turn rather than a plain about-face. */
-  turnWindow: 1.8,
+  /* What he does on arrival. Weighted by repetition rather than by numbers:
+     mostly thinking, with the occasional friendlier beat so he does not read
+     as a two-frame loop. Every entry must be a key of CLIPS. */
+  gestures: ["yes", "no", "yes", "no", "yes", "no", "thumbsUp", "wave"],
 
-  /* The Jump clip takes 0.71s, during which he cannot travel. Only spend
-     that if the panel lasts long enough to afford it — at the current scroll
-     velocity the hop must fit inside this fraction of the panel. Otherwise
-     he just turns and keeps running, which is what someone moving that fast
-     would do anyway. */
-  hopBudget: 0.45,
+  accelTime: 0.35,     // seconds to reach cruising speed
+  easeDist: 1.1,       // world units out from the target that he starts slowing
+  arriveEps: 0.05,     // close enough to call it arrived
+  crawlFactor: 0.3,    // floor on the deceleration ramp, or he never lands
 
-  /* Fraction of a panel over which the crossing is spread. The target sits
-     on the far edge for the remainder, which gives the chase time to
-     actually arrive — an exponential follow only ever approaches its target,
-     so without this margin he would hand over to the next panel a little
-     short of the edge every single time, and the hop-turn would never fire. */
-  arriveAt: 0.82,
+  /* He squares up before setting off and again before gesturing; movement
+     waits until he is roughly pointed the right way. */
+  turnedEnough: 0.1,   // radians — squared up to within ~6 degrees
 
   /* Ground speed, in world units/second, at which each locomotion clip plays
      at rate 1.0. The stride is *always* set to speed / refSpeed, which is
-     what keeps the feet matched to the ground — the rate clamps below are a
-     cosmetic guard for extreme scrolling, not the mechanism.
-
-     A panel's worth of scrolling has to carry him the full width of the
-     lane, which is around nine body-lengths. That is a run, not a walk, at
-     any normal scroll pace — hence two clips with a threshold between. */
+     what keeps the feet matched to the ground. */
   refSpeedWalk: 2.0,
   refSpeedRun: 5.2,
-  runEnter: 3.6,       // ground speed at which he breaks into a run
-  runExit: 2.9,        // and drops back to a walk (hysteresis, avoids flapping)
 
-  walkRateRange: [0.35, 1.9],
-  runRateRange: [0.7, 3.4],
-
-  /* Ceiling on ground speed. High enough that an unhurried scroll completes
-     a panel's crossing, low enough that a violent flick reads as running
-     rather than teleporting. */
-  maxSpeed: 30,
-
-  /* The Jump clip lifts him about 19% of his height but has no root motion,
-     so on its own the edge turnaround is a spin on the spot. Carrying him
-     this far back off the wall turns it into a bounce. */
-  hopDistance: 0.95,
-
-  /* Window after landing during which the new panel's target cannot pull him
-     back toward the edge he just bounced off. */
-  hopGuardMs: 600,
+  walkRateRange: [0.3, 1.6],
+  runRateRange: [0.6, 1.8],
 
   fade: 0.25,          // cross-fade seconds between looping clips
   fadeFast: 0.15,      // cross-fade into short one-shots (Jump is 0.71s)
-  scrollIdleMs: 150,   // "still scrolling" debounce from the brief
-  turnRate: 9,         // radians/second the model swings around
+  turnRate: 7,         // radians/second the model swings around
 
   /* Fallback if measuring the posed model ever returns nonsense. This is the
      assembled height of RobotExpressive in its own units. */
@@ -128,7 +116,10 @@ const HALF_PI = Math.PI / 2;
 
 function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
 
-function smoothstep(u) { return u * u * (3 - 2 * u); }
+/* Signed shortest-path difference between two angles, in (-pi, pi]. */
+function angleDelta(from, to) {
+  return ((to - from + Math.PI) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2) - Math.PI;
+}
 
 /* Shortest-path angle step, so a 180 degree turn never takes the long way. */
 function angleTowards(from, to, maxStep) {
@@ -182,8 +173,7 @@ function unavailableCompanion(err) {
     ready: p,
     unavailable: true,
     setState: function () {},
-    notifyScroll: function () {},
-    resolveAmbient: function () { return null; },
+    getPhase: function () { return null; },
     getState: function () { return null; },
     isRunning: function () { return false; },
     resize: function () {},
@@ -294,27 +284,17 @@ export function createCompanion(options) {
   var facing = 0;           // current rotation.y
   var facingTarget = 0;
   var speed = 0;            // world units/second, this frame
-  var lastScrollAt = -1e9;
-  var turning = false;      // an edge Jump is in flight
-  var turnT = 0;            // seconds into the hop
-  var turnDur = 0.7;        // length of the Jump clip
-  var turnFromX = 0, turnToX = 0;
-  var turnFromFacing = 0, turnToFacing = 0;
   var bodyHalf = T.bodyHalfGuess;   // half his on-screen width, measured at load
 
-  /* --- the route -----------------------------------------------------------
-     One complete edge-to-edge walk per panel. `bounds[i]` is the scroll
-     position at which panel i takes over; direction alternates with the
-     panel index, so panel 0 walks him left-to-right, panel 1 right-to-left,
-     and so on. Because consecutive panels start where the previous one
-     finished, the whole route is continuous — he never teleports. */
-  var sectionEls = [];
-  var bounds = [];
-  var maxScrollY = 1;
-  var sectionIndex = 0;
-  var hopGuardUntil = 0;    // see the note in follow()
-  var scrollVel = 0;        // px/second, smoothed — decides if a hop is affordable
-  var lastYSeen = null;
+  /* --- wandering ----------------------------------------------------------
+     phase is the whole behaviour: he squares up, walks somewhere, squares up
+     again, thinks about it, stands around, repeats. */
+  var phase = "greet";      // greet | turnOut | travel | turnIn | gesture | dwell
+  var phaseUntil = 0;       // wall-clock ms, for the timed phases
+  var destX = 0;
+  var travelGait = "walk";
+  var travelT = 0;          // seconds into the current trip, for the accel ramp
+  var finishCount = 0;      // one-shots completed; surfaced for diagnostics
 
   var running = false;
   var rafId = 0;
@@ -352,62 +332,7 @@ export function createCompanion(options) {
     maxX = halfW - margin;
     if (minX > maxX) minX = maxX = 0;
     x = clamp(x, minX, maxX);
-
-    measureRoute();
-  }
-
-  /* Panel i owns the scroll from the moment its top crosses the middle of the
-     viewport until the next panel's top does. That makes the ranges
-     contiguous and non-overlapping — every scroll position belongs to exactly
-     one panel, which is what lets the target be a pure function of scrollY
-     rather than something accumulated (and therefore driftable). */
-  function measureRoute() {
-    var vh = window.innerHeight;
-    maxScrollY = Math.max(
-      (document.documentElement.scrollHeight || 0) - vh, 1
-    );
-
-    bounds = [];
-    for (var i = 0; i < sectionEls.length; i++) {
-      var el = sectionEls[i];
-      if (!el || !el.getBoundingClientRect) continue;
-      var top = el.getBoundingClientRect().top + (window.scrollY || window.pageYOffset || 0);
-      var b = clamp(top - vh / 2, 0, maxScrollY);
-      /* Keep it strictly increasing: panels shorter than half a viewport
-         would otherwise produce a zero-width range and a divide-by-zero. */
-      if (bounds.length && b <= bounds[bounds.length - 1]) continue;
-      bounds.push(b);
-    }
-
-    /* No panels supplied (or none usable): treat the whole document as one
-       panel, which degrades to a single traversal across the page. */
-    if (!bounds.length) bounds = [0];
-  }
-
-  function setSections(list) {
-    if (typeof list === "string") {
-      list = Array.prototype.slice.call(document.querySelectorAll(list));
-    }
-    sectionEls = list && list.length ? Array.prototype.slice.call(list) : [];
-    measureRoute();
-  }
-
-  /* Which panel owns this scroll position, and how far through it we are. */
-  function routeAt(y) {
-    var i = 0;
-    while (i + 1 < bounds.length && y >= bounds[i + 1]) i++;
-    var start = bounds[i];
-    var end = (i + 1 < bounds.length) ? bounds[i + 1] : maxScrollY;
-    var p = end > start ? clamp((y - start) / (end - start), 0, 1) : 0;
-    return { index: i, p: p };
-  }
-
-  /* The X the scroll position asks for. Alternating direction means panel
-     boundaries line up end-to-end, so there is never a jump between them. */
-  function routeTarget(r) {
-    var span = maxX - minX;
-    var p = clamp(r.p / T.arriveAt, 0, 1);
-    return (r.index % 2 === 0) ? minX + p * span : maxX - p * span;
+    destX = clamp(destX, minX, maxX);
   }
 
   function resize() {
@@ -449,138 +374,155 @@ export function createCompanion(options) {
     onState(name);
   }
 
-  /* Walk or run, with hysteresis so a speed hovering on the threshold does
-     not flicker between the two clips. */
-  function gaitFor(v) {
-    if (current === "run") return v > T.runExit ? "run" : "walk";
-    return v > T.runEnter ? "run" : "walk";
-  }
-
-  function resolveAmbient() {
-    return (now() - lastScrollAt) < T.scrollIdleMs ? gaitFor(speed) : "idle";
-  }
-
+  /* Manual override, used by the lab. A one-shot hands back to the wander
+     loop when it finishes; a looping clip just stays until the loop moves on. */
   function apiSetState(name) {
     if (STATES.indexOf(name) === -1) return;
+    if (ONE_SHOT[name]) phase = "gesture";
     play(name, { force: true });
   }
 
-  /* The position itself is read from window.scrollY inside follow(); this
-     only marks that the user is still actively scrolling. */
-  function notifyScroll() {
-    if (reduceMotion || disposed) return;
-    lastScrollAt = now();
-    if (!turning && current !== "wave" && !isLocomotion(current)) play("walk");
-    if (!running) start();
+  function pickGesture() {
+    var pool = T.gestures || THINKING;
+    for (var tries = 0; tries < 6; tries++) {
+      var name = pool[(Math.random() * pool.length) | 0];
+      if (actions[name]) return name;
+    }
+    return actions.idle ? "idle" : null;
   }
 
-  function onClipFinished(e) {
-    if (disposed) return;
+  /* Choose somewhere new along the bottom edge. Drawn from a band so the trip
+     is never a pointless shuffle nor a full-width march every time, and
+     mirrored back into the lane when the roll would overshoot. */
+  function pickDestination() {
+    var span = maxX - minX;
+    if (span <= 0.01) return x;
 
-    if (turning && e.action === actions.jump) {
-      /* The hop itself is driven by turnT in step(); this just lands him
-         cleanly on the exact target angle and hands control back. */
-      turning = false;
-      facing = facingTarget = Math.atan2(Math.sin(turnToFacing), Math.cos(turnToFacing));
-      hopGuardUntil = now() + T.hopGuardMs;
-      play(resolveAmbient(), { force: true });
+    var dist = span * (T.minTravel + Math.random() * (T.maxTravel - T.minTravel));
+    var dir = Math.random() < 0.5 ? -1 : 1;
+    var candidate = x + dir * dist;
+
+    if (candidate < minX || candidate > maxX) candidate = x - dir * dist;
+    if (candidate < minX || candidate > maxX) {
+      /* Both ways overshoot: aim at the roomier side instead. */
+      candidate = (x - minX > maxX - x) ? minX : maxX;
+    }
+    return clamp(candidate, minX, maxX);
+  }
+
+  function beginTrip() {
+    destX = pickDestination();
+    var dist = Math.abs(destX - x);
+    travelGait = (dist > (maxX - minX) * T.runAbove && actions.run) ? "run" : "walk";
+    travelT = 0;
+    facingTarget = (destX > x) ? HALF_PI : -HALF_PI;
+    phase = "turnOut";
+  }
+
+  function beginDwell() {
+    phase = "dwell";
+    phaseUntil = now() + T.dwellMin + Math.random() * (T.dwellMax - T.dwellMin);
+    facingTarget = 0;
+    play("idle");
+  }
+
+  /* Both the greeting wave and every arrival gesture are one-shots; whichever
+     just ended, he now has nothing to do, so stand about and then move on. */
+  function onClipFinished() {
+    finishCount++;
+    if (disposed) return;
+    beginDwell();
+  }
+
+  function facingSettled() {
+    return Math.abs(angleDelta(facing, facingTarget)) < T.turnedEnough;
+  }
+
+  /* The whole behaviour loop. Nothing here reads scroll position. */
+  function wander(dt) {
+    switch (phase) {
+
+      case "greet":
+        /* Held by the Wave one-shot; onClipFinished moves us on. */
+        facingTarget = 0;
+        speed = 0;
+        break;
+
+      case "dwell":
+        facingTarget = 0;
+        speed = 0;
+        if (current !== "idle") play("idle");
+        if (now() >= phaseUntil) beginTrip();
+        break;
+
+      case "turnOut":
+        /* Step into the turn rather than idling side-on: he is already in
+           the locomotion clip, marking time, so setting off is continuous.
+           Ground speed stays 0, so the stride ticks over at its slowest. */
+        speed = 0;
+        if (current !== travelGait) play(travelGait);
+        if (facingSettled()) {
+          phase = "travel";
+          travelT = 0;
+        }
+        break;
+
+      case "travel":
+        travel(dt);
+        break;
+
+      case "turnIn":
+        /* Back to camera before he says anything. */
+        speed = 0;
+        facingTarget = 0;
+        if (current !== "idle") play("idle");
+        if (facingSettled()) {
+          var g = pickGesture();
+          phase = "gesture";
+          if (g && g !== "idle") play(g, { force: true });
+          else beginDwell();
+        }
+        break;
+
+      case "gesture":
+        /* Held by the one-shot; onClipFinished moves us on. */
+        facingTarget = 0;
+        speed = 0;
+        break;
+    }
+  }
+
+  function travel(dt) {
+    var remaining = Math.abs(destX - x);
+    if (remaining <= T.arriveEps) {
+      x = destX;
+      speed = 0;
+      phase = "turnIn";
+      facingTarget = 0;
       return;
     }
 
-    /* Wave, or a manually-triggered one-shot: settle into the ambient state. */
-    play(resolveAmbient(), { force: true });
-  }
+    var dir = destX > x ? 1 : -1;
+    var cruise = travelGait === "run" ? T.refSpeedRun : T.refSpeedWalk;
 
-  function triggerEdgeTurn() {
-    if (turning) return;
-    turning = true;
-    speed = 0;
+    /* Ease in off the mark and ease out into the destination. Both ramps are
+       floored so the tail of the deceleration still actually converges. */
+    travelT += dt;
+    var accel = clamp(travelT / T.accelTime, T.crawlFactor, 1);
+    var decel = clamp(remaining / T.easeDist, T.crawlFactor, 1);
+    var v = cruise * Math.min(accel, decel);
 
-    turnT = 0;
-    turnDur = actions.jump ? actions.jump.getClip().duration : 0.7;
-
-    /* Bounce back off the wall rather than landing on the same spot. */
-    var inward = x >= 0 ? -1 : 1;
-    turnFromX = x;
-    turnToX = clamp(x + inward * T.hopDistance, minX, maxX);
-
-    /* Half a turn, taken in the direction that sweeps him through facing the
-       camera — mid-hop you see his face, not his back. The route's own
-       parity supplies the new walking direction once he lands. */
-    turnFromFacing = facing;
-    turnToFacing = facing - Math.sign(facing || 1) * Math.PI;
-    facingTarget = turnToFacing;
-
-    play("jump", { force: true });
-  }
-
-  /* Would the Jump clip fit inside a sensible slice of this panel, at the
-     rate the user is currently scrolling? */
-  function canAffordHop(index) {
-    if (!actions.jump) return false;
-    if (scrollVel < 1) return true;          // barely moving: all the time in the world
-    var from = bounds[index];
-    var to = (index + 1 < bounds.length) ? bounds[index + 1] : maxScrollY;
-    var panelSeconds = Math.abs(to - from) / scrollVel;
-    return actions.jump.getClip().duration < panelSeconds * T.hopBudget;
-  }
-
-  /* Walk toward the X the current panel's scroll progress asks for. */
-  function follow(dt) {
-    var y = window.scrollY || window.pageYOffset || 0;
-    var r = routeAt(y);
-    var target = routeTarget(r);
-
-    if (lastYSeen === null) lastYSeen = y;
-    var instVel = dt > 0 ? Math.abs(y - lastYSeen) / dt : 0;
-    lastYSeen = y;
-    scrollVel += (instVel - scrollVel) * clamp(dt * 6, 0, 1);
-
-    /* A panel change at an edge is the moment to hop and turn around —
-       provided this panel is going by slowly enough to spare the time. */
-    if (r.index !== sectionIndex) {
-      var atEdge = (x - minX) < T.turnWindow || (maxX - x) < T.turnWindow;
-      sectionIndex = r.index;
-      if (atEdge && actions.jump && canAffordHop(r.index)) {
-        triggerEdgeTurn();
-        return;
-      }
-    }
-
-    var scrolling = (now() - lastScrollAt) < T.scrollIdleMs;
-    var dx = target - x;
-
-    /* Just after a hop he stands a little inside the edge while the new
-       panel's target still sits on it. Without this the target would walk
-       him briefly backwards into the wall he just bounced off. */
-    if (now() < hopGuardUntil) {
-      var inward = x >= 0 ? -1 : 1;
-      if (dx * inward < 0) dx = 0;
-    }
-
-    var chase = scrolling ? T.followRate : T.followRateSettling;
-    var move = dx * (1 - Math.exp(-dt * chase));
-
-    var maxStep = T.maxSpeed * dt;
-    if (Math.abs(move) > maxStep) move = Math.sign(move) * maxStep;
-
-    var eps = (maxX - minX) * 1e-3;
-
-    if (Math.abs(move) > 1e-5) {
-      x = clamp(x + move, minX, maxX);
-      facingTarget = move > 0 ? HALF_PI : -HALF_PI;
-    }
-
-    speed = dt > 0 ? Math.abs(move) / dt : 0;
-
-    /* Rule (d): stopped scrolling and standing where he was asked to be. */
-    if (!scrolling && Math.abs(dx) < eps) {
-      speed = 0;
-      if (current !== "idle") play("idle");
+    var move = dir * v * dt;
+    if (Math.abs(move) >= remaining) {
+      x = destX;
     } else {
-      var gait = gaitFor(speed);
-      if (current !== gait) play(gait);
+      x += move;
     }
+    x = clamp(x, minX, maxX);
+
+    speed = v;
+    facingTarget = dir > 0 ? HALF_PI : -HALF_PI;
+    if (current !== travelGait) play(travelGait);
   }
 
   function setStride(name, ref, range) {
@@ -595,39 +537,19 @@ export function createCompanion(options) {
   function step(dt) {
     if (!mixer) return;
 
-    if (!turning && current !== "wave") {
-      follow(dt);
-    } else if (turning) {
-      /* The Jump clip has no root motion, so the travel and the spin are
-         scripted here against the clip's own duration. */
-      turnT += dt;
-      var u = clamp(turnT / turnDur, 0, 1);
-      x = turnFromX + (turnToX - turnFromX) * smoothstep(u);
-
-      /* Spin only across the airborne stretch of the clip — he crouches
-         first and lands square, so rotating through the whole thing would
-         have him pirouetting on the floor. */
-      facing = turnFromFacing +
-        (turnToFacing - turnFromFacing) * smoothstep(clamp((u - 0.2) / 0.55, 0, 1));
-
-      speed = 0;
-    } else {
-      speed = 0;
-    }
+    wander(dt);
 
     /* Stride follows velocity, so the feet stay planted at any speed. */
     setStride("walk", T.refSpeedWalk, T.walkRateRange);
     setStride("run", T.refSpeedRun, T.runRateRange);
 
-    if (!turning) {
-      facing = angleTowards(facing, facingTarget, T.turnRate * dt);
+    facing = angleTowards(facing, facingTarget, T.turnRate * dt);
 
-      /* Fold the angle back into (-pi, pi] once a turn completes, so repeated
-         turnarounds don't wind the number up indefinitely. Doing it only on
-         completion keeps the in-flight rotation from jumping. */
-      if (facing === facingTarget) {
-        facing = facingTarget = Math.atan2(Math.sin(facing), Math.cos(facing));
-      }
+    /* Fold the angle back into (-pi, pi] once a turn completes, so repeated
+       turns don't wind the number up indefinitely. Doing it only on
+       completion keeps the in-flight rotation from jumping. */
+    if (facing === facingTarget) {
+      facing = facingTarget = Math.atan2(Math.sin(facing), Math.cos(facing));
     }
 
     pivot.position.x = x;
@@ -647,8 +569,8 @@ export function createCompanion(options) {
 
     /* Standing idle is visually near-static, so halve its frame rate. That
        gives back roughly half the GPU time during the long stretches where
-       the user is reading rather than scrolling. */
-    if (current === "idle" && !turning) {
+       he is standing about rather than moving. */
+    if (current === "idle") {
       idleFrameToggle = !idleFrameToggle;
       if (idleFrameToggle) return;
     }
@@ -691,7 +613,6 @@ export function createCompanion(options) {
   });
 
   /* --- load -------------------------------------------------------------- */
-  if (options.sections) setSections(options.sections);
   layout();
 
   new GLTFLoader().load(
@@ -760,7 +681,7 @@ export function createCompanion(options) {
       glow.position.x = x;
 
       if (reduceMotion) {
-        /* Standing idle, one frame, no loop, no scroll response. */
+        /* Standing idle, facing the viewer: one frame, no loop, no wandering. */
         play("idle", { force: true });
         mixer.update(0.4);
         pivot.rotation.y = 0;
@@ -790,55 +711,49 @@ export function createCompanion(options) {
     ready: ready,
     canvas: canvas,
     setState: apiSetState,
-    notifyScroll: notifyScroll,
-    resolveAmbient: resolveAmbient,
     getState: function () { return current; },
+    getPhase: function () { return phase; },
     isRunning: function () { return running; },
     resize: resize,
 
-    setSections: setSections,
-
     debug: function () {
-      var r = routeAt(window.scrollY || window.pageYOffset || 0);
       return {
         state: current,
+        phase: phase,
         x: x, minX: minX, maxX: maxX,
+        destX: destX,
         halfW: camera.right, bodyHalf: bodyHalf,
-        panel: r.index,
-        panels: bounds.length,
-        panelProgress: r.p,
-        target: routeTarget(r),
         facing: facing,
         facingTarget: facingTarget,
+        facesViewer: Math.abs(angleDelta(facing, 0)) < 0.02,
         speed: speed,
-        turning: turning,
         gait: isLocomotion(current) ? current : null,
         stride: (isLocomotion(current) && actions[current])
           ? actions[current].getEffectiveTimeScale() : 0,
         running: running,
-        scrolling: (now() - lastScrollAt) < T.scrollIdleMs,
+        finishCount: finishCount,
         triangles: renderer.info.render.triangles,
         drawCalls: renderer.info.render.calls
       };
     },
 
-    /* Test seams for the isolation lab: drive position and scroll budget
-       directly, without having to fake a real scroll event. */
+    /* Test seams for the isolation lab. */
     _place: function (worldX, dir) {
       x = clamp(worldX, minX, maxX);
       if (typeof dir === "number") facing = facingTarget = dir;
       pivot.position.x = x;
       glow.position.x = x;
     },
-    /* Pretend the user just scrolled, without needing a real scroll event —
-       the lab drives the route from here. */
-    _markScrolling: function () {
-      lastScrollAt = now();
-      if (!turning && current !== "wave" && !isLocomotion(current)) play("walk");
+    /* Send him somewhere specific instead of waiting for the dice. */
+    _goTo: function (worldX) {
+      destX = clamp(worldX, minX, maxX);
+      var dist = Math.abs(destX - x);
+      travelGait = (dist > (maxX - minX) * T.runAbove && actions.run) ? "run" : "walk";
+      travelT = 0;
+      facingTarget = destX > x ? HALF_PI : -HALF_PI;
+      phase = "turnOut";
       if (!running) start();
     },
-    _route: function (y) { var r = routeAt(y); return { index: r.index, p: r.p, target: routeTarget(r) }; },
-    _bounds: function () { return bounds.slice(); },
 
     /* Advance one frame by hand, independent of requestAnimationFrame. The
        isolation lab uses this to step the whole state machine on a fake
@@ -898,21 +813,19 @@ export function mountCompanion(opts) {
     return null;
   }
 
-  /* Small screens: the canvas is a full-width GPU surface composited on every
-     scroll frame, which is exactly where a mid-range phone can least afford
-     it. Below this width we don't create it at all. */
+  /* Small screens: the canvas is a full-width GPU surface composited over
+     every frame of the page, which is exactly where a mid-range phone can
+     least afford it. Below this width we don't create it at all. */
   var minWidth = opts.minWidth || 700;
   if (window.innerWidth < minWidth) {
     warn("viewport is " + window.innerWidth + "px, below the " + minWidth +
-         "px threshold (disabled on small screens for scroll performance).");
+         "px threshold (disabled on small screens to protect scrolling).");
     return null;
   }
 
   var companion = createCompanion({
     reduceMotion: reduceMotion,
-    onState: opts.onState,
-    /* Each of these gets one complete edge-to-edge walk. */
-    sections: opts.sections || "main > section"
+    onState: opts.onState
   });
 
   companion.ready.catch(function (err) {
@@ -920,15 +833,8 @@ export function mountCompanion(opts) {
     companion.dispose();
   });
 
-  if (!reduceMotion) {
-    window.addEventListener("scroll", function () {
-      companion.notifyScroll();
-    }, { passive: true });
-
-    /* Images and fonts landing after load change where the panels sit, and
-       the route is measured from their offsets. */
-    window.addEventListener("load", function () { companion.setSections(opts.sections || "main > section"); });
-  }
+  /* Deliberately no scroll wiring: he wanders on his own schedule, and the
+     page's scroll position is nothing to do with him. */
 
   return companion;
 }

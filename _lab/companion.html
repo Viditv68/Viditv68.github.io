@@ -76,11 +76,16 @@
   </div>
 
   <div class="row">
-    <button data-panel="0">Panel 1</button>
-    <button data-panel="1">Panel 2</button>
-    <button data-panel="2">Panel 3</button>
-    <button data-panel="3">Panel 4</button>
-    <button data-panel="4">Panel 5</button>
+    <button data-force="yes">Yes</button>
+    <button data-force="no">No</button>
+    <button data-force="thumbsUp">Thumbs</button>
+    <button data-force="run">Run</button>
+  </div>
+
+  <div class="row">
+    <button data-go="min">&larr; Go left edge</button>
+    <button data-go="mid">Go centre</button>
+    <button data-go="max">Go right edge &rarr;</button>
   </div>
 
   <div class="row">
@@ -90,10 +95,10 @@
 
   <div class="readout">
     state: <b id="r-state">…</b><br>
-    x: <b id="r-x">…</b> &nbsp;&rarr; target: <b id="r-target">…</b><br>
-    panel: <b id="r-panel">…</b> &nbsp; progress: <b id="r-prog">…</b><br>
-    facing: <b id="r-facing">…</b> &nbsp; bounds: <b id="r-bounds">…</b><br>
-    turning: <b id="r-turning">…</b> &nbsp; scrolling: <b id="r-scroll">…</b><br>
+    phase: <b id="r-phase">…</b><br>
+    x: <b id="r-x">…</b> &nbsp;&rarr; dest: <b id="r-target">…</b><br>
+    facing: <b id="r-facing">…</b> &nbsp; faces viewer: <b id="r-faces">…</b><br>
+    bounds: <b id="r-bounds">…</b><br>
     speed: <b id="r-speed">…</b> &nbsp; gait: <b id="r-rate">…</b><br>
     loop: <b id="r-running">…</b> &nbsp; fps: <b id="r-fps">…</b><br>
     tris: <b id="r-tris">…</b> &nbsp; draws: <b id="r-draws">…</b><br>
@@ -104,11 +109,11 @@
 </div>
 
 <div class="spacer"></div>
-<section><p class="tag">Panel 01</p><h2>Load &amp; greet</h2><p>On load the robot parks at the LEFT edge, faces the viewer and plays <b>Wave</b> once, then cross-fades to <b>Idle</b>. Reload to watch it again.</p></section>
-<section><p class="tag">Panel 02</p><h2>One panel, one crossing</h2><p>Each panel gets a complete edge-to-edge walk. This one runs <b>right → left</b>, because direction alternates with the panel index — so panels join end to end and he never teleports.</p></section>
-<section><p class="tag">Panel 03</p><h2>Stop scrolling</h2><p>Stop for a moment: after the ~150ms debounce he cross-fades back to <b>Idle</b> and stops moving. The idle loop renders at half rate to save GPU.</p></section>
-<section><p class="tag">Panel 04</p><h2>Scroll back up</h2><p>The target is a pure function of scroll position, so scrolling up retraces the route exactly — no drift, no accumulated error.</p></section>
-<section><p class="tag">Panel 05</p><h2>Edge turnaround</h2><p>He arrives at the edge exactly as this panel hands over to the next, plays <b>Jump</b> once, bounces inward and turns 180° to start the next crossing.</p></section>
+<section><p class="tag">01</p><h2>Load &amp; greet</h2><p>On load he parks at the LEFT edge, faces the viewer and plays <b>Wave</b> once, then settles into <b>Idle</b>. Reload to watch it again.</p></section>
+<section><p class="tag">02</p><h2>He wanders on his own</h2><p>Scrolling does nothing to him. He picks a random spot along the bottom edge, turns, and walks or runs there depending on how far it is.</p></section>
+<section><p class="tag">03</p><h2>Arrive and think</h2><p>On arrival he squares up to camera and plays a thinking beat — a nod or a head shake — then stands about for a few seconds before choosing somewhere new.</p></section>
+<section><p class="tag">04</p><h2>Always facing you</h2><p>Watch the <b>faces viewer</b> readout: it reads yes for every idle, wave and thinking frame. Only walking and running turn him side-on.</p></section>
+<section><p class="tag">05</p><h2>Bounds</h2><p>Destinations are clamped to his silhouette, not his origin, so he never crosses the edge of the screen however the dice land.</p></section>
 <div class="spacer"></div>
 
 <script type="module">
@@ -129,8 +134,7 @@ const reduceMotion = new URLSearchParams(location.search).has("reduced") ||
 
 const companion = createCompanion({
   reduceMotion,
-  sections: "section",
-  onState: (s) => log("state -> " + s)
+  onState: (s) => log("clip -> " + s)
 });
 window.companion = companion;
 
@@ -141,29 +145,28 @@ companion.ready.then((info) => {
   if (reduceMotion) log("REDUCED MOTION: static idle pose, no loop", "ok");
 }).catch((e) => log("LOAD FAILED: " + e.message, "bad"));
 
-/* --- real scroll wiring: identical to what the site uses ---------------- */
-window.addEventListener("scroll", () => companion.notifyScroll(), { passive: true });
-window.addEventListener("load", () => companion.setSections("section"));
+/* He is autonomous — there is deliberately no scroll wiring to test. */
 
 /* --- controls ------------------------------------------------------------ */
 document.querySelectorAll("[data-force]").forEach((b) => {
   b.addEventListener("click", () => companion.setState(b.dataset.force));
 });
 
-/* Jump the page to the middle of a panel and watch him walk that panel end
-   to end as you scroll through it. */
-document.querySelectorAll("[data-panel]").forEach((b) => {
+/* Send him somewhere instead of waiting for the dice. */
+document.querySelectorAll("[data-go]").forEach((b) => {
   b.addEventListener("click", () => {
-    const els = document.querySelectorAll("section");
-    const el = els[Number(b.dataset.panel)];
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    const d = companion.debug();
+    const to = b.dataset.go === "min" ? d.minX
+             : b.dataset.go === "max" ? d.maxX
+             : (d.minX + d.maxX) / 2;
+    companion._goTo(to);
+    log("sent to x=" + to.toFixed(2));
   });
 });
 
 $("btn-bounds").addEventListener("click", () => {
   const d = companion.debug();
-  log(`x=${d.x.toFixed(2)} in [${d.minX.toFixed(2)}, ${d.maxX.toFixed(2)}]`);
-  log(`panel ${d.panel + 1}/${d.panels}  boundaries: ${companion._bounds().map((v) => Math.round(v)).join(", ")}`);
+  log(`x=${d.x.toFixed(2)} in [${d.minX.toFixed(2)}, ${d.maxX.toFixed(2)}]  phase=${d.phase}`);
 });
 
 /* Simulate a background tab: the visibilitychange listener inside the module
@@ -197,15 +200,12 @@ let frames = 0, fpsAt = performance.now(), fps = 0;
     return;
   }
   $("r-state").textContent = d.state;
+  $("r-phase").textContent = d.phase;
   $("r-x").textContent = d.x.toFixed(2);
-  $("r-target").textContent = d.target.toFixed(2);
-  $("r-panel").textContent = (d.panel + 1) + " / " + d.panels +
-    (d.panel % 2 === 0 ? "  (L→R)" : "  (R→L)");
-  $("r-prog").textContent = (d.panelProgress * 100).toFixed(0) + "%";
+  $("r-target").textContent = d.destX.toFixed(2);
   $("r-bounds").textContent = `[${d.minX.toFixed(2)}, ${d.maxX.toFixed(2)}]`;
   $("r-facing").textContent = (d.facing * 180 / Math.PI).toFixed(0) + "°";
-  $("r-turning").textContent = d.turning;
-  $("r-scroll").textContent = d.scrolling;
+  $("r-faces").textContent = d.facesViewer ? "yes" : "no";
   $("r-speed").textContent = d.speed.toFixed(2);
   $("r-rate").textContent = (d.gait || "—") + " x" + d.stride.toFixed(2);
   $("r-running").textContent = d.running;
