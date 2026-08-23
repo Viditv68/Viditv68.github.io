@@ -1,0 +1,16 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "portfolio",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "C:/Users/user/AppData/Local/Temp/claude/D--Github-Viditv68-github-io/ee0687a0-8741-463d-96ce-f1713d9c7a86/scratchpad/devserver.js",
+        "D:/Github/Viditv68.github.io",
+        "C:/Users/user/AppData/Local/Temp/claude/D--Github-Viditv68-github-io/ee0687a0-8741-463d-96ce-f1713d9c7a86/scratchpad/captures",
+        "4173"
+      ],
+      "port": 4173
+    }
+  ]
+}

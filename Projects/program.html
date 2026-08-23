@@ -1,143 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <script> particlesJS.load('particles-js', '/particles.json', function() {
-        console.log('callback - particles.js config loaded'); });
-      </script> -->
-    <script src="../refresh.js"></script>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- Bootstrap js plugin -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-            crossorigin="anonymous"></script>
-    <!-- font awesome -->
-    <script src="https://kit.fontawesome.com/d3db143f9a.js" crossorigin="anonymous"></script>
+<script>document.documentElement.classList.add('js');</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shipped Titles — Vidit Rawat</title>
+<meta name="description" content="Mobile games Vidit Rawat has shipped as a developer: Crowd Sort, Chef Diary and Pet Shelter Mania — gameplay, progression systems and designer tooling in Unity.">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 
-    <link rel="stylesheet" href="program.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js" defer></script>
 </head>
 <body>
-<div class="fullBody">
-    <div id="particles-js"></div>
-    <section id="navigation">
-        <nav class="navbar navbar-expand-lg navbar-dark">
-            <span class="navbar-brand">
-              <a class="home-page" href="../index.html">
-              Vidit Rawat
-              </a>
-            </span>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../Resume/ViditRawat_Resume.pdf">Resume</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../Contact/contact.html">Contact</a>
-                    </li>
-                </ul>
-    </section>
-    <section id="projects-designs">
-        <div class="projects-title"><h1 class="programming">Projects</h1><br></div>
 
-        <div>
-            <video class="wall-and-eve" poster="" controls>
-                <source src="Videos/CrowdSort.mp4" type="video/mp4">
-            </video>
-            <div class="wall-and-eve-title1">
-                <div class="github1">
-                    <a href="https://play.google.com/store/apps/details?id=com.cympl.crowdsort&hl=en"><i
-                            class='fab fa-google-play'></i></a>
-                </div>
-                <div class="crowd-Sort-title">Crowd Sort (C# & Unity)</div>
-            </div>
-            <br>
-            <div class="wall-and-eve-description">
-                - Implemented the whole project from scratch with only one designer, one artist and one animator
-                including me as Developer.<br>
-                - Taken requirements from the designer and created a level in which designer can set the number of
-                tiles, blockers on tiles, difficulty per level during gameplay and data get saved. Designers don't have to write data in json file or in scriptable objects<br>
-                - Worked on the analytics and ads.<br>
-                - Worked on third party plugins like analytics, UniRx and DoTween.
-                - Completed the project in 16 days. <br>
-            </div>
-        </div>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><line x1="4" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M3 5h18v14H3z"/><polyline points="3 6 12 13 21 6"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+</svg>
 
-        <div>
-            <video class="wall-and-eve" poster="" controls>
-                <source src="Videos/ChefDiary.mp4" type="video/mp4">
-            </video>
-            <div class="wall-and-eve-title1">
-                <div class="github1">
-                    <a href="https://play.google.com/store/apps/details?id=com.cympl.cooking.story&hl=en&gl=US&pli=1"><i
-                            class='fab fa-google-play'></i></a>
-                </div>
-                <div class="pet-shelter-title">Chef Diary: Cooking & Romance (C# & Unity)</div>
-            </div>
-            <br>
-            <div class="wall-and-eve-description">
-                - Implemented achievement system from tier-1 to tier-3, customer patience, notifications, rate us
-                upgrade system,chef streak, battle pass, piggy bank and many more design features using dotween,
-                Firebase, Google play review, UniRx etc.<br>
-                - Worked on the refactoring of different modules.<br>
-                - Had taken the ownership of Story Narration module and refactored it. Also added Conversation and
-                episode
-                tools from which narration and episode data is assigned from Google Spreadsheet to Scriptable
-                Objects.<br>
-                - Analyzed the existing code structure for different gameplay features in Unity.<br>
-            </div>
-        </div>
-        <hr class="hr">
+<div class="scanlines"></div>
+<a class="skip-link" href="#main">Skip to content</a>
 
-        <div>
-            <video class="wall-and-eve" poster="" controls>
-                <source src="Videos/PetShelter_1.mp4" type="video/mp4">
-            </video>
-            <video class="wall-and-eve" poster="" controls>
-                <source src="Videos/PetShelter_2.mp4" type="video/mp4">
-            </video>
-            <div class="wall-and-eve-title1">
-                <div class="github1">
-                    <a href="https://play.google.com/store/apps/details?id=com.CYMPLSTUDIOS.Petscapes&hl=en_IN"><i
-                            class="logo github fab fa-github-square"></i></a>
-                </div>
-                Pet Shelter Mania (Unity)
-            </div>
+<header class="hud-nav">
+  <div class="hud-nav__inner">
+    <a class="hud-nav__brand" href="../index.html">
+      <span class="hud-nav__dot"></span> Vidit Rawat
+    </a>
+    <button class="hud-nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation">
+      <svg class="icon-open"><use href="#i-menu"/></svg>
+      <svg class="icon-close"><use href="#i-close"/></svg>
+    </button>
+    <nav class="hud-nav__links" id="nav-links" aria-label="Main">
+      <a class="hud-nav__link" href="../index.html">Home</a>
+      <a class="hud-nav__link" href="program.html" aria-current="page">Projects</a>
+      <a class="hud-nav__link" href="../program/program.html">Lab</a>
+      <a class="hud-nav__link" href="../Resume/ViditRawat_Resume.pdf">Résumé</a>
+      <a class="hud-nav__link" href="../Contact/contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
 
-            <br>
-            <div class="wall-and-eve-description">
-                - Implementation of energy system, upgrade system, special item, spin wheel, IAP store, achievement,
-                milestone rewards, rate us and many more design featues.<br>
-                - Worked with a senior developer for the Battle Pass system whic will change after x amount of days.<br>
-                - Worked on the level goals with the use of CSV file which will be imported from the firebase.
-            </div>
-        </div>
+<main id="main">
 
-
-        <hr class="hr">
-
-    </section>
-
-
-    <hr class="hr1">
-    <hr class="hr2">
-    <hr class="hr3">
-    <div class="title-logo">
-        <a href="https://www.linkedin.com/in/vidit-rawat-baa13816b/"><i class="logo fab fa-linkedin"></i></a>
-        <a href="https://github.com/Viditv68"><i class="logo fab fa-github-square"></i></a>
+  <section class="page-head">
+    <div class="wrap">
+      <p class="kicker" data-reveal style="--i:0">01 — Shipped</p>
+      <h1 data-reveal style="--i:1">Shipped <em>Titles</em></h1>
+      <p data-reveal style="--i:2">
+        Mobile games I worked on as a developer — gameplay, progression and economy systems, and the
+        editor tooling behind them. Clips are captured from builds and from the Unity editor; press
+        play to load one.
+      </p>
     </div>
-</div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="wrap">
+
+      <!-- ===== Crowd Sort ===== -->
+      <article class="case brackets" id="crowd-sort" data-reveal>
+        <div class="case__head">
+          <span class="case__index">// 01</span>
+          <h2 class="case__title">Crowd Sort</h2>
+        </div>
+        <p class="case__stack">C# · Unity · UniRx · DOTween</p>
+
+        <div class="case__media">
+          <video controls preload="none" poster="Posters/CrowdSort.jpg" width="2048" height="1114">
+            <source src="Videos/CrowdSort.mp4" type="video/mp4">
+            Your browser can't play this clip.
+          </video>
+        </div>
+
+        <div class="case__grid">
+          <ul class="hud-list">
+            <li>Built the project <strong>from scratch as the only developer</strong>, alongside one designer, one artist and one animator.</li>
+            <li>Took requirements from the designer and built an <strong>in-play level tool</strong>: tile count, blockers on tiles and per-level difficulty are all set during gameplay and saved automatically — designers never touch a JSON file or a scriptable object.</li>
+            <li>Integrated analytics and ads.</li>
+            <li>Worked with third-party plugins including analytics, UniRx and DOTween.</li>
+            <li>Shipped the whole project in <strong>16 days</strong>.</li>
+          </ul>
+
+          <aside>
+            <div class="case__rail">
+              <h4>Role</h4>
+              <p style="margin:0;color:var(--muted);font-size:.93rem">Sole developer</p>
+            </div>
+            <div class="case__rail">
+              <h4>Tech</h4>
+              <div class="tags">
+                <span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">UniRx</span><span class="tag">DOTween</span><span class="tag">Analytics</span>
+              </div>
+            </div>
+            <div class="case__rail">
+              <h4>Links</h4>
+              <a class="btn btn--ghost" style="width:100%;justify-content:center" href="https://play.google.com/store/apps/details?id=com.cympl.crowdsort&amp;hl=en">
+                <svg><use href="#i-play"/></svg> Google Play
+              </a>
+            </div>
+          </aside>
+        </div>
+      </article>
+
+      <!-- ===== Chef Diary ===== -->
+      <article class="case brackets" id="chef-diary" data-reveal>
+        <div class="case__head">
+          <span class="case__index">// 02</span>
+          <h2 class="case__title">Chef Diary: Cooking &amp; Romance</h2>
+        </div>
+        <p class="case__stack">C# · Unity · Firebase · UniRx · DOTween</p>
+
+        <div class="case__media">
+          <video controls preload="none" poster="Posters/ChefDiary.jpg" width="1280" height="590">
+            <source src="Videos/ChefDiary.mp4" type="video/mp4">
+            Your browser can't play this clip.
+          </video>
+        </div>
+
+        <div class="case__grid">
+          <ul class="hud-list">
+            <li>Implemented <strong>tier 1–3 achievements</strong>, customer patience, notifications, the rate-us upgrade system, chef streak, battle pass, piggy bank and many more design features using DOTween, Firebase, Google Play Review and UniRx.</li>
+            <li>Took ownership of the <strong>Story Narration module</strong> and refactored it, adding Conversation and Episode tools that assign narration and episode data from a Google Spreadsheet into scriptable objects.</li>
+            <li>Worked on the refactoring of several other modules.</li>
+            <li>Analysed the existing code structure across different gameplay features in Unity.</li>
+          </ul>
+
+          <aside>
+            <div class="case__rail">
+              <h4>Focus</h4>
+              <p style="margin:0;color:var(--muted);font-size:.93rem">Progression systems &amp; narration tooling</p>
+            </div>
+            <div class="case__rail">
+              <h4>Tech</h4>
+              <div class="tags">
+                <span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">Firebase</span><span class="tag">UniRx</span><span class="tag">DOTween</span>
+              </div>
+            </div>
+            <div class="case__rail">
+              <h4>Links</h4>
+              <a class="btn btn--ghost" style="width:100%;justify-content:center" href="https://play.google.com/store/apps/details?id=com.cympl.cooking.story&amp;hl=en&amp;gl=US&amp;pli=1">
+                <svg><use href="#i-play"/></svg> Google Play
+              </a>
+            </div>
+          </aside>
+        </div>
+      </article>
+
+      <!-- ===== Pet Shelter Mania ===== -->
+      <article class="case brackets" id="pet-shelter" data-reveal>
+        <div class="case__head">
+          <span class="case__index">// 03</span>
+          <h2 class="case__title">Pet Shelter Mania</h2>
+        </div>
+        <p class="case__stack">C# · Unity · Firebase · IAP</p>
+
+        <div class="case__media-pair">
+          <div class="case__media">
+            <video controls preload="none" poster="Posters/PetShelter_1.jpg" width="1920" height="968">
+              <source src="Videos/PetShelter_1.mp4" type="video/mp4">
+              Your browser can't play this clip.
+            </video>
+          </div>
+          <div class="case__media">
+            <video controls preload="none" poster="Posters/PetShelter_2.jpg" width="1920" height="968">
+              <source src="Videos/PetShelter_2.mp4" type="video/mp4">
+              Your browser can't play this clip.
+            </video>
+          </div>
+        </div>
+
+        <div class="case__grid">
+          <ul class="hud-list">
+            <li>Implemented the <strong>energy system, upgrade system</strong>, special items, spin wheel, IAP store, achievements, milestone rewards, rate-us and many more design features.</li>
+            <li>Worked with a senior developer on a <strong>Battle Pass</strong> that rotates after a set number of days.</li>
+            <li>Built level goals driven by <strong>CSV files imported from Firebase</strong>.</li>
+          </ul>
+
+          <aside>
+            <div class="case__rail">
+              <h4>Focus</h4>
+              <p style="margin:0;color:var(--muted);font-size:.93rem">Economy, rewards &amp; live content</p>
+            </div>
+            <div class="case__rail">
+              <h4>Tech</h4>
+              <div class="tags">
+                <span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">Firebase</span><span class="tag">IAP</span>
+              </div>
+            </div>
+            <div class="case__rail">
+              <h4>Links</h4>
+              <a class="btn btn--ghost" style="width:100%;justify-content:center" href="https://play.google.com/store/apps/details?id=com.CYMPLSTUDIOS.Petscapes&amp;hl=en_IN">
+                <svg><use href="#i-play"/></svg> Google Play
+              </a>
+            </div>
+          </aside>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="cta brackets" data-reveal>
+        <p class="kicker" style="justify-content:center">Next</p>
+        <h2>Into the <em style="font-style:normal;color:var(--accent)">Lab</em></h2>
+        <p>Prototypes where I pull one system apart at a time — AI, input, camera work, architecture.</p>
+        <div class="btn-row">
+          <a class="btn" href="../program/program.html">Open the lab <svg><use href="#i-arrow"/></svg></a>
+          <a class="btn btn--ghost" href="../Contact/contact.html"><svg><use href="#i-mail"/></svg> Get in touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <p class="footer__note">&copy; <span data-year>2024</span> Vidit Rawat</p>
+    <div class="socials">
+      <a href="https://www.linkedin.com/in/vidit-rawat-baa13816b/" aria-label="LinkedIn"><svg><use href="#i-linkedin"/></svg></a>
+      <a href="https://github.com/Viditv68" aria-label="GitHub"><svg><use href="#i-github"/></svg></a>
+      <a href="mailto:viditrawatv68@gmail.com" aria-label="Email"><svg><use href="#i-mail"/></svg></a>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>

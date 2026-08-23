@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Companion — isolation test</title>
+<style>
+  :root { --bg:#080b14; --panel:#0e1523; --line:#253352; --text:#e6edf7;
+          --muted:#93a3bd; --accent:#00e5ff; --accent2:#a06bff; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text);
+         font-family:"Segoe UI",system-ui,sans-serif; }
+
+  /* the companion mount — exactly how it will be pinned on the real site */
+  #companion {
+    position: fixed; right: 18px; bottom: 18px;
+    width: 260px; height: 260px;
+    z-index: 80; pointer-events: none;
+  }
+  /* a visible box while we tune framing, toggled off by default */
+  #companion.show-bounds { outline:1px dashed rgba(0,229,255,.35); }
+
+  .panel { position:fixed; left:18px; top:18px; z-index:90; width:340px;
+           background:rgba(14,21,35,.92); border:1px solid var(--line);
+           border-radius:12px; padding:16px; backdrop-filter:blur(8px); }
+  .panel h1 { font-size:.8rem; letter-spacing:.16em; text-transform:uppercase;
+              margin:0 0 12px; color:var(--accent); }
+  .row { display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap; }
+  button { flex:1; padding:9px 6px; background:transparent; color:var(--accent);
+           border:1px solid var(--line); border-radius:6px; cursor:pointer;
+           font-family:ui-monospace,Consolas,monospace; font-size:.72rem;
+           letter-spacing:.1em; text-transform:uppercase; }
+  button:hover { border-color:var(--accent); background:rgba(0,229,255,.1); }
+  label.scrub { display:block; font-family:ui-monospace,Consolas,monospace;
+                font-size:.66rem; color:var(--muted); letter-spacing:.1em;
+                text-transform:uppercase; margin:2px 0 4px; }
+  input[type=range] { width:100%; accent-color:var(--accent); margin-bottom:8px; }
+  .readout { font-family:ui-monospace,Consolas,monospace; font-size:.72rem;
+             line-height:1.9; color:var(--muted); border-top:1px solid var(--line);
+             padding-top:10px; margin-top:4px; }
+  .readout b { color:var(--text); font-weight:600; }
+  .state { color:var(--accent2); font-weight:700; }
+  #log { margin-top:10px; max-height:120px; overflow:auto; font-size:.66rem;
+         color:var(--muted); border-top:1px solid var(--line); padding-top:8px; }
+  #log div { padding:1px 0; }
+
+  /* scrollable test sections, to exercise the real detection logic */
+  .spacer { height:60vh; }
+  section { min-height:78vh; margin:0 24px 24px 390px; padding:38px;
+            border:1px solid var(--line); border-radius:14px;
+            background:linear-gradient(180deg,rgba(20,30,50,.5),rgba(10,16,28,.5)); }
+  section h2 { font-size:2rem; margin:0 0 8px; text-transform:uppercase; }
+  section p { color:var(--muted); max-width:52ch; }
+  .tag { font-family:ui-monospace,Consolas,monospace; font-size:.7rem;
+         letter-spacing:.16em; text-transform:uppercase; color:var(--accent); }
+</style>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+
+<div class="panel">
+  <h1>Companion · isolation test</h1>
+  <div class="row">
+    <button data-force="idle">Idle</button>
+    <button data-force="riding">Riding</button>
+    <button data-force="react">React</button>
+  </div>
+  <div class="row">
+    <button id="btn-hide">Simulate tab hidden</button>
+    <button id="btn-bounds">Bounds</button>
+  </div>
+
+  <label class="scrub">Scrub crank <span id="v-crank">live</span></label>
+  <input type="range" id="s-crank" min="0" max="360" step="2" value="0">
+  <label class="scrub">Scrub speed / wave</label>
+  <input type="range" id="s-speed" min="0" max="100" step="1" value="0">
+  <input type="range" id="s-wave" min="0" max="100" step="1" value="0">
+  <div class="row"><button id="btn-live">Resume live</button></div>
+
+  <div class="readout">
+    state: <span class="state" id="r-state">…</span><br>
+    scrolling: <b id="r-scroll">false</b><br>
+    loop running: <b id="r-running">…</b><br>
+    fps: <b id="r-fps">…</b><br>
+    states: <b id="r-clips">…</b><br>
+    triangles: <b id="r-tris">…</b> · draws: <b id="r-draws">…</b>
+  </div>
+  <div id="log"></div>
+</div>
+
+<div id="companion"></div>
+
+<div class="spacer"></div>
+<section data-name="Projects"><p class="tag">Section 01</p><h2>Projects</h2><p>Scroll into this section — the companion should lift a hand off the bar to wave (REACT), then settle back into RIDING (if you are still scrolling) or IDLE.</p></section>
+<section data-name="Side Projects"><p class="tag">Section 02</p><h2>Side Projects</h2><p>Each section entering the viewport fires its own IntersectionObserver and triggers the wave once.</p></section>
+<section data-name="Resume"><p class="tag">Section 03</p><h2>Resume</h2><p>Stop scrolling for a moment and watch the legs coast down and the state fall back to IDLE after the ~180 ms debounce.</p></section>
+<section data-name="Contact"><p class="tag">Section 04</p><h2>Contact</h2><p>The cranks keep turning over very slowly at idle, so he never looks frozen.</p></section>
+<div class="spacer"></div>
+
+<script type="module">
+// Cache-busted on purpose: this is a lab page and must always exercise the
+// current module, never a stale copy from the browser cache.
+const mod = await import("../assets/companion.js?v=" + Date.now());
+const { createCompanion, STATES, poseRig } = mod;
+
+const $ = (id) => document.getElementById(id);
+const logEl = $("log");
+function log(msg) {
+  const d = document.createElement("div");
+  d.textContent = new Date().toISOString().substr(17, 6) + "  " + msg;
+  logEl.prepend(d);
+}
+
+const reduceMotion = new URLSearchParams(location.search).has("reduced") ||
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const companion = createCompanion({
+  mount: $("companion"),
+  reduceMotion,
+  onState: (s) => { $("r-state").textContent = s; log("state -> " + s); }
+});
+window.companion = companion;
+
+companion.ready.then((info) => {
+  $("r-clips").textContent = STATES.join(", ");
+  $("r-tris").textContent = info.triangles;
+  $("r-draws").textContent = info.drawCalls;
+  log("rig built procedurally — no model file");
+  if (reduceMotion) log("REDUCED MOTION: frozen on idle pose, no loop");
+});
+
+// --- real scroll wiring (same as the site will use) ---
+addEventListener("scroll", () => companion.notifyScroll(), { passive: true });
+
+document.querySelectorAll("section").forEach((sec) => {
+  new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      log("section enter: " + sec.dataset.name);
+      companion.setState("react");
+    });
+  }, { threshold: 0.35 }).observe(sec);
+});
+
+// --- debug controls ---
+document.querySelectorAll("[data-force]").forEach((b) => {
+  b.addEventListener("click", () => companion.setState(b.dataset.force));
+});
+
+let fakeHidden = false;
+$("btn-hide").addEventListener("click", () => {
+  fakeHidden = !fakeHidden;
+  Object.defineProperty(document, "hidden", { get: () => fakeHidden, configurable: true });
+  document.dispatchEvent(new Event("visibilitychange"));
+  $("btn-hide").textContent = fakeHidden ? "Simulate tab visible" : "Simulate tab hidden";
+  log("visibility -> " + (fakeHidden ? "hidden" : "visible"));
+});
+
+$("btn-bounds").addEventListener("click", () => {
+  $("companion").classList.toggle("show-bounds");
+});
+
+/* --- manual pose scrubbing -------------------------------------------------
+   Freezes the render loop and drives poseRig() directly, so a single crank
+   angle can be inspected without chasing it in real time. */
+const dbg = companion.debug();
+
+function renderPose(crankDeg, speed, wave) {
+  poseRig(dbg.rig, {
+    crankAngle: crankDeg * Math.PI / 180,
+    speed, wave, waveT: 1.2, breath: 0
+  });
+  dbg.renderer.render(dbg.scene, dbg.camera);
+}
+
+function scrub() {
+  const deg = +$("s-crank").value;
+  const sp = +$("s-speed").value / 100;
+  const wv = +$("s-wave").value / 100;
+  $("v-crank").textContent = deg + "deg sp:" + sp.toFixed(2) + " wv:" + wv.toFixed(2);
+  window.__frozen = true;
+  renderPose(deg, sp, wv);
+}
+["s-crank", "s-speed", "s-wave"].forEach((id) => {
+  $(id).addEventListener("input", scrub);
+});
+$("btn-live").addEventListener("click", () => {
+  window.__frozen = false;
+  $("v-crank").textContent = "live";
+  log("resumed live loop");
+});
+
+/* --- headless capture ------------------------------------------------------
+   Renders a grid of crank angles into one PNG so a full pedal revolution can
+   be checked in a single image, rather than by eye in real time. */
+window.captureSheet = function (cols = 6, rows = 2, speed = 1, wave = 0) {
+  const src = dbg.renderer.domElement;
+  const tw = src.width, th = src.height;
+  const out = document.createElement("canvas");
+  out.width = tw * cols; out.height = th * rows;
+  const ctx = out.getContext("2d");
+  ctx.fillStyle = "#080b14";
+  ctx.fillRect(0, 0, out.width, out.height);
+
+  const n = cols * rows;
+  for (let i = 0; i < n; i++) {
+    renderPose((i / n) * 360, speed, wave);
+    ctx.drawImage(src, (i % cols) * tw, Math.floor(i / cols) * th);
+    ctx.strokeStyle = "rgba(0,229,255,.25)";
+    ctx.strokeRect((i % cols) * tw, Math.floor(i / cols) * th, tw, th);
+    ctx.fillStyle = "#00e5ff";
+    ctx.font = "16px monospace";
+    ctx.fillText(Math.round((i / n) * 360) + "deg",
+      (i % cols) * tw + 8, Math.floor(i / cols) * th + 22);
+  }
+  return out.toDataURL("image/png");
+};
+
+/* Single frame at an explicit pose, for close inspection. */
+window.captureOne = function (crankDeg = 40, speed = 1, wave = 0) {
+  renderPose(crankDeg, speed, wave);
+  return dbg.renderer.domElement.toDataURL("image/png");
+};
+
+/* Hand a capture to the dev server, which writes it to disk. Keeps the
+   base64 out of anywhere it would have to be read by hand. */
+window.saveCapture = async function (name, dataUrl) {
+  const r = await fetch("/__capture", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ name, dataUrl })
+  });
+  return r.json();
+};
+
+/* Render the companion mount larger while capturing, so the contact sheet
+   is legible; the site pins it much smaller. */
+window.setMountSize = function (w, h) {
+  const el = $("companion");
+  el.style.width = w + "px";
+  el.style.height = h + "px";
+  companion.resize();
+};
+
+/* --- deterministic state-machine test --------------------------------------
+   Builds a second companion on a fake clock and steps it by hand, so the
+   idle/riding/react transitions can be asserted without sleeping, and
+   without depending on requestAnimationFrame running at all. */
+window.runStateTests = async function () {
+  const host = document.createElement("div");
+  host.style.cssText = "position:fixed;left:-9999px;width:200px;height:200px";
+  document.body.appendChild(host);
+
+  let clock = 0;
+  const seen = [];
+  const c = createCompanion({
+    mount: host,
+    now: () => clock,
+    onState: (s) => seen.push(s)
+  });
+
+  const results = [];
+  const check = (name, got, want) =>
+    results.push({ name, got, want, pass: got === want });
+
+  const run = (ms, dtMs = 16) => {
+    for (let i = 0; i < ms / dtMs; i++) { clock += dtMs; c.step(dtMs / 1000); }
+  };
+
+  check("starts idle", c.getState(), "idle");
+
+  // scrolling => riding
+  c.notifyScroll(); run(50);
+  check("scroll -> riding", c.getState(), "riding");
+
+  // keep scrolling: stays riding
+  for (let i = 0; i < 10; i++) { c.notifyScroll(); run(30); }
+  check("sustained scroll stays riding", c.getState(), "riding");
+
+  // stop scrolling: falls back to idle after the debounce
+  const spinning = c.debug().read().speed;
+  run(400);
+  check("scroll stops -> idle", c.getState(), "idle");
+  // The legs coast rather than stopping dead, so speed should be falling
+  // here but not yet zero...
+  const coasting = c.debug().read().speed;
+  check("legs start coasting down", coasting < spinning, true);
+  // ...and settle within about a second.
+  run(1200);
+  check("legs settle to a stop", c.debug().read().speed < 0.05, true);
+
+  // section enters view => react, then hands back to idle
+  c.setState("react");
+  check("section -> react", c.getState(), "react");
+  run(300);
+  check("react holds while playing", c.getState(), "react");
+  run(2000);
+  check("react -> idle when done", c.getState(), "idle");
+
+  // react while scrolling should hand back to riding, not idle
+  c.notifyScroll(); run(50);
+  c.setState("react"); run(200);
+  check("react over scroll", c.getState(), "react");
+  // keep scrolling through the whole gesture
+  for (let i = 0; i < 60; i++) { c.notifyScroll(); run(30); }
+  check("react -> riding when still scrolling", c.getState(), "riding");
+
+  // pedals must actually be turning when riding
+  const a1 = c.debug().read().crankAngle;
+  run(200);
+  const a2 = c.debug().read().crankAngle;
+  check("cranks advance while riding", a2 > a1, true);
+
+  c.dispose();
+  host.remove();
+
+  // reduced motion must never animate or change state
+  const host2 = document.createElement("div");
+  host2.style.cssText = "position:fixed;left:-9999px;width:200px;height:200px";
+  document.body.appendChild(host2);
+  const rm = createCompanion({ mount: host2, reduceMotion: true, now: () => clock });
+  rm.notifyScroll();
+  rm.setState("react");
+  check("reduced motion stays idle", rm.getState(), "idle");
+  check("reduced motion loop off", rm.isRunning(), false);
+  rm.dispose();
+  host2.remove();
+
+  return results;
+};
+
+// --- readouts ---
+let frames = 0, last = performance.now();
+(function poll() {
+  frames++;
+  const now = performance.now();
+  if (now - last >= 500) {
+    $("r-fps").textContent = Math.round(frames / ((now - last) / 1000));
+    frames = 0; last = now;
+  }
+  $("r-running").textContent = companion.isRunning();
+  $("r-scroll").textContent = companion.resolveAmbient() === "riding";
+  requestAnimationFrame(poll);
+})();
+</script>
+</body>
+</html>

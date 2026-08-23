@@ -1,113 +1,315 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <script> particlesJS.load('particles-js', '/particles.json', function() {
-             console.log('callback - particles.js config loaded'); });
-    </script> -->
-    <script src="refresh.js"></script>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>document.documentElement.classList.add('js');</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vidit Rawat — Game Developer</title>
+<meta name="description" content="Game developer working in Unity and Unreal. Gameplay systems, progression and economy features, and editor tools for designers. Shipped mobile titles plus engine prototypes.">
+<meta property="og:title" content="Vidit Rawat — Game Developer">
+<meta property="og:description" content="Gameplay systems, progression features and designer tooling in Unity and Unreal.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 
-    <title>Vidit Rawat</title>
-                                    <!-- Moteserrat Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" 
-rel="stylesheet">
-                                   <!-- Bootstrap js plugin -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
-integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" 
-crossorigin="anonymous"></script>
-                                     <!-- font awesome -->
-    <script src="https://kit.fontawesome.com/d3db143f9a.js" crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js" defer></script>
 </head>
 <body>
-    <div class ="fullBody">
-        
-            
-        <!-- <video autoplay muted loop id="myVideo">
-            <source src="Images/Cinematics1.mp4" type="video/mp4">
-          </video> -->
-        <div id="particles-js"></div>
-    <section id="title">
-        <div class="fluid-first container-fluid">
-    <div class="row">
-        <div class="info col-lg-7">
-            <h1 class="name-heading">Vidit Rawat</h1>
-            <h4>Game Developer</h4>
-        <div class="title-logo">
-            <a href="https://www.linkedin.com/in/vidit-rawat-baa13816b/"><i class="logo fab fa-linkedin"></i></a>
-            <a href="https://github.com/Viditv68"><i class="logo fab fa-github-square"></i></a>
-        </div>
-        <br>        
-        <p class = "title-para">
-            An aspiring game developer with a lifelong passion for gaming, I, Vidit Rawat, am driven by the ambition to become the industry's best developer. Since childhood, I've been captivated by the intricacies of game character movement, fueling my desire to bring these characters to life through my work. With a dedication to mastering the craft and a profound love for gaming, I am committed to pushing the boundaries of game development and creating immersive experiences.
-        </p>
-        </div>
-        <div class="col-lg-5">
-            <img class="title-image" src="Homepage/Images/Profile.jpg" alt="Vidit Rawat image"></h1>
-          </div>
-    </div>
-</div>
-</section>
-<section id="navigation">
-    <div class="fluid-second container-fluid">
-        <!-- Nav Bar -->
-        <nav class="navbar navbar-expand-lg navbar-dark text-white">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="Projects/program.html">Projects</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="program/program.html">Side Projects</a>
-            </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="Resume/ViditRawat_Resume.pdf">Resume</a>
-                  
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="Contact/contact.html">Contact</a>
-              </li>
 
-          </ul>
-        </nav>
-          </div>
-</section>
-<!-- <section id="features">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-4">
-                <<h3 class="program-title">PROGRAMMING</h3> 
-                <a href="../Viditv68.github.io/program/program.html"><img class="program-img" src="Homepage/Images/program.png" alt="programming.png"></a>
-            </div>
-            
+<!-- icon sprite -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><line x1="4" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M3 5h18v14H3z"/><polyline points="3 6 12 13 21 6"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+</svg>
+
+<div class="scanlines"></div>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="hud-nav">
+  <div class="hud-nav__inner">
+    <a class="hud-nav__brand" href="index.html">
+      <span class="hud-nav__dot"></span> Vidit Rawat
+    </a>
+    <button class="hud-nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation">
+      <svg class="icon-open"><use href="#i-menu"/></svg>
+      <svg class="icon-close"><use href="#i-close"/></svg>
+    </button>
+    <nav class="hud-nav__links" id="nav-links" aria-label="Main">
+      <a class="hud-nav__link" href="#work">Work</a>
+      <a class="hud-nav__link" href="#stack">Stack</a>
+      <a class="hud-nav__link" href="#lab">Lab</a>
+      <a class="hud-nav__link" href="Resume/ViditRawat_Resume.pdf">Résumé</a>
+      <a class="hud-nav__link" href="Contact/contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <canvas class="hero__vortex" aria-hidden="true"></canvas>
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="hero__spot" aria-hidden="true"></div>
+    <div class="wrap hero__stage">
+
+      <article class="glass-card" data-reveal="scale">
+        <p class="status-pill" data-reveal style="--i:0">Open to work</p>
+
+        <figure class="glass-card__avatar" data-reveal style="--i:1">
+          <img src="assets/avatar.jpg" alt="Vidit Rawat" width="400" height="400">
+        </figure>
+
+        <h1 class="glass-card__name" data-reveal style="--i:2">Vidit Rawat</h1>
+        <p class="glass-card__role" data-reveal style="--i:3">Game Developer · Unity / Unreal</p>
+
+        <p class="glass-card__bio" data-reveal style="--i:4">
+          An aspiring game developer building gameplay systems, progression and economy
+          features, and the <strong>editor tools</strong> that let designers tune a game
+          without opening a JSON file. Hooked since childhood on how game characters move.
+        </p>
+
+        <div class="btn-row" data-reveal style="--i:5">
+          <a class="btn btn--glass" href="Projects/program.html">View Projects <svg><use href="#i-arrow"/></svg></a>
+          <a class="btn btn--glass is-secondary" href="Contact/contact.html"><svg><use href="#i-mail"/></svg> Contact Me</a>
         </div>
+
+        <div class="socials" data-reveal style="--i:6">
+          <a href="https://www.linkedin.com/in/vidit-rawat-baa13816b/" aria-label="LinkedIn"><svg><use href="#i-linkedin"/></svg></a>
+          <a href="https://github.com/Viditv68" aria-label="GitHub"><svg><use href="#i-github"/></svg></a>
+          <a href="Resume/ViditRawat_Resume.pdf" aria-label="Download résumé"><svg><use href="#i-download"/></svg></a>
+          <a href="mailto:viditrawatv68@gmail.com" aria-label="Email"><svg><use href="#i-mail"/></svg></a>
+        </div>
+      </article>
+
+      <div class="stats stats--glass" data-reveal>
+        <div class="stat">
+          <div class="stat__num">03</div>
+          <div class="stat__label">Shipped titles</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num">06</div>
+          <div class="stat__label">Lab prototypes</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num">02</div>
+          <div class="stat__label">Engines</div>
+        </div>
+      </div>
+
     </div>
-</section> -->
-    <div class="bottom-hr">
-        <hr class="hr1">
-        <hr class="hr2">
-        <hr class="hr3">
-    </div>    
-<section id="contact">
-    <h1 class="get-in-touch">Get In Touch</h1>
-    <p class="contact-para">Love playing video games ? Let's talk about how awesome they are! We can code while we play !</p>
-   <button type="button" class="btn btn-light contact-button">
-       <a href="mailto:viditrawatv68@gmail.com"><span class="contact-me">CONTACT ME</span></a></button>
-</section>
-<section id="copyright">
-    <p>&copy; 2024 Vidit Rawat</p>
-</section>
-</div>
+  </section>
+
+  <!-- ===== FEATURED WORK ===== -->
+  <section class="section" id="work">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <p class="kicker">01 — Shipped</p>
+        <h2>Titles on <em>store shelves</em></h2>
+        <p>Mobile games I worked on as a developer — gameplay, progression systems and the tools behind them.</p>
+      </div>
+
+      <div class="card-grid">
+
+        <article class="card brackets" data-reveal>
+          <div class="card__media">
+            <span class="card__pip">Shipped</span>
+            <img src="Projects/Posters/CrowdSort-card.jpg" alt="Crowd Sort gameplay: a crowd of characters beside hexagonal tiles" loading="lazy" width="800" height="450">
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Crowd Sort</h3>
+            <p class="card__desc">
+              Built from scratch in 16 days with a team of four. I wrote the gameplay, plus a level
+              tool that lets designers set tile counts, blockers and difficulty during play — no
+              hand-editing JSON or scriptable objects.
+            </p>
+            <div class="tags">
+              <span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">UniRx</span><span class="tag">DOTween</span>
+            </div>
+          </div>
+          <a class="card__link" href="Projects/program.html#crowd-sort" aria-label="Crowd Sort — read more"></a>
+        </article>
+
+        <article class="card brackets" data-reveal>
+          <div class="card__media">
+            <span class="card__pip">Shipped</span>
+            <img src="Projects/Posters/ChefDiary.jpg" alt="Chef Diary gameplay: a restaurant floor with seated customers" loading="lazy" width="960" height="442">
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Chef Diary</h3>
+            <p class="card__desc">
+              Cooking &amp; romance sim. Tier 1–3 achievements, battle pass, piggy bank, chef streak
+              and customer patience — and I took ownership of the story-narration module, rebuilding
+              it to pull episode data straight from Google Sheets.
+            </p>
+            <div class="tags">
+              <span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">Firebase</span><span class="tag">UniRx</span>
+            </div>
+          </div>
+          <a class="card__link" href="Projects/program.html#chef-diary" aria-label="Chef Diary — read more"></a>
+        </article>
+
+        <article class="card brackets" data-reveal>
+          <div class="card__media">
+            <span class="card__pip">Shipped</span>
+            <img src="Projects/Posters/PetShelter-card.jpg" alt="Pet Shelter Mania gameplay: pets waiting at a grooming counter" loading="lazy" width="800" height="450">
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Pet Shelter Mania</h3>
+            <p class="card__desc">
+              Time-management sim. Energy and upgrade systems, spin wheel, IAP store, achievements
+              and milestone rewards, plus level goals driven by CSV files pulled from Firebase.
+            </p>
+            <div class="tags">
+              <span class="tag">Unity</span><span class="tag">Firebase</span><span class="tag">IAP</span>
+            </div>
+          </div>
+          <a class="card__link" href="Projects/program.html#pet-shelter" aria-label="Pet Shelter Mania — read more"></a>
+        </article>
+
+      </div>
+
+      <div class="btn-row" data-reveal>
+        <a class="btn btn--ghost" href="Projects/program.html">All shipped titles <svg><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STACK ===== -->
+  <section class="section" id="stack">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <p class="kicker">02 — Stack</p>
+        <h2>Tools of the <em>trade</em></h2>
+        <p>Engines, patterns and services I've used to ship and prototype.</p>
+      </div>
+
+      <div class="tech-cols">
+        <div class="tech-col" data-reveal>
+          <h3>Engines &amp; Languages</h3>
+          <ul>
+            <li>Unity</li><li>Unreal Engine</li><li>C#</li><li>C++</li><li>Blueprints</li>
+          </ul>
+        </div>
+        <div class="tech-col" data-reveal>
+          <h3>Gameplay Systems</h3>
+          <ul>
+            <li>New Input System</li><li>Cinemachine</li><li>NavMesh</li><li>Behaviour Trees</li>
+            <li>Scriptable Objects</li><li>Animation Blueprints</li>
+          </ul>
+        </div>
+        <div class="tech-col" data-reveal>
+          <h3>Design Patterns</h3>
+          <ul>
+            <li>MVC</li><li>Generic Singleton</li><li>Object Pooling</li><li>State Machine</li><li>Observer</li>
+          </ul>
+        </div>
+        <div class="tech-col" data-reveal>
+          <h3>Services &amp; Libraries</h3>
+          <ul>
+            <li>Firebase</li><li>DOTween</li><li>UniRx</li><li>Google Play Services</li>
+            <li>In-App Purchases</li><li>Analytics &amp; Ads</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LAB ===== -->
+  <section class="section" id="lab">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <p class="kicker">03 — The Lab</p>
+        <h2>Prototypes &amp; <em>experiments</em></h2>
+        <p>Side projects where I dig into a single system — AI, input, camera work, architecture — and take it apart.</p>
+      </div>
+
+      <div class="card-grid">
+
+        <article class="card brackets" data-reveal>
+          <div class="card__media">
+            <span class="card__pip card__pip--lab">Prototype</span>
+            <img src="program/Posters/Top-Down-Shooter-card.jpg" alt="Top-Down Shooter prototype: a character firing in a blockout level" loading="lazy" width="800" height="450">
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Top-Down Shooter</h3>
+            <p class="card__desc">Movement, firing and weapon swapping on the new Input System, with Cinemachine adjusting camera distance per weapon and single / auto / burst fire modes.</p>
+            <div class="tags"><span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">Cinemachine</span></div>
+          </div>
+          <a class="card__link" href="program/program.html#top-down-shooter" aria-label="Top-Down Shooter — read more"></a>
+        </article>
+
+        <article class="card brackets" data-reveal>
+          <div class="card__media">
+            <span class="card__pip card__pip--lab">Prototype</span>
+            <img src="program/Posters/BattleTank.jpg" alt="Battle Tank prototype: a green tank in a desert level" loading="lazy" width="960" height="540">
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Battle Tank</h3>
+            <p class="card__desc">An architecture study: MVC for tanks and bullets, a generic singleton and object pool, and a state machine driving enemy patrol, chase and attack.</p>
+            <div class="tags"><span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">NavMesh</span></div>
+          </div>
+          <a class="card__link" href="program/program.html#battle-tank" aria-label="Battle Tank — read more"></a>
+        </article>
+
+        <article class="card brackets" data-reveal>
+          <div class="card__media">
+            <span class="card__pip card__pip--lab">Prototype</span>
+            <img src="program/Posters/Shooter.jpg" alt="Simple Shooter prototype: a character in a sci-fi corridor" loading="lazy" width="960" height="540">
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Simple Shooter</h3>
+            <p class="card__desc">Third-person movement and animation in Unreal, shooting mechanics, health and death for player and enemies, and enemy AI built on behaviour trees.</p>
+            <div class="tags"><span class="tag tag--accent">C++</span><span class="tag">Unreal</span><span class="tag">Behaviour Trees</span></div>
+          </div>
+          <a class="card__link" href="program/program.html#simple-shooter" aria-label="Simple Shooter — read more"></a>
+        </article>
+
+      </div>
+
+      <div class="btn-row" data-reveal>
+        <a class="btn btn--ghost" href="program/program.html">Open the lab <svg><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="cta brackets" data-reveal>
+        <p class="kicker" style="justify-content:center">04 — Contact</p>
+        <h2>Let's build something <em style="font-style:normal;color:var(--accent)">playable</em></h2>
+        <p>Love video games? Let's talk about how good they are — and write some code while we're at it.</p>
+        <div class="btn-row">
+          <a class="btn" href="Contact/contact.html">Get in touch <svg><use href="#i-arrow"/></svg></a>
+          <a class="btn btn--ghost" href="mailto:viditrawatv68@gmail.com"><svg><use href="#i-mail"/></svg> Email me</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <p class="footer__note">&copy; <span data-year>2024</span> Vidit Rawat</p>
+    <div class="socials">
+      <a href="https://www.linkedin.com/in/vidit-rawat-baa13816b/" aria-label="LinkedIn"><svg><use href="#i-linkedin"/></svg></a>
+      <a href="https://github.com/Viditv68" aria-label="GitHub"><svg><use href="#i-github"/></svg></a>
+      <a href="mailto:viditrawatv68@gmail.com" aria-label="Email"><svg><use href="#i-mail"/></svg></a>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
