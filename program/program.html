@@ -13,6 +13,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/site.css">
 <script src="../assets/site.js" defer></script>
+
+<!-- Scroll companion. An import map plus a module script — no bundler, so it
+     stays a plain GitHub Pages site. The model path resolves from the
+     module's own URL, so this is identical on every page regardless of depth. -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+  import { mountCompanion } from "../assets/companion.js";
+  mountCompanion();
+</script>
 </head>
 <body>
 
