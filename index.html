@@ -220,105 +220,140 @@
         <p>Engines, patterns and services I've used to ship and prototype.</p>
       </div>
 
-      <div class="tech-cols">
-        <div class="tech-col" data-reveal>
+      <div class="loadout">
+        <div class="loadout__slot" data-reveal>
+          <span class="loadout__idx">Slot 01</span>
           <h3>Engines &amp; Languages</h3>
-          <ul>
-            <li>Unity</li><li>Unreal Engine</li><li>C#</li><li>C++</li><li>Blueprints</li>
-          </ul>
+          <div class="loadout__chips">
+            <span class="tag tag--accent">C#</span><span class="tag tag--accent">C++</span>
+            <span class="tag">Unity</span><span class="tag">Unreal Engine</span><span class="tag">Blueprints</span>
+          </div>
         </div>
-        <div class="tech-col" data-reveal>
+
+        <div class="loadout__slot" data-reveal>
+          <span class="loadout__idx">Slot 02</span>
           <h3>Gameplay Systems</h3>
-          <ul>
-            <li>New Input System</li><li>Cinemachine</li><li>NavMesh</li><li>Behaviour Trees</li>
-            <li>Scriptable Objects</li><li>Animation Blueprints</li>
-          </ul>
+          <div class="loadout__chips">
+            <span class="tag">New Input System</span><span class="tag">Cinemachine</span><span class="tag">NavMesh</span>
+            <span class="tag">Behaviour Trees</span><span class="tag">Scriptable Objects</span><span class="tag">Animation Blueprints</span>
+          </div>
         </div>
-        <div class="tech-col" data-reveal>
+
+        <div class="loadout__slot" data-reveal>
+          <span class="loadout__idx">Slot 03</span>
           <h3>Design Patterns</h3>
-          <ul>
-            <li>MVC</li><li>Generic Singleton</li><li>Object Pooling</li><li>State Machine</li><li>Observer</li>
-          </ul>
+          <div class="loadout__chips">
+            <span class="tag">MVC</span><span class="tag">Generic Singleton</span><span class="tag">Object Pooling</span>
+            <span class="tag">State Machine</span><span class="tag">Observer</span>
+          </div>
         </div>
-        <div class="tech-col" data-reveal>
+
+        <div class="loadout__slot" data-reveal>
+          <span class="loadout__idx">Slot 04</span>
           <h3>Services &amp; Libraries</h3>
-          <ul>
-            <li>Firebase</li><li>DOTween</li><li>UniRx</li><li>Google Play Services</li>
-            <li>In-App Purchases</li><li>Analytics &amp; Ads</li>
-          </ul>
+          <div class="loadout__chips">
+            <span class="tag">Firebase</span><span class="tag">DOTween</span><span class="tag">UniRx</span>
+            <span class="tag">Google Play Services</span><span class="tag">In-App Purchases</span><span class="tag">Analytics &amp; Ads</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== LAB ===== -->
+  <!-- ===== SIDE PROJECTS / THE LAB ===== -->
   <section class="section" id="lab">
     <div class="wrap">
       <div class="sec-head" data-reveal>
-        <p class="kicker">03 — The Lab</p>
-        <h2>Prototypes &amp; <em>experiments</em></h2>
-        <p>Side projects where I dig into a single system — AI, input, camera work, architecture — and take it apart.</p>
+        <p class="kicker">03 — Side Projects</p>
+        <h2>The <em>Lab</em></h2>
+        <p>Prototypes where I take one system apart at a time — enemy AI, input handling, camera work, gameplay architecture.</p>
       </div>
 
-      <div class="card-grid">
+      <div class="log">
 
-        <article class="card brackets" data-reveal>
-          <div class="card__media">
-            <span class="card__pip card__pip--lab">Prototype</span>
-            <img src="program/Posters/Top-Down-Shooter-card.jpg" alt="Top-Down Shooter prototype: a character firing in a blockout level" loading="lazy" width="800" height="450">
+        <article class="log__row" data-reveal>
+          <img class="log__thumb" src="program/Posters/Top-Down-Shooter-card.jpg" alt="" loading="lazy" width="800" height="450">
+          <div>
+            <div class="log__head">
+              <span class="log__idx">// 01</span>
+              <h3 class="log__title">Top-Down Shooter</h3>
+            </div>
+            <p class="log__desc">Movement, firing and weapon swapping on the new Input System, with Cinemachine pulling the camera back per weapon and single / auto / burst fire modes.</p>
           </div>
-          <div class="card__body">
-            <h3 class="card__title">Top-Down Shooter</h3>
-            <p class="card__desc">Movement, firing and weapon swapping on the new Input System, with Cinemachine adjusting camera distance per weapon and single / auto / burst fire modes.</p>
-            <div class="tags"><span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">Cinemachine</span></div>
-          </div>
-          <a class="card__link" href="program/program.html#top-down-shooter" aria-label="Top-Down Shooter — read more"></a>
+          <div class="tags"><span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">Cinemachine</span></div>
+          <svg class="log__go" aria-hidden="true"><use href="#i-arrow"/></svg>
+          <a class="log__link" href="program/program.html#top-down-shooter" aria-label="Top-Down Shooter — read more"></a>
         </article>
 
-        <article class="card brackets" data-reveal>
-          <div class="card__media">
-            <span class="card__pip card__pip--lab">Prototype</span>
-            <img src="program/Posters/BattleTank.jpg" alt="Battle Tank prototype: a green tank in a desert level" loading="lazy" width="960" height="540">
+        <article class="log__row" data-reveal>
+          <img class="log__thumb" src="program/Posters/BattleTank.jpg" alt="" loading="lazy" width="960" height="540">
+          <div>
+            <div class="log__head">
+              <span class="log__idx">// 02</span>
+              <h3 class="log__title">Battle Tank</h3>
+            </div>
+            <p class="log__desc">An architecture study: MVC for tanks and bullets, a generic singleton and object pool, and a state machine driving enemy patrol, chase and attack.</p>
           </div>
-          <div class="card__body">
-            <h3 class="card__title">Battle Tank</h3>
-            <p class="card__desc">An architecture study: MVC for tanks and bullets, a generic singleton and object pool, and a state machine driving enemy patrol, chase and attack.</p>
-            <div class="tags"><span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">NavMesh</span></div>
-          </div>
-          <a class="card__link" href="program/program.html#battle-tank" aria-label="Battle Tank — read more"></a>
+          <div class="tags"><span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">NavMesh</span></div>
+          <svg class="log__go" aria-hidden="true"><use href="#i-arrow"/></svg>
+          <a class="log__link" href="program/program.html#battle-tank" aria-label="Battle Tank — read more"></a>
         </article>
 
-        <article class="card brackets" data-reveal>
-          <div class="card__media">
-            <span class="card__pip card__pip--lab">Prototype</span>
-            <img src="program/Posters/Shooter.jpg" alt="Simple Shooter prototype: a character in a sci-fi corridor" loading="lazy" width="960" height="540">
+        <article class="log__row" data-reveal>
+          <img class="log__thumb" src="program/Posters/Shooter.jpg" alt="" loading="lazy" width="960" height="540">
+          <div>
+            <div class="log__head">
+              <span class="log__idx">// 03</span>
+              <h3 class="log__title">Simple Shooter</h3>
+            </div>
+            <p class="log__desc">Third-person movement and animation in Unreal, shooting mechanics, health and death for player and enemies, and enemy AI built on behaviour trees.</p>
           </div>
-          <div class="card__body">
-            <h3 class="card__title">Simple Shooter</h3>
-            <p class="card__desc">Third-person movement and animation in Unreal, shooting mechanics, health and death for player and enemies, and enemy AI built on behaviour trees.</p>
-            <div class="tags"><span class="tag tag--accent">C++</span><span class="tag">Unreal</span><span class="tag">Behaviour Trees</span></div>
+          <div class="tags"><span class="tag tag--accent">C++</span><span class="tag">Unreal</span><span class="tag">Behaviour Trees</span></div>
+          <svg class="log__go" aria-hidden="true"><use href="#i-arrow"/></svg>
+          <a class="log__link" href="program/program.html#simple-shooter" aria-label="Simple Shooter — read more"></a>
+        </article>
+
+        <article class="log__row" data-reveal>
+          <img class="log__thumb" src="program/Posters/Outland.jpg" alt="" loading="lazy" width="960" height="540">
+          <div>
+            <div class="log__head">
+              <span class="log__idx">// 04</span>
+              <h3 class="log__title">Outland</h3>
+            </div>
+            <p class="log__desc">A third-person adventure prototype in Unreal — traversal, combat feel and the camera work that holds the two together.</p>
           </div>
-          <a class="card__link" href="program/program.html#simple-shooter" aria-label="Simple Shooter — read more"></a>
+          <div class="tags"><span class="tag tag--accent">C++</span><span class="tag">Unreal</span><span class="tag">Blueprints</span></div>
+          <svg class="log__go" aria-hidden="true"><use href="#i-arrow"/></svg>
+          <a class="log__link" href="program/program.html#outland" aria-label="Outland — read more"></a>
         </article>
 
       </div>
 
       <div class="btn-row" data-reveal>
-        <a class="btn btn--ghost" href="program/program.html">Open the lab <svg><use href="#i-arrow"/></svg></a>
+        <a class="btn btn--ghost" href="program/program.html">All side projects <svg><use href="#i-arrow"/></svg></a>
       </div>
     </div>
   </section>
 
   <!-- ===== CTA ===== -->
-  <section class="section section--tight">
+  <section class="section section--close">
     <div class="wrap">
-      <div class="cta brackets" data-reveal>
+      <div class="cta" data-reveal>
+        <div class="cta__aura" aria-hidden="true"></div>
+
         <p class="kicker" style="justify-content:center">04 — Contact</p>
-        <h2>Let's build something <em style="font-style:normal;color:var(--accent)">playable</em></h2>
+        <h2>Let's build something <em style="font-style:normal;color:var(--accent-text)">playable</em></h2>
         <p>Love video games? Let's talk about how good they are — and write some code while we're at it.</p>
+
         <div class="btn-row">
-          <a class="btn" href="Contact/contact.html">Get in touch <svg><use href="#i-arrow"/></svg></a>
-          <a class="btn btn--ghost" href="mailto:viditrawatv68@gmail.com"><svg><use href="#i-mail"/></svg> Email me</a>
+          <a class="btn btn--glass" href="Contact/contact.html">Get in touch <svg><use href="#i-arrow"/></svg></a>
+          <a class="btn btn--glass is-secondary" href="Resume/ViditRawat_Resume.pdf"><svg><use href="#i-download"/></svg> Résumé</a>
+        </div>
+
+        <div class="cta__direct">
+          <a href="mailto:viditrawatv68@gmail.com"><svg><use href="#i-mail"/></svg> viditrawatv68@gmail.com</a>
+          <a href="https://www.linkedin.com/in/vidit-rawat-baa13816b/"><svg><use href="#i-linkedin"/></svg> LinkedIn</a>
+          <a href="https://github.com/Viditv68"><svg><use href="#i-github"/></svg> GitHub</a>
         </div>
       </div>
     </div>

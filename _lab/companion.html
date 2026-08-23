@@ -117,7 +117,10 @@
 <div class="spacer"></div>
 
 <script type="module">
-import { createCompanion, STATES, CLIPS, MODEL_URL } from "../assets/companion.js?v=3";
+/* Cache-busted on purpose: this is a lab page and must always exercise the
+   current module, never a stale copy pinned to an old query string. */
+const { createCompanion, STATES, CLIPS, MODEL_URL } =
+  await import("../assets/companion.js?v=" + Date.now());
 
 const $ = (id) => document.getElementById(id);
 const logEl = $("log");
