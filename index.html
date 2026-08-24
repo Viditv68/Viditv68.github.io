@@ -121,7 +121,7 @@
 
       <div class="stats stats--glass" data-reveal>
         <div class="stat">
-          <div class="stat__num">03</div>
+          <div class="stat__num">04</div>
           <div class="stat__label">Shipped titles</div>
         </div>
         <div class="stat">
@@ -143,10 +143,43 @@
       <div class="sec-head" data-reveal>
         <p class="kicker">01 — Shipped</p>
         <h2>Titles on <em>store shelves</em></h2>
-        <p>Mobile games I worked on as a developer — gameplay, progression systems and the tools behind them.</p>
+        <p>Console and mobile titles I've worked on as a developer — gameplay, progression systems and the tools behind them.</p>
       </div>
 
       <div class="card-grid">
+
+        <article class="card card--feature brackets" data-reveal>
+          <div class="card__media">
+            <span class="card__pip card__pip--ship">Published by Sony</span>
+            <img src="https://i.ytimg.com/vi/rm1nxBrbVCo/maxresdefault.jpg"
+                 alt="Lokko — still from the PlayStation GDC trailer"
+                 loading="lazy" width="1280" height="720">
+            <span class="play-badge"><svg><use href="#i-play"/></svg></span>
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Lokko</h3>
+            <p class="card__meta">Appy Monkeys · Unity Developer · PS5 · BitSummit &amp; GDC</p>
+            <p class="card__desc">
+              A Unity title published by Sony. I built the two-player co-op robot level end to end —
+              local two-controller couch co-op on a single console, both players riding one mech: a
+              <strong>pilot</strong> who drives and punches, and a <strong>gunner</strong> who fires blocks.
+            </p>
+            <ul class="card__points">
+              <li>Designed the gunner's <strong>arc-and-crosshair preview</strong>, so blocks snap to each other into runnable platforms that block obstacles, plus punchable cube-spheres that shatter into scattering cubes.</li>
+              <li>Architected a custom <strong>level editor</strong> scene letting players build levels with real-time preview and validation.</li>
+              <li>Implemented the full <strong>iOS control scheme</strong> across every gameplay mechanic for responsive touch input.</li>
+              <li>Designed a <strong>wave-based enemy spawner</strong> with multiple enemy types and difficulty scaling for the Lab levels.</li>
+              <li>Engineered secure auth on <strong>AWS Cognito</strong> — email OTP verification and account deletion via Amazon SES — and shipped the in-game wallet.</li>
+            </ul>
+            <div class="tags">
+              <span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">PS5</span><span class="tag">AWS Cognito</span><span class="tag">iOS</span>
+            </div>
+            <p class="card__credit">Trailer &amp; thumbnail © Sony Interactive Entertainment — opens on the official PlayStation channel.</p>
+          </div>
+          <a class="card__link" href="https://www.youtube.com/watch?v=rm1nxBrbVCo"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Lokko — watch the GDC trailer on the official PlayStation YouTube channel (opens in a new tab)"></a>
+        </article>
 
         <article class="card brackets" data-video="assets/previews/crowd-sort.mp4" data-reveal>
           <div class="card__media">

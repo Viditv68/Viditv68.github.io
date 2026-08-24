@@ -1349,6 +1349,127 @@ ul {
   }
 }
 
+/* --- Featured card -------------------------------------------------------
+   One project gets the full width of the grid: media on the left, the detail
+   on the right. Used for work that carries more than a three-line summary. */
+.card--feature {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.card--feature .card__media {
+  border-bottom: 0;
+  border-right: 1px solid var(--line);
+  height: 100%;
+}
+
+.card--feature .card__media img {
+  height: 100%;
+  aspect-ratio: auto;
+  object-fit: cover;
+}
+
+.card--feature .card__body {
+  padding: clamp(22px, 3vw, 34px);
+}
+
+.card--feature .card__title {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
+/* Marks media that opens a video rather than a detail page. */
+.play-badge {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 62px;
+  height: 62px;
+  margin: -31px 0 0 -31px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(8, 11, 20, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #fff;
+  pointer-events: none;
+  transition: transform 0.3s var(--ease), background-color 0.3s var(--ease),
+    border-color 0.3s var(--ease);
+}
+
+.play-badge svg { width: 20px; height: 20px; margin-left: 3px; }
+
+.card:hover .play-badge,
+.card:focus-within .play-badge {
+  transform: scale(1.12);
+  background: rgba(var(--accent-rgb), 0.5);
+  border-color: #fff;
+}
+
+.card__meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+  margin: -6px 0 12px;
+}
+
+/* Credit for media served from someone else's CDN. */
+.card__credit {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  color: var(--dim);
+  margin: 14px 0 0;
+}
+
+.card__points {
+  margin: 0 0 4px;
+  display: grid;
+  gap: 8px;
+}
+
+.card__points li {
+  position: relative;
+  padding-left: 18px;
+  color: var(--muted);
+  font-size: 0.93rem;
+  line-height: 1.55;
+}
+
+.card__points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  background: var(--accent2);
+  transform: rotate(45deg);
+}
+
+.card__points strong { color: var(--text); font-weight: 600; }
+
+.card__pip--ship {
+  border-color: rgba(var(--accent-rgb), 0.55);
+  color: var(--accent-text);
+}
+
+@media (max-width: 860px) {
+  .card--feature { grid-template-columns: minmax(0, 1fr); }
+
+  .card--feature .card__media {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .card--feature .card__media img { aspect-ratio: 16 / 9; height: auto; }
+}
+
 /* --- Tags -------------------------------------------------------------- */
 .tags {
   display: flex;
