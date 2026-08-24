@@ -1470,6 +1470,67 @@ ul {
   .card--feature .card__media img { aspect-ratio: 16 / 9; height: auto; }
 }
 
+/* --- Store links ---------------------------------------------------------
+   A card with four destinations cannot hide behind one invisible overlay —
+   each has to be its own visible, focusable link. */
+.store-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin: 18px 0 0;
+}
+
+.store-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 15px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.02);
+  transition: color 0.25s var(--ease), border-color 0.25s var(--ease),
+    background-color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+
+.store-link svg {
+  width: 13px;
+  height: 13px;
+  flex: none;
+  opacity: 0.75;
+}
+
+.store-link:hover,
+.store-link:focus-visible {
+  color: var(--accent-text);
+  border-color: rgba(var(--accent-rgb), 0.6);
+  background: rgba(var(--accent-rgb), 0.1);
+  transform: translateY(-2px);
+}
+
+.store-link--play {
+  color: var(--accent2-text);
+  border-color: rgba(var(--accent2-rgb), 0.45);
+}
+
+.store-link--play:hover,
+.store-link--play:focus-visible {
+  color: #ecdfff;
+  border-color: var(--accent2);
+  background: rgba(var(--accent2-rgb), 0.15);
+}
+
+/* The feature card's media is itself a link now. */
+.card__media--link {
+  display: block;
+  cursor: pointer;
+}
+
 /* --- Tags -------------------------------------------------------------- */
 .tags {
   display: flex;

@@ -46,6 +46,7 @@
   <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M3 5h18v14H3z"/><polyline points="3 6 12 13 21 6"/></symbol>
   <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></symbol>
   <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
 </svg>
 
@@ -149,13 +150,16 @@
       <div class="card-grid">
 
         <article class="card card--feature brackets" data-reveal>
-          <div class="card__media">
+          <a class="card__media card__media--link"
+             href="https://www.youtube.com/watch?v=rm1nxBrbVCo"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Watch the Lokko trailer on the official PlayStation channel (opens in a new tab)">
             <span class="card__pip card__pip--ship">Published by Sony</span>
             <img src="https://i.ytimg.com/vi/rm1nxBrbVCo/maxresdefault.jpg"
                  alt="Lokko — still from the PlayStation GDC trailer"
                  loading="lazy" width="1280" height="720">
             <span class="play-badge"><svg><use href="#i-play"/></svg></span>
-          </div>
+          </a>
           <div class="card__body">
             <h3 class="card__title">Lokko</h3>
             <p class="card__meta">Appy Monkeys · Unity Developer · PS5 · BitSummit &amp; GDC</p>
@@ -174,11 +178,15 @@
             <div class="tags">
               <span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">PS5</span><span class="tag">AWS Cognito</span><span class="tag">iOS</span>
             </div>
+            <div class="store-row">
+              <a class="store-link" href="https://store.playstation.com/en-us/concept/10013643" target="_blank" rel="noopener noreferrer">PlayStation Store <svg><use href="#i-external"/></svg></a>
+              <a class="store-link" href="https://store.steampowered.com/app/1810630/Lokko/" target="_blank" rel="noopener noreferrer">Steam <svg><use href="#i-external"/></svg></a>
+              <a class="store-link" href="https://apps.apple.com/us/app/lokko/id1668799195" target="_blank" rel="noopener noreferrer">App Store <svg><use href="#i-external"/></svg></a>
+              <a class="store-link store-link--play" href="https://www.youtube.com/watch?v=rm1nxBrbVCo" target="_blank" rel="noopener noreferrer">Watch trailer <svg><use href="#i-play"/></svg></a>
+            </div>
+
             <p class="card__credit">Trailer &amp; thumbnail © Sony Interactive Entertainment — opens on the official PlayStation channel.</p>
           </div>
-          <a class="card__link" href="https://www.youtube.com/watch?v=rm1nxBrbVCo"
-             target="_blank" rel="noopener noreferrer"
-             aria-label="Lokko — watch the GDC trailer on the official PlayStation YouTube channel (opens in a new tab)"></a>
         </article>
 
         <article class="card brackets" data-video="assets/previews/crowd-sort.mp4" data-reveal>
