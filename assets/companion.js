@@ -44,10 +44,15 @@ export const CLIPS = {
      so those two stand in for thinking. */
   yes: "Yes",
   no: "No",
-  thumbsUp: "ThumbsUp"
+  thumbsUp: "ThumbsUp",
+  /* A real sit-down and its reverse: 0.42s each, feet stay planted, and he
+     drops about 10% of his height. */
+  sit: "Sitting",
+  stand: "Standing"
 };
 
-export const STATES = ["wave", "idle", "walk", "run", "jump", "yes", "no", "thumbsUp"];
+export const STATES = ["wave", "idle", "walk", "run", "jump", "yes", "no",
+                       "thumbsUp", "sit", "stand"];
 
 /* Played once on arrival, then he goes back to idling. */
 const THINKING = ["yes", "no"];
@@ -59,7 +64,8 @@ function isLocomotion(name) { return name === "walk" || name === "run"; }
    wander loop takes over again. Anything listed here MUST be here — a clip
    played on LoopRepeat never fires "finished", so the loop would stall. */
 const ONE_SHOT = {
-  wave: true, jump: true, yes: true, no: true, thumbsUp: true
+  wave: true, jump: true, yes: true, no: true, thumbsUp: true,
+  sit: true, stand: true
 };
 
 const TUNING = {
@@ -79,6 +85,20 @@ const TUNING = {
 
   dwellMin: 2600,      // ms of standing about after a gesture, before moving on
   dwellMax: 6200,
+
+  /* Odds a dwell ends with him sitting down for a think rather than setting
+     off somewhere new. */
+  sitChance: 0.3,
+  sitThinkMin: 2800,   // ms spent seated and pondering
+  sitThinkMax: 5000,
+
+  /* Sitting and Yes/No drive the same leg bones, so layering a nod over the
+     seated pose blends him half upright. The seated think is therefore driven
+     straight onto the head bone, which the clamped Sitting pose leaves alone.
+     Radians. */
+  ponderTilt: 0.30,    // slow side-to-side weighing-it-up
+  ponderNod: 0.11,     // small chin motion
+  ponderTurn: 0.17,    // glances off to one side and back
 
   /* What he does on arrival. Weighted by repetition rather than by numbers:
      mostly thinking, with the occasional friendlier beat so he does not read
@@ -298,6 +318,11 @@ export function createCompanion(options) {
   var destX = 0;
   var travelGait = "walk";
   var travelT = 0;          // seconds into the current trip, for the accel ramp
+  var thinkT = 0;           // seconds into the seated think
+  var thinkDur = 3;         // ...and how long this one runs for
+  var headBone = null;      // posed directly while seated
+  var headBase = new THREE.Quaternion();   // the clamped seated head pose
+  var headCaptured = false;
   var finishCount = 0;      // one-shots completed; surfaced for diagnostics
 
   var running = false;
@@ -425,6 +450,44 @@ export function createCompanion(options) {
     phase = "turnOut";
   }
 
+  function beginSit() {
+    if (!actions.sit || !actions.stand) { beginTrip(); return; }
+    headCaptured = false;
+    facingTarget = 0;
+    thinkT = 0;
+    phase = "sitDown";
+    play("sit", { force: true });
+    if (!running) start();
+  }
+
+  /* Runs after mixer.update(), so it lands on top of the clamped Sitting pose
+     rather than being overwritten by it. Only the head moves; the legs stay
+     exactly where the clip left them. */
+  var ponderEuler = new THREE.Euler();
+  var ponderQuat = new THREE.Quaternion();
+  function poseThinkingHead() {
+    if (!headBone) return;
+
+    /* Compose from a captured base rather than multiplying into whatever is
+       already on the bone. Once Sitting is clamped the mixer stops rewriting
+       this bone every frame, so a per-frame multiply would accumulate and the
+       head would spiral away. */
+    if (!headCaptured) {
+      headBase.copy(headBone.quaternion);
+      headCaptured = true;
+    }
+    /* Ease in and out so the head does not snap at either end of the beat.
+       Keyed off this beat's actual duration, not the configured maximum. */
+    var blend = clamp(thinkT / 0.5, 0, 1) * clamp((thinkDur - thinkT) / 0.5, 0, 1);
+    ponderEuler.set(
+      T.ponderNod * Math.sin(thinkT * 1.7 + 1.0) * blend,
+      T.ponderTurn * Math.sin(thinkT * 0.7) * blend,
+      T.ponderTilt * Math.sin(thinkT * 1.1) * blend
+    );
+    ponderQuat.setFromEuler(ponderEuler);
+    headBone.quaternion.copy(headBase).multiply(ponderQuat);
+  }
+
   function beginDwell() {
     phase = "dwell";
     phaseUntil = now() + T.dwellMin + Math.random() * (T.dwellMax - T.dwellMin);
@@ -441,6 +504,17 @@ export function createCompanion(options) {
        and still reports finished. Ignore it, or he would bounce once and
        then wander off mid-spotlight. */
     if (phase === "excited") return;
+
+    if (phase === "sitDown") {
+      /* Seated now. Hold the pose and think about it for a bit. */
+      phase = "sitThink";
+      thinkT = 0;
+      headCaptured = false;
+      thinkDur = (T.sitThinkMin + Math.random() * (T.sitThinkMax - T.sitThinkMin)) / 1000;
+      phaseUntil = now() + thinkDur * 1000;
+      return;
+    }
+
     beginDwell();
   }
 
@@ -462,7 +536,10 @@ export function createCompanion(options) {
         facingTarget = 0;
         speed = 0;
         if (current !== "idle") play("idle");
-        if (now() >= phaseUntil) beginTrip();
+        if (now() >= phaseUntil) {
+          if (Math.random() < T.sitChance) beginSit();
+          else beginTrip();
+        }
         break;
 
       case "turnOut":
@@ -496,6 +573,28 @@ export function createCompanion(options) {
 
       case "gesture":
         /* Held by the one-shot; onClipFinished moves us on. */
+        facingTarget = 0;
+        speed = 0;
+        break;
+
+      case "sitDown":
+        /* Held by the Sitting one-shot; onClipFinished moves us on. */
+        facingTarget = 0;
+        speed = 0;
+        break;
+
+      case "sitThink":
+        facingTarget = 0;
+        speed = 0;
+        thinkT += dt;
+        if (now() >= phaseUntil) {
+          phase = "standUp";
+          play("stand", { force: true });
+        }
+        break;
+
+      case "standUp":
+        /* Held by the Standing one-shot. */
         facingTarget = 0;
         speed = 0;
         break;
@@ -573,6 +672,7 @@ export function createCompanion(options) {
     glow.position.x = x;
 
     mixer.update(dt);
+    if (phase === "sitThink") poseThinkingHead();
   }
 
   function tick() {
@@ -647,6 +747,10 @@ export function createCompanion(options) {
       });
 
       pivot.add(root);
+
+      /* Exact name match: the head *mesh* nodes are Head_2/3/4, the bone is
+         plain "Head". */
+      headBone = root.getObjectByName("Head") || null;
 
       mixer = new THREE.AnimationMixer(root);
       mixer.addEventListener("finished", onClipFinished);
@@ -758,6 +862,8 @@ export function createCompanion(options) {
         facing: facing,
         facingTarget: facingTarget,
         facesViewer: Math.abs(angleDelta(facing, 0)) < 0.02,
+        seated: phase === "sitDown" || phase === "sitThink" || phase === "standUp",
+        headBone: !!headBone,
         speed: speed,
         gait: isLocomotion(current) ? current : null,
         stride: (isLocomotion(current) && actions[current])
@@ -776,6 +882,9 @@ export function createCompanion(options) {
       pivot.position.x = x;
       glow.position.x = x;
     },
+    /* Sit down and think, now, instead of waiting for the dice. */
+    _sit: function () { if (!reduceMotion && !disposed) beginSit(); },
+
     /* Send him somewhere specific instead of waiting for the dice. */
     _goTo: function (worldX) {
       destX = clamp(worldX, minX, maxX);

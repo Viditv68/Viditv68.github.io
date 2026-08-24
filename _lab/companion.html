@@ -80,6 +80,7 @@
     <button data-force="no">No</button>
     <button data-force="thumbsUp">Thumbs</button>
     <button data-force="run">Run</button>
+    <button id="btn-sit">Sit &amp; think</button>
   </div>
 
   <div class="row">
@@ -166,6 +167,8 @@ document.querySelectorAll("[data-go]").forEach((b) => {
     log("sent to x=" + to.toFixed(2));
   });
 });
+
+$("btn-sit").addEventListener("click", () => { companion._sit(); log("sit & think"); });
 
 $("btn-bounds").addEventListener("click", () => {
   const d = companion.debug();
