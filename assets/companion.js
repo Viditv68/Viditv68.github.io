@@ -847,26 +847,85 @@ export function mountCompanion(opts) {
 
   /* Small screens: the canvas is a full-width GPU surface composited over
      every frame of the page, which is exactly where a mid-range phone can
-     least afford it. Below this width we don't create it at all. */
+     least afford it. Below this width he is not created at all.
+
+     Watched rather than checked once, because a window that *starts* narrow
+     and is then widened used to leave him gone until a reload — which looks
+     exactly like a bug. Crossing the threshold either way now mounts or
+     disposes him. */
   var minWidth = opts.minWidth || 700;
-  if (window.innerWidth < minWidth) {
-    warn("viewport is " + window.innerWidth + "px, below the " + minWidth +
-         "px threshold (disabled on small screens to protect scrolling).");
-    return null;
+  var wideEnough = window.matchMedia("(min-width: " + minWidth + "px)");
+
+  var current = null;
+  var settle = 0;
+
+  function create() {
+    if (current) return;
+    current = createCompanion({
+      reduceMotion: reduceMotion,
+      onState: opts.onState
+    });
+    current.ready.catch(function (err) {
+      if (window.console) console.warn("[companion] unavailable:", err.message);
+      if (current) { current.dispose(); current = null; }
+    });
   }
 
-  var companion = createCompanion({
-    reduceMotion: reduceMotion,
-    onState: opts.onState
-  });
+  function destroy() {
+    if (!current) return;
+    current.dispose();
+    current = null;
+  }
 
-  companion.ready.catch(function (err) {
-    if (window.console) console.warn("[companion] unavailable:", err.message);
-    companion.dispose();
-  });
+  function sync() {
+    if (wideEnough.matches) create();
+    else destroy();
+  }
+
+  /* Dragging a window across the threshold would otherwise build and tear
+     down a WebGL context on every crossing. */
+  function onChange() {
+    clearTimeout(settle);
+    settle = setTimeout(sync, 300);
+  }
+
+  if (wideEnough.addEventListener) wideEnough.addEventListener("change", onChange);
+  else wideEnough.addListener(onChange);
+
+  sync();
+
+  if (!wideEnough.matches) {
+    warn("viewport is " + window.innerWidth + "px, below the " + minWidth +
+         "px threshold (disabled on small screens to protect scrolling). " +
+         "He appears on his own if the window is widened past it.");
+  }
 
   /* Deliberately no scroll wiring: he wanders on his own schedule, and the
      page's scroll position is nothing to do with him. */
 
-  return companion;
+  /* A stable handle, because the instance behind it comes and goes with the
+     viewport. Every method is safe to call while he is unmounted. */
+  return {
+    get mounted() { return !!current; },
+    get instance() { return current; },
+
+    setExcited: function (on) { if (current) current.setExcited(on); },
+    setState: function (name) { if (current) current.setState(name); },
+    getState: function () { return current ? current.getState() : null; },
+    getPhase: function () { return current ? current.getPhase() : null; },
+    isRunning: function () { return current ? current.isRunning() : false; },
+    resize: function () { if (current) current.resize(); },
+
+    debug: function () {
+      return current ? current.debug()
+        : { mounted: false, innerWidth: window.innerWidth, minWidth: minWidth };
+    },
+
+    dispose: function () {
+      if (wideEnough.removeEventListener) wideEnough.removeEventListener("change", onChange);
+      else wideEnough.removeListener(onChange);
+      clearTimeout(settle);
+      destroy();
+    }
+  };
 }
