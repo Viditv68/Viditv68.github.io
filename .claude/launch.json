@@ -3,13 +3,8 @@
   "configurations": [
     {
       "name": "portfolio",
-      "runtimeExecutable": "node",
-      "runtimeArgs": [
-        "C:/Users/user/AppData/Local/Temp/claude/D--Github-Viditv68-github-io/5815070a-5bdf-4f26-9c7f-a6f021fc7bb0/scratchpad/devserver.js",
-        "D:/Github/Viditv68.github.io",
-        "4173",
-        "C:/Users/user/AppData/Local/Temp/claude/D--Github-Viditv68-github-io/5815070a-5bdf-4f26-9c7f-a6f021fc7bb0/scratchpad/shots"
-      ],
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "4173", "--bind", "127.0.0.1"],
       "port": 4173
     }
   ]

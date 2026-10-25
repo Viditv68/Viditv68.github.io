@@ -1,0 +1,6 @@
+# Never rewrite line endings in these; a CRLF inserted into a PDF corrupts it.
+*.pdf binary
+*.mp4 binary
+*.glb binary
+*.jpg binary
+*.png binary
