@@ -36,6 +36,7 @@
   import { mountCompanion } from "./assets/companion.js";
   /* Exposed so site.js can tell him to bounce while a card is spotlit. */
   window.__companion = mountCompanion();
+  import("./assets/hero-mascot.js").then(function (m) { m.mountHeroMascot(document.querySelector(".hero__mascot")); });
 </script>
 </head>
 <body>
@@ -136,6 +137,7 @@
         <span class="hero__readout hero__readout--top">Player 01</span>
         <img src="assets/avatar.jpg" alt="" width="400" height="400" fetchpriority="high">
         <span class="hero__readout hero__readout--bottom">Unity · C# · C++</span>
+        <canvas class="hero__mascot" aria-hidden="true"></canvas>
       </figure>
 
     </div>
