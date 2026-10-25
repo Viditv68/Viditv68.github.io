@@ -160,8 +160,6 @@ ul {
   height: 100%;
   z-index: -1;
   pointer-events: none;
-  /* the buffer is a third of screen size; nearest upscaling keeps the dither crisp */
-  image-rendering: pixelated;
 }
 
 /* --- Screen-reader-only text ------------------------------------------- */
