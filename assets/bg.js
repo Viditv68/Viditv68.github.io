@@ -150,6 +150,8 @@
   }
 
   function resize() {
+    // A frame loaded hidden reports 0×0; build once there is a real size.
+    if (!window.innerWidth || !window.innerHeight) return;
     // Display buffer at 0.6x of the (1.5-capped) device resolution: smoke is soft anyway.
     var s = Math.min(window.devicePixelRatio || 1, 1.5) * 0.6;
     canvas.width = Math.round(window.innerWidth * s);
@@ -271,6 +273,7 @@
   }
 
   function ambient() {
+    if (!vel) return;
     // Puffs start right of the copy column so the hero text keeps its contrast.
     var a = Math.random() * Math.PI * 2, s = 260 + Math.random() * 320;
     splat(0.45 + Math.random() * 0.5, 0.2 + Math.random() * 0.7,
@@ -289,6 +292,7 @@
   document.body.insertBefore(canvas, document.body.firstChild);
 
   function settle() {
+    if (!vel) return;
     for (var k = 0; k < 4; k++) ambient();
     for (var s = 0; s < 90; s++) step(1 / 60);
     show();
@@ -305,6 +309,7 @@
   var scroll = window.scrollY || 0, lastScroll = scroll;
 
   function frame(now) {
+    if (!vel) { raf = requestAnimationFrame(frame); return; } // still waiting for a non-zero size
     var dt = last ? Math.min((now - last) / 1000, 1 / 30) : 1 / 60;
     last = now;
     if (now > nextPuff) { ambient(); nextPuff = now + 2200 + Math.random() * 1800; }
