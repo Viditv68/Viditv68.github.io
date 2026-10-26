@@ -1036,14 +1036,15 @@ ul {
   margin-top: 20px;
 }
 
-/* Zeph stands in front of the portrait's lower-left corner, clear of the
-   face, so his look toward the copy and the cursor reads across the hero. */
+/* Zeph stands under the portrait, like a player under his card. The gap
+   between the copy and the frame is under 90px at every width, so beside
+   the photo he would always cover it or the text. */
 .hero__mascot {
   position: absolute;
-  left: -42%;
-  bottom: -10%;
-  width: 72%;
-  height: 92%;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 100%;
+  height: clamp(150px, 24vh, 220px);
   z-index: 2;
   pointer-events: none;
 }
