@@ -284,7 +284,7 @@ export function createCompanion(options) {
   var current = null;
 
   var x = 0;                // world X of the pivot
-  var minX = -1, maxX = 1;
+  var minX = -1, maxX = 1, fullSpan = 2;
   var facing = 0;           // current rotation.y
   var facingTarget = 0;
   var speed = 0;            // world units/second, this frame
@@ -334,6 +334,14 @@ export function createCompanion(options) {
     var margin = bodyHalf + T.edgeGap;
     minX = -halfW + margin;
     maxX = halfW - margin;
+    fullSpan = maxX - minX;
+    /* Keep him in the empty gutter left of the page content, so he never walks
+       over text or buttons. Pages without a .wrap keep the full width. */
+    var content = document.querySelector("main .wrap");
+    if (content) {
+      var gutterPx = content.getBoundingClientRect().left + parseFloat(getComputedStyle(content).paddingLeft);
+      maxX = Math.max(minX, -halfW + gutterPx * (2 * halfW / w) - margin);
+    }
     if (minX > maxX) minX = maxX = 0;
     x = clamp(x, minX, maxX);
     destX = clamp(destX, minX, maxX);
@@ -419,7 +427,8 @@ export function createCompanion(options) {
   function beginTrip() {
     destX = pickDestination();
     var dist = Math.abs(destX - x);
-    travelGait = (dist > (maxX - minX) * T.runAbove && actions.run) ? "run" : "walk";
+    // Measured against the screen, not the gutter: a short hop should stay a walk.
+    travelGait = (dist > fullSpan * T.runAbove && actions.run) ? "run" : "walk";
     travelT = 0;
     facingTarget = (destX > x) ? HALF_PI : -HALF_PI;
     phase = "turnOut";
@@ -845,15 +854,15 @@ export function mountCompanion(opts) {
     return null;
   }
 
-  /* Small screens: the canvas is a full-width GPU surface composited over
-     every frame of the page, which is exactly where a mid-range phone can
-     least afford it. Below this width he is not created at all.
+  /* Narrower screens: page content reaches too close to the edge to leave a
+     gutter he fits in, so below this width he is not created at all. It also
+     spares phones a full-width GPU surface composited over every frame.
 
      Watched rather than checked once, because a window that *starts* narrow
      and is then widened used to leave him gone until a reload — which looks
      exactly like a bug. Crossing the threshold either way now mounts or
      disposes him. */
-  var minWidth = opts.minWidth || 700;
+  var minWidth = opts.minWidth || 1340;
   var wideEnough = window.matchMedia("(min-width: " + minWidth + "px)");
 
   var current = null;
