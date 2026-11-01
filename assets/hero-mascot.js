@@ -1,10 +1,10 @@
 /* =========================================================================
-   Hero mascot — Zeph, standing in front of the portrait frame.
+   Hero mascot — Zeph, standing on top of the gameplay reel.
    The character itself lives in mascot.js (built from three.js primitives,
    no model file). This module owns the renderer, the lighting that ties him
    to the fluid background, and the cursor → look-angle mapping.
 
-   Wide screens only: at 860px and below the portrait shrinks to a thumbnail
+   Wide screens only: at 980px and below the hero stacks
    and there is no room for him, so no renderer is ever created there. The
    loop also stops while the hero is scrolled out of view or the tab is
    hidden, so past the first screen he costs nothing.
@@ -21,7 +21,7 @@ export function mountHeroMascot(canvas) {
   if (!canvas || location.protocol === "file:") return null;
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const wide = window.matchMedia("(min-width: 861px)");
+  const wide = window.matchMedia("(min-width: 981px)");
 
   var renderer = null, scene, camera, zeph, rimU;
   var raf = 0, last = 0, inView = true;

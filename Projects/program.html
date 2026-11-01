@@ -1,329 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>document.documentElement.classList.add('js');</script>
+<script>document.documentElement.classList.add("js");</script>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shipped Titles — Vidit Rawat</title>
-<meta name="description" content="Titles Vidit Rawat has worked on as a Unity developer: Lokko (Sony as publisher, open beta on PS5, Steam and iOS), Crowd Sort, Chef Diary and Pet Shelter Mania — gameplay, progression systems and designer tooling.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shipped Work · Vidit Rawat</title>
+<meta name="description" content="What Vidit Rawat built on Lokko, Crowd Sort, Chef Diary and Pet Shelter Mania.">
+<link rel="canonical" href="https://viditv68.github.io/Projects/program.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shipped Work · Vidit Rawat">
+<meta property="og:description" content="What Vidit Rawat built on Lokko, Crowd Sort, Chef Diary and Pet Shelter Mania.">
+<meta property="og:url" content="https://viditv68.github.io/Projects/program.html">
+<meta property="og:image" content="https://viditv68.github.io/assets/avatar.jpg">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/site.css">
-<script src="../assets/bg.js" defer></script>
-<script src="../assets/site.js" defer></script>
-
-<!-- Scroll companion. An import map plus a module script — no bundler, so it
-     stays a plain GitHub Pages site. The model path resolves from the
-     module's own URL, so this is identical on every page regardless of depth. -->
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-  }
-}
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css?v=3">
+<script src="../assets/bg.js?v=3" defer></script>
+<script src="../assets/site.js?v=3" defer></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 <script type="module">
   import { mountCompanion } from "../assets/companion.js";
-  /* Exposed so site.js can tell him to bounce while a card is spotlit. */
   window.__companion = mountCompanion();
+  
 </script>
 </head>
 <body>
-
-<!-- icon sprite -->
-<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
-  <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></symbol>
-  <symbol id="i-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></symbol>
-  <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z"/></symbol>
-  <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><line x1="4" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
-  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M3 5h18v14H3z"/><polyline points="3 6 12 13 21 6"/></symbol>
-  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></symbol>
-  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
-  <symbol id="i-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></symbol>
-  <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
-  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="9" y="9" width="12" height="12"/><path d="M5 15H3V3h12v2"/></symbol>
-  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><polyline points="9 5 16 12 9 19"/></symbol>
-</svg>
-
-<div class="scanlines"></div>
-<a class="skip-link" href="#main">Skip to content</a>
-
-<header class="hud-nav hud-nav--solid">
-  <div class="hud-nav__inner">
-    <a class="hud-nav__brand" href="../index.html">
-      <span class="hud-nav__badge">VR</span> <span class="hud-nav__name">Vidit Rawat</span>
-    </a>
-    <nav class="hud-nav__links" id="nav-links" aria-label="Main">
-      <a class="hud-nav__link is-active" href="../index.html#work">Work</a>
-      <a class="hud-nav__link" href="../index.html#projects">Projects</a>
-      <a class="hud-nav__link" href="../index.html#experience">Experience</a>
-      <a class="hud-nav__link" href="../index.html#skills">Skills</a>
-      <a class="hud-nav__link" href="../index.html#contact">Contact</a>
-    </nav>
-    <div class="hud-nav__actions">
-      <a class="hud-nav__btn" href="../Resume/ViditRawat_Resume.pdf" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-download"/></svg><span class="hud-nav__btn-label">Résumé</span></a>
-      <a class="hud-nav__btn hud-nav__btn--hire" href="mailto:viditrawatv68@gmail.com"><svg aria-hidden="true"><use href="#i-mail"/></svg><span class="hud-nav__btn-label">Hire me</span></a>
-    </div>
-    <button class="hud-nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation">
-      <svg class="icon-open"><use href="#i-menu"/></svg>
-      <svg class="icon-close"><use href="#i-close"/></svg>
-    </button>
-  </div>
-</header>
-
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav"><div class="wrap nav__in">
+  <a class="brand" href="../index.html">Vidit Rawat</a>
+  <nav class="nav__links" aria-label="Main"><a class="link" href="../index.html#work" aria-current=page>Work</a><a class="link" href="../program/program.html">Prototypes</a><a class="link" href="../index.html#experience">Experience</a><a class="link" href="../Contact/contact.html">Contact</a></nav>
+  <a class="btn btn--sm hide-s" href="../Resume/ViditRawat_Resume.pdf" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="../assets/sprite.svg#i-download"/></svg> Résumé</a>
+  <a class="btn btn--sm btn--primary" href="mailto:viditrawatv68@gmail.com"><svg class="i" aria-hidden="true"><use href="../assets/sprite.svg#i-mail"/></svg> Email me</a>
+</div></header>
 <main id="main">
-
-  <section class="page-head">
-    <div class="wrap">
-      <p class="kicker" data-reveal style="--i:0">01 — Shipped</p>
-      <h1 data-reveal style="--i:1">Shipped <em>Titles</em></h1>
-      <p data-reveal style="--i:2">
-        Console and mobile titles I've worked on as a developer — gameplay, progression and economy
-        systems, and the editor tooling behind them. Clips are captured from builds and from the Unity editor; press
-        play to load one.
-      </p>
-    </div>
-  </section>
-
-  <section class="section section--tight">
-    <div class="wrap">
-
-      <!-- ===== Lokko ===== -->
-      <article class="case brackets" id="lokko" data-reveal>
-        <div class="case__head">
-          <span class="case__index">// 01</span>
-          <h2 class="case__title">Lokko</h2>
-        </div>
-        <p class="case__stack">C# · Unity · PS5 · Steam · iOS · AWS Cognito</p>
-
-        <div class="case__media">
-          <a class="case__trailer"
-             href="https://www.youtube.com/watch?v=rm1nxBrbVCo"
-             target="_blank" rel="noopener noreferrer"
-             aria-label="Watch the Lokko trailer on the official PlayStation channel (opens in a new tab)">
-            <img src="https://i.ytimg.com/vi/rm1nxBrbVCo/maxresdefault.jpg"
-                 alt="Lokko — still from the PlayStation GDC trailer"
-                 width="1280" height="720">
-            <span class="play-badge"><svg><use href="#i-play"/></svg></span>
-          </a>
-        </div>
-
-        <div class="case__grid">
-          <ul class="hud-list">
-            <li>Owned the full <strong>iOS architecture</strong>, including touch controls across every gameplay mechanic.</li>
-            <li>Engineered a reusable <strong>local PvP framework</strong> — new levels need only level design — plus a wave-based enemy spawner with difficulty scaling.</li>
-            <li>Developed the <strong>two-player co-op robot level</strong> end to end: PS5 couch co-op on one console, a pilot who drives and punches and a gunner whose blocks snap into platforms.</li>
-            <li>Optimised the in-game <strong>Level Editor</strong> and adapted it into a separate iOS project.</li>
-            <li>Platform-specific player and camera configs (speed, jump, roll) for iOS and console, using ScriptableObject-Architecture.</li>
-            <li>Build tools that apply iOS or console <strong>animation sets automatically at build time</strong>, with a per-player animation report.</li>
-            <li>Secure auth on <strong>AWS Cognito</strong> — email OTP verification and account deletion via Amazon SES — and the in-game wallet.</li>
-          </ul>
-
-          <aside>
-            <div class="case__rail">
-              <h4>Role</h4>
-              <p style="margin:0;color:var(--muted);font-size:.93rem">Unity Developer · Appy Monkeys</p>
-            </div>
-            <div class="case__rail">
-              <h4>Status</h4>
-              <p style="margin:0;color:var(--muted);font-size:.93rem">Open beta on PS5, Steam and iOS · Sony as publisher · Showcased at BitSummit</p>
-            </div>
-            <div class="case__rail">
-              <h4>Links</h4>
-              <div class="store-row" style="margin:0">
-                <a class="store-link" href="https://store.playstation.com/en-us/concept/10013643" target="_blank" rel="noopener noreferrer">PlayStation Store <svg><use href="#i-external"/></svg></a>
-                <a class="store-link" href="https://store.steampowered.com/app/1810630/Lokko/" target="_blank" rel="noopener noreferrer">Steam <svg><use href="#i-external"/></svg></a>
-                <a class="store-link" href="https://apps.apple.com/us/app/lokko/id1668799195" target="_blank" rel="noopener noreferrer">App Store <svg><use href="#i-external"/></svg></a>
-                <a class="store-link store-link--play" href="https://www.youtube.com/watch?v=rm1nxBrbVCo" target="_blank" rel="noopener noreferrer">Watch trailer <svg><use href="#i-play"/></svg></a>
-              </div>
-            </div>
-          </aside>
-        </div>
-
-        <p class="card__credit">Trailer &amp; thumbnail © Sony Interactive Entertainment — opens on the official PlayStation channel.</p>
-      </article>
-
-      <!-- ===== Crowd Sort ===== -->
-      <article class="case brackets" id="crowd-sort" data-reveal>
-        <div class="case__head">
-          <span class="case__index">// 02</span>
-          <h2 class="case__title">Crowd Sort</h2>
-        </div>
-        <p class="case__stack">C# · Unity · UniRx · DOTween</p>
-
-        <div class="case__media">
-          <video controls preload="none" poster="Posters/CrowdSort.jpg" width="2048" height="1114">
-            <source src="Videos/CrowdSort.mp4" type="video/mp4">
-            Your browser can't play this clip.
-          </video>
-        </div>
-
-        <div class="case__grid">
-          <ul class="hud-list">
-            <li>Built the project <strong>from scratch as the only developer</strong>, alongside one designer, one artist and one animator.</li>
-            <li>Took requirements from the designer and built an <strong>in-play level tool</strong>: tile count, blockers on tiles and per-level difficulty are all set during gameplay and saved automatically — designers never touch a JSON file or a scriptable object.</li>
-            <li>Integrated analytics and ads.</li>
-            <li>Worked with third-party plugins including analytics, UniRx and DOTween.</li>
-            <li>Shipped the whole project in <strong>16 days</strong>.</li>
-          </ul>
-
-          <aside>
-            <div class="case__rail">
-              <h4>Role</h4>
-              <p style="margin:0;color:var(--muted);font-size:.93rem">Sole developer</p>
-            </div>
-            <div class="case__rail">
-              <h4>Tech</h4>
-              <div class="tags">
-                <span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">UniRx</span><span class="tag">DOTween</span><span class="tag">Analytics</span>
-              </div>
-            </div>
-            <div class="case__rail">
-              <h4>Links</h4>
-              <a class="btn btn--ghost" style="width:100%;justify-content:center" href="https://play.google.com/store/apps/details?id=com.cympl.crowdsort&amp;hl=en">
-                <svg><use href="#i-play"/></svg> Google Play
-              </a>
-            </div>
-          </aside>
-        </div>
-      </article>
-
-      <!-- ===== Chef Diary ===== -->
-      <article class="case brackets" id="chef-diary" data-reveal>
-        <div class="case__head">
-          <span class="case__index">// 03</span>
-          <h2 class="case__title">Chef Diary: Cooking &amp; Romance</h2>
-        </div>
-        <p class="case__stack">C# · Unity · Firebase · UniRx · DOTween</p>
-
-        <div class="case__media">
-          <video controls preload="none" poster="Posters/ChefDiary.jpg" width="1280" height="590">
-            <source src="Videos/ChefDiary.mp4" type="video/mp4">
-            Your browser can't play this clip.
-          </video>
-        </div>
-
-        <div class="case__grid">
-          <ul class="hud-list">
-            <li>Implemented <strong>tier 1–3 achievements</strong>, customer patience, notifications, the rate-us upgrade system, chef streak, battle pass, piggy bank and many more design features using DOTween, Firebase, Google Play Review and UniRx.</li>
-            <li>Took ownership of the <strong>Story Narration module</strong> and refactored it, adding Conversation and Episode tools that assign narration and episode data from a Google Spreadsheet into scriptable objects.</li>
-            <li>Worked on the refactoring of several other modules.</li>
-            <li>Analysed the existing code structure across different gameplay features in Unity.</li>
-          </ul>
-
-          <aside>
-            <div class="case__rail">
-              <h4>Focus</h4>
-              <p style="margin:0;color:var(--muted);font-size:.93rem">Progression systems &amp; narration tooling</p>
-            </div>
-            <div class="case__rail">
-              <h4>Tech</h4>
-              <div class="tags">
-                <span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">Firebase</span><span class="tag">UniRx</span><span class="tag">DOTween</span>
-              </div>
-            </div>
-            <div class="case__rail">
-              <h4>Links</h4>
-              <a class="btn btn--ghost" style="width:100%;justify-content:center" href="https://play.google.com/store/apps/details?id=com.cympl.cooking.story&amp;hl=en&amp;gl=US&amp;pli=1">
-                <svg><use href="#i-play"/></svg> Google Play
-              </a>
-            </div>
-          </aside>
-        </div>
-      </article>
-
-      <!-- ===== Pet Shelter Mania ===== -->
-      <article class="case brackets" id="pet-shelter" data-reveal>
-        <div class="case__head">
-          <span class="case__index">// 04</span>
-          <h2 class="case__title">Pet Shelter Mania</h2>
-        </div>
-        <p class="case__stack">C# · Unity · Firebase · IAP</p>
-
-        <div class="case__media-pair">
-          <div class="case__media">
-            <video controls preload="none" poster="Posters/PetShelter_1.jpg" width="1920" height="968">
-              <source src="Videos/PetShelter_1.mp4" type="video/mp4">
-              Your browser can't play this clip.
-            </video>
-          </div>
-          <div class="case__media">
-            <video controls preload="none" poster="Posters/PetShelter_2.jpg" width="1920" height="968">
-              <source src="Videos/PetShelter_2.mp4" type="video/mp4">
-              Your browser can't play this clip.
-            </video>
-          </div>
-        </div>
-
-        <div class="case__grid">
-          <ul class="hud-list">
-            <li>Implemented the <strong>energy system, upgrade system</strong>, special items, spin wheel, IAP store, achievements, milestone rewards, rate-us and many more design features.</li>
-            <li>Worked with a senior developer on a <strong>Battle Pass</strong> that rotates after a set number of days.</li>
-            <li>Built level goals driven by <strong>CSV files imported from Firebase</strong>.</li>
-          </ul>
-
-          <aside>
-            <div class="case__rail">
-              <h4>Focus</h4>
-              <p style="margin:0;color:var(--muted);font-size:.93rem">Economy, rewards &amp; live content</p>
-            </div>
-            <div class="case__rail">
-              <h4>Tech</h4>
-              <div class="tags">
-                <span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">Firebase</span><span class="tag">IAP</span>
-              </div>
-            </div>
-            <div class="case__rail">
-              <h4>Links</h4>
-              <a class="btn btn--ghost" style="width:100%;justify-content:center" href="https://play.google.com/store/apps/details?id=com.CYMPLSTUDIOS.Petscapes&amp;hl=en_IN">
-                <svg><use href="#i-play"/></svg> Google Play
-              </a>
-            </div>
-          </aside>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
-  <section class="section section--tight">
-    <div class="wrap">
-      <div class="cta brackets" data-reveal>
-        <p class="kicker" style="justify-content:center">Next</p>
-        <h2>Into the <em>Lab</em></h2>
-        <p>Prototypes where I pull one system apart at a time — AI, input, camera work, architecture.</p>
-        <div class="btn-row">
-          <a class="btn" href="../program/program.html">Open the lab <svg><use href="#i-arrow"/></svg></a>
-          <a class="btn btn--ghost" href="mailto:viditrawatv68@gmail.com"><svg><use href="#i-mail"/></svg> Email me</a>
-          <a class="btn btn--ghost btn--violet" href="../Resume/ViditRawat_Resume.pdf" target="_blank" rel="noopener"><svg><use href="#i-download"/></svg> Résumé</a>
-        </div>
-        <div class="cta__direct">
-          <a href="mailto:viditrawatv68@gmail.com"><svg aria-hidden="true"><use href="#i-mail"/></svg> viditrawatv68@gmail.com</a>
-          <a href="https://www.linkedin.com/in/vidit-rawat-baa13816b/"><svg aria-hidden="true"><use href="#i-linkedin"/></svg> LinkedIn</a>
-          <a href="../Contact/contact.html"><svg aria-hidden="true"><use href="#i-arrow"/></svg> Contact form</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
+<section class="head"><div class="wrap"><span class="label">SHIPPED WORK</span><h1>Games I helped ship</h1>
+  <p>What I personally built on each title, from gameplay to the tools behind it.</p></div></section>
+<section class="pcases"><div class="wrap">
+<article class="pcase" id="lokko" data-up><div class="case">
+  <div><h2>Lokko</h2><p class="pcase__lead">A Unity title with Sony as publisher, in open beta on PS5, Steam and iOS, and showcased at BitSummit.</p><a class="case__trailer" href="https://www.youtube.com/watch?v=rm1nxBrbVCo" target="_blank" rel="noopener noreferrer" aria-label="Watch the Lokko trailer on the official PlayStation channel (opens in a new tab)"><img src="https://i.ytimg.com/vi/rm1nxBrbVCo/maxresdefault.jpg" alt="Lokko, still from the PlayStation GDC trailer" width="1280" height="720" loading="lazy"><span class="play"><svg class="i" aria-hidden="true"><use href="../assets/sprite.svg#i-play"/></svg></span></a><p class="note">Trailer and thumbnail © Sony Interactive Entertainment. Opens on the official PlayStation channel.</p><h3>What I built</h3><ul class="built"><li>Owned the full <strong>iOS architecture</strong>, including touch controls across every gameplay mechanic.</li><li>Engineered a reusable <strong>local PvP framework</strong>, so new levels need only level design, plus a wave-based enemy spawner with difficulty scaling.</li><li>Developed the <strong>two-player co-op robot level</strong> end to end: PS5 couch co-op on one console, with a pilot who drives and punches and a gunner whose blocks snap into platforms.</li><li>Optimised the in-game <strong>Level Editor</strong> and adapted it into a separate iOS project.</li><li>Set up platform-specific player and camera configs (speed, jump, roll) for iOS and console, using ScriptableObject-Architecture.</li><li>Created build tools that apply iOS or console <strong>animation sets automatically at build time</strong>, with a per-player animation report.</li><li>Delivered authentication on <strong>AWS Cognito</strong> (email OTP, account deletion via Amazon SES) and shipped the in-game wallet.</li><li>Mentored junior developers through code reviews and led knowledge-transfer sessions.</li></ul></div>
+  <aside class="rail"><dl class="facts"><div><dt>ROLE</dt><dd>Unity Developer, Appy Monkeys</dd></div><div><dt>STATUS</dt><dd>Open beta, Sony as publisher</dd></div><div><dt>ENGINE</dt><dd>Unity · C#</dd></div><div><dt>PLATFORM</dt><dd>PS5 · Steam · iOS</dd></div><div><dt>BACKEND</dt><dd>AWS Cognito · Amazon SES</dd></div></dl><a class="btn" href="https://store.playstation.com/en-us/concept/10013643" target="_blank" rel="noopener noreferrer"><svg class="i" aria-hidden="true"><use href="../assets/sprite.svg#i-external"/></svg> PlayStation Store</a><a class="btn" href="https://store.steampowered.com/app/1810630/Lokko/" target="_blank" rel="noopener noreferrer"><svg class="i" aria-hidden="true"><use href="../assets/sprite.svg#i-external"/></svg> Steam</a><a class="btn" href="https://apps.apple.com/us/app/lokko/id1668799195" target="_blank" rel="noopener noreferrer"><svg class="i" aria-hidden="true"><use href="../assets/sprite.svg#i-external"/></svg> App Store</a><a class="btn btn--primary" href="mailto:viditrawatv68@gmail.com"><svg class="i" aria-hidden="true"><use href="../assets/sprite.svg#i-mail"/></svg> Talk to me about this</a></aside>
+</div></article><article class="pcase" id="crowd-sort" data-up><div class="case">
+  <div><h2>Crowd Sort</h2><p class="pcase__lead">A mobile sorting game built from scratch in 16 days, with a level tool designers use during play.</p><video class="case__video" controls preload="none" poster="../Projects/Posters/CrowdSort-card.jpg" width="2048" height="1114"><source src="../Projects/Videos/CrowdSort.mp4" type="video/mp4">Your browser cannot play this clip.</video><h3>The brief</h3><p>A team of four: me as the only developer, plus one designer, one artist and one animator. The designer asked for a way to set up levels without hand-editing data files.</p><h3>What I built</h3><ul class="built"><li>The full game, <strong>from scratch</strong>.</li><li>An <strong>in-play level tool</strong>: tile count, blockers and per-level difficulty are set during gameplay and saved automatically. Designers never touch a JSON file or a ScriptableObject.</li><li>Analytics and ads integration, plus third-party plugins including UniRx and DOTween.</li></ul><h3>The result</h3><p>The whole project shipped in <strong>16 days</strong>.</p></div>
+  <aside class="rail"><dl class="facts"><div><dt>ROLE</dt><dd>Sole developer</dd></div><div><dt>TEAM</dt><dd>4 people</dd></div><div><dt>TIMELINE</dt><dd>16 days</dd></div><div><dt>ENGINE</dt><dd>Unity · C#</dd></div><div><dt>PLUGINS</dt><dd>UniRx · DOTween</dd></div><div><dt>PLATFORM</dt><dd>Android</dd></div></dl><a class="btn" href="https://play.google.com/store/apps/details?id=com.cympl.crowdsort&hl=en" target="_blank" rel="noopener noreferrer"><svg class="i" aria-hidden="true"><use href="../assets/sprite.svg#i-play"/></svg> Google Play</a><a class="btn btn--primary" href="mailto:viditrawatv68@gmail.com"><svg class="i" aria-hidden="true"><use href="../assets/sprite.svg#i-mail"/></svg> Talk to me about this</a></aside>
+</div></article><article class="pcase" id="chef-diary" data-up><div class="case">
+  <div><h2>Chef Diary: Cooking &amp; Romance</h2><p class="pcase__lead">A cooking and romance sim where I built progression systems and took ownership of the narration tooling.</p><video class="case__video" controls preload="none" poster="../Projects/Posters/ChefDiary.jpg" width="1280" height="590"><source src="../Projects/Videos/ChefDiary.mp4" type="video/mp4">Your browser cannot play this clip.</video><h3>What I built</h3><ul class="built"><li><strong>Tier 1–3 achievements</strong>, customer patience, notifications, the rate-us upgrade system, chef streak, battle pass and piggy bank, using DOTween, Firebase, Google Play Review and UniRx.</li><li>Took ownership of the <strong>Story Narration module</strong> and refactored it, adding Conversation and Episode tools that assign narration and episode data from a Google Spreadsheet into ScriptableObjects.</li><li>Refactored several other modules and analysed the existing code structure across gameplay features.</li></ul></div>
+  <aside class="rail"><dl class="facts"><div><dt>ROLE</dt><dd>Game Programmer, CYMPL Studios</dd></div><div><dt>FOCUS</dt><dd>Progression and narration tooling</dd></div><div><dt>ENGINE</dt><dd>Unity · C#</dd></div><div><dt>SERVICES</dt><dd>Firebase · UniRx · DOTween</dd></div><div><dt>PLATFORM</dt><dd>Android</dd></div></dl><a class="btn" href="https://play.google.com/store/apps/details?id=com.cympl.cooking.story&hl=en&gl=US&pli=1" target="_blank" rel="noopener noreferrer"><svg class="i" aria-hidden="true"><use href="../assets/sprite.svg#i-play"/></svg> Google Play</a><a class="btn btn--primary" href="mailto:viditrawatv68@gmail.com"><svg class="i" aria-hidden="true"><use href="../assets/sprite.svg#i-mail"/></svg> Talk to me about this</a></aside>
+</div></article><article class="pcase" id="pet-shelter" data-up><div class="case">
+  <div><h2>Pet Shelter Mania</h2><p class="pcase__lead">A time-management sim where I worked on economy, rewards and live content.</p><div class="case__pair"><video class="case__video" controls preload="none" poster="../Projects/Posters/PetShelter_1.jpg" width="1920" height="968"><source src="../Projects/Videos/PetShelter_1.mp4" type="video/mp4">Your browser cannot play this clip.</video><video class="case__video" controls preload="none" poster="../Projects/Posters/PetShelter_2.jpg" width="1920" height="968"><source src="../Projects/Videos/PetShelter_2.mp4" type="video/mp4">Your browser cannot play this clip.</video></div><h3>What I built</h3><ul class="built"><li>The <strong>energy system and upgrade system</strong>, special items, spin wheel, IAP store, achievements, milestone rewards and rate-us.</li><li>Worked with a senior developer on a <strong>Battle Pass</strong> that rotates after a set number of days.</li><li>Built level goals driven by <strong>CSV files imported from Firebase</strong>.</li></ul></div>
+  <aside class="rail"><dl class="facts"><div><dt>ROLE</dt><dd>Game Programmer, CYMPL Studios</dd></div><div><dt>FOCUS</dt><dd>Economy, rewards and live content</dd></div><div><dt>ENGINE</dt><dd>Unity · C#</dd></div><div><dt>SERVICES</dt><dd>Firebase · IAP</dd></div><div><dt>PLATFORM</dt><dd>Android</dd></div></dl><a class="btn" href="https://play.google.com/store/apps/details?id=com.CYMPLSTUDIOS.Petscapes&hl=en_IN" target="_blank" rel="noopener noreferrer"><svg class="i" aria-hidden="true"><use href="../assets/sprite.svg#i-play"/></svg> Google Play</a><a class="btn btn--primary" href="mailto:viditrawatv68@gmail.com"><svg class="i" aria-hidden="true"><use href="../assets/sprite.svg#i-mail"/></svg> Talk to me about this</a></aside>
+</div></article></div></section>
+<section class="sec"><div class="wrap"><div class="cta" data-up><h2>Want to read my code?</h2><p>The prototypes have public source on GitHub.</p><div class="row"><a class="btn btn--primary" href="../program/program.html">See prototypes <svg class="i" aria-hidden="true"><use href="../assets/sprite.svg#i-arrow"/></svg></a><a class="btn" href="mailto:viditrawatv68@gmail.com"><svg class="i" aria-hidden="true"><use href="../assets/sprite.svg#i-mail"/></svg> Email me</a></div></div></div></section>
 </main>
-
-<footer class="footer">
-  <div class="wrap footer__inner">
-    <p class="footer__note">&copy; <span data-year>2024</span> Vidit Rawat · <a href="mailto:viditrawatv68@gmail.com">viditrawatv68@gmail.com</a></p>
-    <div class="socials">
-      <a href="https://www.linkedin.com/in/vidit-rawat-baa13816b/" aria-label="LinkedIn"><svg><use href="#i-linkedin"/></svg></a>
-      <a href="https://github.com/Viditv68" aria-label="GitHub"><svg><use href="#i-github"/></svg></a>
-      <a href="../Resume/ViditRawat_Resume.pdf" target="_blank" rel="noopener" aria-label="Résumé (PDF)"><svg><use href="#i-download"/></svg></a>
-      <a href="mailto:viditrawatv68@gmail.com" aria-label="Email"><svg><use href="#i-mail"/></svg></a>
-    </div>
-  </div>
-</footer>
-
+<footer class="foot"><div class="wrap">
+  <span>Vidit Rawat · Unity Developer · Bengaluru, India</span>
+  <span><a href="mailto:viditrawatv68@gmail.com">Email</a><a href="https://www.linkedin.com/in/vidit-rawat-baa13816b/">LinkedIn</a><a href="https://github.com/Viditv68">GitHub</a><a href="../Resume/ViditRawat_Resume.pdf">Résumé</a></span>
+</div></footer>
 </body>
 </html>

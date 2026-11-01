@@ -1,750 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>document.documentElement.classList.add('js');</script>
+<script>document.documentElement.classList.add("js");</script>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vidit Rawat — Unity Developer · Gameplay &amp; Tools</title>
-<meta name="description" content="Unity developer with 5+ years building gameplay systems, editor tooling and backend-connected features across console, mobile and PC. Currently developing Lokko (Sony as publisher), in open beta on PS5, Steam and iOS.">
-<meta property="og:title" content="Vidit Rawat — Unity Developer · Gameplay &amp; Tools">
-<meta property="og:description" content="Gameplay systems, editor tooling and backend-connected features in Unity. Now developing Lokko (Sony as publisher), in open beta on PS5, Steam and iOS.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vidit Rawat · Unity Developer, Gameplay &amp; Tools</title>
+<meta name="description" content="Unity developer with 5+ years in gameplay systems and designer tools. Currently on Lokko, with Sony as publisher, in open beta on PS5, Steam and iOS.">
+<link rel="canonical" href="https://viditv68.github.io/">
 <meta property="og:type" content="website">
+<meta property="og:title" content="Vidit Rawat · Unity Developer, Gameplay &amp; Tools">
+<meta property="og:description" content="Unity developer with 5+ years in gameplay systems and designer tools. Currently on Lokko, with Sony as publisher, in open beta on PS5, Steam and iOS.">
 <meta property="og:url" content="https://viditv68.github.io/">
 <meta property="og:image" content="https://viditv68.github.io/assets/avatar.jpg">
-<meta name="twitter:card" content="summary">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css">
-<script src="assets/bg.js" defer></script>
-<script src="assets/site.js" defer></script>
-
-<!-- Scroll companion. An import map plus a module script — no bundler, so it
-     stays a plain GitHub Pages site. Browsers without import-map support
-     simply skip the module and the page is unaffected. -->
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-  }
-}
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=3">
+<script src="assets/bg.js?v=3" defer></script>
+<script src="assets/site.js?v=3" defer></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 <script type="module">
   import { mountCompanion } from "./assets/companion.js";
-  /* Exposed so site.js can tell him to bounce while a card is spotlit. */
   window.__companion = mountCompanion();
   import("./assets/hero-mascot.js").then(function (m) { m.mountHeroMascot(document.querySelector(".hero__mascot")); });
 </script>
 </head>
 <body>
-
-<!-- icon sprite -->
-<!-- icon sprite -->
-<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
-  <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></symbol>
-  <symbol id="i-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></symbol>
-  <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z"/></symbol>
-  <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><line x1="4" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
-  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M3 5h18v14H3z"/><polyline points="3 6 12 13 21 6"/></symbol>
-  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></symbol>
-  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
-  <symbol id="i-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></symbol>
-  <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
-  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="9" y="9" width="12" height="12"/><path d="M5 15H3V3h12v2"/></symbol>
-  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><polyline points="9 5 16 12 9 19"/></symbol>
-</svg>
-
-<div class="scanlines"></div>
-<a class="skip-link" href="#main">Skip to content</a>
-
-<header class="hud-nav">
-  <div class="hud-nav__inner">
-    <a class="hud-nav__brand" href="index.html">
-      <span class="hud-nav__badge">VR</span> <span class="hud-nav__name">Vidit Rawat</span>
-    </a>
-    <nav class="hud-nav__links" id="nav-links" aria-label="Main">
-      <a class="hud-nav__link" href="#work" data-spy>Work</a>
-      <a class="hud-nav__link" href="#projects" data-spy>Projects</a>
-      <a class="hud-nav__link" href="#experience" data-spy>Experience</a>
-      <a class="hud-nav__link" href="#skills" data-spy>Skills</a>
-      <a class="hud-nav__link" href="#contact" data-spy>Contact</a>
-      <span class="hud-nav__indicator" aria-hidden="true"></span>
-    </nav>
-    <div class="hud-nav__actions">
-      <a class="hud-nav__btn" href="Resume/ViditRawat_Resume.pdf" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-download"/></svg><span class="hud-nav__btn-label">Résumé</span></a>
-      <a class="hud-nav__btn hud-nav__btn--hire" href="mailto:viditrawatv68@gmail.com"><svg aria-hidden="true"><use href="#i-mail"/></svg><span class="hud-nav__btn-label">Hire me</span></a>
-    </div>
-    <button class="hud-nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation">
-      <svg class="icon-open"><use href="#i-menu"/></svg>
-      <svg class="icon-close"><use href="#i-close"/></svg>
-    </button>
-  </div>
-</header>
-
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav"><div class="wrap nav__in">
+  <a class="brand" href="index.html">Vidit Rawat</a>
+  <nav class="nav__links" aria-label="Main"><a class="link" href="#work">Work</a><a class="link" href="program/program.html">Prototypes</a><a class="link" href="#experience">Experience</a><a class="link" href="Contact/contact.html">Contact</a></nav>
+  <a class="btn btn--sm hide-s" href="Resume/ViditRawat_Resume.pdf" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-download"/></svg> Résumé</a>
+  <a class="btn btn--sm btn--primary" href="mailto:viditrawatv68@gmail.com"><svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-mail"/></svg> Email me</a>
+</div></header>
 <main id="main">
-
-  <!-- ===== HERO / TITLE SCREEN ===== -->
-  <section class="hero" aria-labelledby="hero-name">
-    <div class="wrap hero__stage">
-
-      <div class="hero__copy">
-        <p class="hero__status" data-reveal style="--i:0">
-          <span class="hero__dot" aria-hidden="true"></span>
-          Open to Unity / gameplay programming roles · Bengaluru, India (IST)
-        </p>
-
-        <h1 class="hero__name" id="hero-name" data-split>Vidit Rawat</h1>
-        <p class="hero__role" data-reveal style="--i:2">Unity Developer · Gameplay &amp; Tools</p>
-
-        <ul class="hero__chips" aria-label="Highlights" data-reveal style="--i:3">
-          <li class="chip chip--accent">Lokko · Sony as publisher</li>
-          <li class="chip">Open beta · PS5 · Steam · iOS</li>
-          <li class="chip">Showcased at BitSummit</li>
-          <li class="chip chip--violet">5+ years</li>
-        </ul>
-
-        <p class="hero__value" data-reveal style="--i:4">
-          Unity developer with 5+ years building gameplay systems, <strong>editor tooling</strong> and
-          backend-connected features across console, mobile and PC.
-        </p>
-
-        <p class="hero__now" data-reveal style="--i:5">
-          <span class="hero__now-tag">Now</span>
-          <span>Unity Developer @ Appy Monkeys — Lokko (Sony), open beta on PS5 · Steam · iOS</span>
-        </p>
-
-        <div class="btn-row" data-reveal style="--i:6">
-          <a class="btn" href="#work">View work <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          <a class="btn btn--ghost" href="mailto:viditrawatv68@gmail.com"><svg aria-hidden="true"><use href="#i-mail"/></svg> Email me</a>
-          <a class="btn btn--ghost btn--violet" href="Resume/ViditRawat_Resume.pdf" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-download"/></svg> Résumé</a>
-        </div>
-
-        <div class="socials" data-reveal style="--i:7">
-          <a href="https://www.linkedin.com/in/vidit-rawat-baa13816b/" aria-label="LinkedIn"><svg><use href="#i-linkedin"/></svg></a>
-          <a href="https://github.com/Viditv68" aria-label="GitHub"><svg><use href="#i-github"/></svg></a>
-        </div>
-      </div>
-
-      <figure class="hero__frame" aria-hidden="true">
-        <span class="hero__corner hero__corner--tl"></span>
-        <span class="hero__corner hero__corner--tr"></span>
-        <span class="hero__corner hero__corner--bl"></span>
-        <span class="hero__corner hero__corner--br"></span>
-        <span class="hero__readout hero__readout--top">Player 01</span>
-        <img src="assets/avatar.jpg" alt="" width="400" height="400" fetchpriority="high">
-        <span class="hero__readout hero__readout--bottom">Unity · C# · C++</span>
-        <canvas class="hero__mascot" aria-hidden="true"></canvas>
-      </figure>
-
-    </div>
-  </section>
-
-  <!-- ===== FEATURED / LEVEL SELECT ===== -->
-  <section class="section" id="work" aria-labelledby="work-title">
-    <div class="wrap">
-      <div class="sec-head" data-reveal>
-        <p class="kicker">01 — Level select</p>
-        <h2 id="work-title">Featured <em>work</em></h2>
-        <p>Console and mobile titles I've worked on as a developer — gameplay, progression systems and the tools behind them.</p>
-      </div>
-
-      <div class="slider" role="region" aria-roledescription="carousel" aria-label="Featured projects" data-slider data-reveal>
-        <div class="slider__stage">
-
-          <article class="slide" id="slide-lokko" role="group" aria-roledescription="slide" aria-label="1 of 4: Lokko">
-            <a class="slide__media brackets"
-               href="https://www.youtube.com/watch?v=rm1nxBrbVCo"
-               target="_blank" rel="noopener noreferrer"
-               aria-label="Watch the Lokko trailer on the official PlayStation channel (opens in a new tab)">
-              <img src="https://i.ytimg.com/vi/rm1nxBrbVCo/maxresdefault.jpg"
-                   alt="Lokko — still from the PlayStation GDC trailer"
-                   loading="lazy" width="1280" height="720">
-              <span class="play-badge"><svg><use href="#i-play"/></svg></span>
-            </a>
-            <div class="slide__body">
-              <p class="slide__pip">Open beta · Sony as publisher</p>
-              <h3 class="slide__title">Lokko</h3>
-              <dl class="facts">
-                <div><dt>Role</dt><dd>Unity Developer · Appy Monkeys</dd></div>
-                <div><dt>Engine</dt><dd>Unity · C#</dd></div>
-                <div><dt>Platform</dt><dd>PS5 · Steam · iOS (open beta)</dd></div>
-              </dl>
-              <ul class="card__points">
-                <li>Owned the full <strong>iOS architecture</strong>, including touch controls across every gameplay mechanic.</li>
-                <li>Engineered a reusable <strong>local PvP framework</strong> — new levels need only level design — plus a wave-based enemy spawner with difficulty scaling.</li>
-                <li>Built the <strong>two-player co-op robot level</strong> end to end: PS5 couch co-op, a pilot and a gunner whose blocks snap into platforms.</li>
-              </ul>
-              <div class="tags">
-                <span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">PS5</span><span class="tag">iOS</span><span class="tag">AWS Cognito</span>
-              </div>
-              <div class="store-row">
-                <a class="store-link" href="https://store.playstation.com/en-us/concept/10013643" target="_blank" rel="noopener noreferrer">PlayStation Store <svg><use href="#i-external"/></svg></a>
-                <a class="store-link" href="https://store.steampowered.com/app/1810630/Lokko/" target="_blank" rel="noopener noreferrer">Steam <svg><use href="#i-external"/></svg></a>
-                <a class="store-link" href="https://apps.apple.com/us/app/lokko/id1668799195" target="_blank" rel="noopener noreferrer">App Store <svg><use href="#i-external"/></svg></a>
-                <a class="store-link store-link--play" href="https://www.youtube.com/watch?v=rm1nxBrbVCo" target="_blank" rel="noopener noreferrer">Watch trailer <svg><use href="#i-play"/></svg></a>
-                <a class="store-link store-link--case" href="Projects/program.html#lokko">Case study <svg><use href="#i-arrow"/></svg></a>
-              </div>
-              <p class="card__credit">Trailer &amp; thumbnail © Sony Interactive Entertainment — opens on the official PlayStation channel.</p>
-            </div>
-          </article>
-
-          <article class="slide" id="slide-crowd-sort" role="group" aria-roledescription="slide" aria-label="2 of 4: Crowd Sort">
-            <div class="slide__media brackets" data-video="assets/previews/crowd-sort.mp4">
-              <img src="Projects/Posters/CrowdSort.jpg" alt="Crowd Sort gameplay: a crowd of characters beside hexagonal tiles" loading="lazy" width="960" height="522">
-            </div>
-            <div class="slide__body">
-              <p class="slide__pip">Shipped · Google Play</p>
-              <h3 class="slide__title">Crowd Sort</h3>
-              <dl class="facts">
-                <div><dt>Role</dt><dd>Sole developer · CYMPL Studios</dd></div>
-                <div><dt>Engine</dt><dd>Unity · C#</dd></div>
-                <div><dt>Platform</dt><dd>Mobile · Google Play</dd></div>
-                <div><dt>Team</dt><dd>4 — me, a designer, an artist, an animator</dd></div>
-              </dl>
-              <ul class="card__points">
-                <li>Built the project <strong>from scratch</strong> and shipped it in <strong>16 days</strong>.</li>
-                <li>Built an <strong>in-play level tool</strong>: tile count, blockers and per-level difficulty are set during gameplay and saved automatically — no hand-editing JSON or scriptable objects.</li>
-                <li>Integrated analytics and ads.</li>
-              </ul>
-              <div class="tags">
-                <span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">UniRx</span><span class="tag">DOTween</span>
-              </div>
-              <div class="store-row">
-                <a class="store-link" href="https://play.google.com/store/apps/details?id=com.cympl.crowdsort&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Play <svg><use href="#i-external"/></svg></a>
-                <a class="store-link store-link--case" href="Projects/program.html#crowd-sort">Case study <svg><use href="#i-arrow"/></svg></a>
-              </div>
-            </div>
-          </article>
-
-          <article class="slide" id="slide-chef-diary" role="group" aria-roledescription="slide" aria-label="3 of 4: Chef Diary">
-            <div class="slide__media brackets" data-video="assets/previews/chef-diary.mp4">
-              <img src="Projects/Posters/ChefDiary.jpg" alt="Chef Diary gameplay: a restaurant floor with seated customers" loading="lazy" width="960" height="442">
-            </div>
-            <div class="slide__body">
-              <p class="slide__pip">Shipped · Google Play</p>
-              <h3 class="slide__title">Chef Diary</h3>
-              <dl class="facts">
-                <div><dt>Role</dt><dd>Game Programmer · CYMPL Studios</dd></div>
-                <div><dt>Engine</dt><dd>Unity · C#</dd></div>
-                <div><dt>Platform</dt><dd>Mobile · Google Play</dd></div>
-              </dl>
-              <ul class="card__points">
-                <li>Implemented <strong>tier 1–3 achievements</strong>, battle pass, piggy bank, chef streak and customer patience.</li>
-                <li>Took ownership of the <strong>Story Narration module</strong> and rebuilt it with tools that pull episode and conversation data from Google Sheets into scriptable objects.</li>
-                <li>Refactored several other gameplay modules.</li>
-              </ul>
-              <div class="tags">
-                <span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">Firebase</span><span class="tag">UniRx</span>
-              </div>
-              <div class="store-row">
-                <a class="store-link" href="https://play.google.com/store/apps/details?id=com.cympl.cooking.story&amp;hl=en&amp;gl=US&amp;pli=1" target="_blank" rel="noopener noreferrer">Google Play <svg><use href="#i-external"/></svg></a>
-                <a class="store-link store-link--case" href="Projects/program.html#chef-diary">Case study <svg><use href="#i-arrow"/></svg></a>
-              </div>
-            </div>
-          </article>
-
-          <article class="slide" id="slide-pet-shelter" role="group" aria-roledescription="slide" aria-label="4 of 4: Pet Shelter Mania">
-            <div class="slide__media brackets" data-video="assets/previews/pet-shelter.mp4">
-              <img src="Projects/Posters/PetShelter_1.jpg" alt="Pet Shelter Mania gameplay: pets waiting at a grooming counter" loading="lazy" width="960" height="484">
-            </div>
-            <div class="slide__body">
-              <p class="slide__pip">Shipped · Google Play</p>
-              <h3 class="slide__title">Pet Shelter Mania</h3>
-              <dl class="facts">
-                <div><dt>Role</dt><dd>Game Programmer · CYMPL Studios</dd></div>
-                <div><dt>Engine</dt><dd>Unity · C#</dd></div>
-                <div><dt>Platform</dt><dd>Mobile · Google Play</dd></div>
-              </dl>
-              <ul class="card__points">
-                <li>Implemented the <strong>energy and upgrade systems</strong>, spin wheel, IAP store, achievements and milestone rewards.</li>
-                <li>Worked with a senior developer on a <strong>Battle Pass</strong> that rotates after a set number of days.</li>
-                <li>Built level goals driven by <strong>CSV files imported from Firebase</strong>.</li>
-              </ul>
-              <div class="tags">
-                <span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">Firebase</span><span class="tag">IAP</span>
-              </div>
-              <div class="store-row">
-                <a class="store-link" href="https://play.google.com/store/apps/details?id=com.CYMPLSTUDIOS.Petscapes&amp;hl=en_IN" target="_blank" rel="noopener noreferrer">Google Play <svg><use href="#i-external"/></svg></a>
-                <a class="store-link store-link--case" href="Projects/program.html#pet-shelter">Case study <svg><use href="#i-arrow"/></svg></a>
-              </div>
-            </div>
-          </article>
-
-        </div>
-
-        <div class="slider__controls">
-          <button class="slider__arrow slider__arrow--prev" type="button" data-slider-prev aria-label="Previous project">
-            <svg aria-hidden="true"><use href="#i-chev"/></svg>
-          </button>
-          <p class="slider__count" aria-hidden="true"><span data-slider-current>01</span> / 04</p>
-          <button class="slider__arrow" type="button" data-slider-next aria-label="Next project">
-            <svg aria-hidden="true"><use href="#i-chev"/></svg>
-          </button>
-
-          <div class="slider__rail" role="group" aria-label="Choose a project">
-            <button class="slider__thumb" type="button" data-slide-to="0" aria-label="Show slide 1: Lokko"><span class="slider__num">01</span><span class="slider__name">Lokko</span></button>
-            <button class="slider__thumb" type="button" data-slide-to="1" aria-label="Show slide 2: Crowd Sort"><span class="slider__num">02</span><span class="slider__name">Crowd Sort</span></button>
-            <button class="slider__thumb" type="button" data-slide-to="2" aria-label="Show slide 3: Chef Diary"><span class="slider__num">03</span><span class="slider__name">Chef Diary</span></button>
-            <button class="slider__thumb" type="button" data-slide-to="3" aria-label="Show slide 4: Pet Shelter Mania"><span class="slider__num">04</span><span class="slider__name">Pet Shelter</span></button>
-            <span class="slider__marker" aria-hidden="true"></span>
-          </div>
-        </div>
-
-        <p class="sr-only" aria-live="polite" aria-atomic="true" data-slider-status></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== PROJECTS / INVENTORY ===== -->
-  <section class="section" id="projects" aria-labelledby="projects-title">
-    <div class="wrap">
-      <div class="sec-head" data-reveal>
-        <p class="kicker">02 — Inventory</p>
-        <h2 id="projects-title">Every <em>project</em></h2>
-        <p>Shipped titles first, then the prototypes where I take one system apart at a time — enemy AI, input handling, camera work, gameplay architecture.</p>
-      </div>
-
-      <div class="inv" data-tabs data-reveal>
-        <div class="tabs" role="tablist" aria-label="Project categories">
-          <button class="tab" type="button" role="tab" id="tab-shipped" aria-selected="true" aria-controls="inv-panel" data-filter="shipped">Shipped <span class="tab__count">04</span></button>
-          <button class="tab" type="button" role="tab" id="tab-lab" aria-selected="false" aria-controls="inv-panel" tabindex="-1" data-filter="lab">Prototypes <span class="tab__count">06</span></button>
-          <button class="tab" type="button" role="tab" id="tab-unreal" aria-selected="false" aria-controls="inv-panel" tabindex="-1" data-filter="unreal">Unreal <span class="tab__count">02</span></button>
-          <span class="tabs__indicator" aria-hidden="true"></span>
-        </div>
-
-        <div class="card-grid inv__panel" id="inv-panel" role="tabpanel" aria-labelledby="tab-shipped" tabindex="0">
-
-          <article class="card brackets" data-cat="shipped">
-            <div class="card__media">
-              <span class="card__pip card__pip--ship">Open beta</span>
-              <img src="https://i.ytimg.com/vi/rm1nxBrbVCo/maxresdefault.jpg" alt="Lokko — still from the PlayStation GDC trailer" loading="lazy" width="1280" height="720">
-            </div>
-            <div class="card__body">
-              <h3 class="card__title">Lokko</h3>
-              <p class="card__meta">Appy Monkeys · PS5 · Steam · iOS</p>
-              <p class="card__desc">
-                Sony as publisher. I own the iOS architecture and built a reusable local PvP framework,
-                a wave-based spawner and the two-player co-op robot level.
-              </p>
-              <div class="tags">
-                <span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">PS5</span><span class="tag">iOS</span>
-              </div>
-            </div>
-            <a class="card__link" href="Projects/program.html#lokko" aria-label="Lokko — read more"></a>
-          </article>
-
-          <article class="card brackets" data-cat="shipped" data-video="assets/previews/crowd-sort.mp4">
-            <div class="card__media">
-              <span class="card__pip">Shipped</span>
-              <img src="Projects/Posters/CrowdSort-card.jpg" alt="Crowd Sort gameplay: a crowd of characters beside hexagonal tiles" loading="lazy" width="800" height="448">
-            </div>
-            <div class="card__body">
-              <h3 class="card__title">Crowd Sort</h3>
-              <p class="card__meta">CYMPL Studios · Sole developer</p>
-              <p class="card__desc">
-                Built from scratch in 16 days with a team of four. I wrote the gameplay, plus a level
-                tool that lets designers set tile counts, blockers and difficulty during play.
-              </p>
-              <div class="tags">
-                <span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">UniRx</span><span class="tag">DOTween</span>
-              </div>
-            </div>
-            <a class="card__link" href="Projects/program.html#crowd-sort" aria-label="Crowd Sort — read more"></a>
-          </article>
-
-          <article class="card brackets" data-cat="shipped" data-video="assets/previews/chef-diary.mp4">
-            <div class="card__media">
-              <span class="card__pip">Shipped</span>
-              <img src="Projects/Posters/ChefDiary.jpg" alt="Chef Diary gameplay: a restaurant floor with seated customers" loading="lazy" width="960" height="442">
-            </div>
-            <div class="card__body">
-              <h3 class="card__title">Chef Diary</h3>
-              <p class="card__meta">CYMPL Studios · Google Play</p>
-              <p class="card__desc">
-                Cooking &amp; romance sim. Tier 1–3 achievements, battle pass, piggy bank and chef
-                streak — plus the story-narration module, rebuilt to pull episode data from Google Sheets.
-              </p>
-              <div class="tags">
-                <span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">Firebase</span><span class="tag">UniRx</span>
-              </div>
-            </div>
-            <a class="card__link" href="Projects/program.html#chef-diary" aria-label="Chef Diary — read more"></a>
-          </article>
-
-          <article class="card brackets" data-cat="shipped" data-video="assets/previews/pet-shelter.mp4">
-            <div class="card__media">
-              <span class="card__pip">Shipped</span>
-              <img src="Projects/Posters/PetShelter-card.jpg" alt="Pet Shelter Mania gameplay: pets waiting at a grooming counter" loading="lazy" width="800" height="450">
-            </div>
-            <div class="card__body">
-              <h3 class="card__title">Pet Shelter Mania</h3>
-              <p class="card__meta">CYMPL Studios · Google Play</p>
-              <p class="card__desc">
-                Time-management sim. Energy and upgrade systems, spin wheel, IAP store, achievements
-                and milestone rewards, plus level goals driven by CSV files pulled from Firebase.
-              </p>
-              <div class="tags">
-                <span class="tag">Unity</span><span class="tag">Firebase</span><span class="tag">IAP</span>
-              </div>
-            </div>
-            <a class="card__link" href="Projects/program.html#pet-shelter" aria-label="Pet Shelter Mania — read more"></a>
-          </article>
-
-          <article class="card brackets" data-cat="lab" data-video="assets/previews/top-down-shooter.mp4">
-            <div class="card__media">
-              <span class="card__pip card__pip--lab">Prototype</span>
-              <img src="program/Posters/Top-Down-Shooter-card.jpg" alt="Top-Down Shooter prototype: a character firing in a blockout level" loading="lazy" width="800" height="450">
-            </div>
-            <div class="card__body">
-              <h3 class="card__title">Top-Down Shooter</h3>
-              <p class="card__meta">Unity · C#</p>
-              <p class="card__desc">
-                Movement, firing and weapon swapping on the new Input System, with Cinemachine
-                pulling the camera back per weapon and single / auto / burst fire modes.
-              </p>
-              <div class="tags">
-                <span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">Cinemachine</span>
-              </div>
-            </div>
-            <a class="card__link" href="program/program.html#top-down-shooter" aria-label="Top-Down Shooter — read more"></a>
-          </article>
-
-          <article class="card brackets" data-cat="lab">
-            <div class="card__media">
-              <span class="card__pip card__pip--lab">Prototype</span>
-              <img src="program/Posters/Outland.jpg" alt="Outland prototype: pixel-art side-scrolling combat" loading="lazy" width="960" height="508">
-            </div>
-            <div class="card__body">
-              <h3 class="card__title">Outland</h3>
-              <p class="card__meta">Unity · C#</p>
-              <p class="card__desc">
-                A 2D side-scrolling action prototype — pixel-art combat against roaming enemies with
-                health bars.
-              </p>
-              <div class="tags">
-                <span class="tag tag--accent">C#</span><span class="tag">Unity</span>
-              </div>
-            </div>
-            <a class="card__link" href="program/program.html#outland" aria-label="Outland — read more"></a>
-          </article>
-
-          <article class="card brackets" data-cat="lab">
-            <div class="card__media">
-              <span class="card__pip card__pip--lab">Prototype</span>
-              <img src="program/Posters/2D-Platformer.jpg" alt="2D Platformer prototype: a character in a side-on level" loading="lazy" width="960" height="540">
-            </div>
-            <div class="card__body">
-              <h3 class="card__title">2D Platformer</h3>
-              <p class="card__meta">Unity · C# · Team lead</p>
-              <p class="card__desc">
-                A team project I led: player mechanics, multi-state enemy AI, the player HUD, save /
-                load and level changing, plus code reviews for the team.
-              </p>
-              <div class="tags">
-                <span class="tag tag--accent">C#</span><span class="tag">Unity</span>
-              </div>
-            </div>
-            <a class="card__link" href="program/program.html#platformer-2d" aria-label="2D Platformer — read more"></a>
-          </article>
-
-          <article class="card brackets" data-cat="lab" data-video="assets/previews/battle-tank.mp4">
-            <div class="card__media">
-              <span class="card__pip card__pip--lab">Prototype</span>
-              <img src="program/Posters/BattleTank.jpg" alt="Battle Tank prototype: a green tank in a desert level" loading="lazy" width="960" height="540">
-            </div>
-            <div class="card__body">
-              <h3 class="card__title">Battle Tank</h3>
-              <p class="card__meta">Unity · C#</p>
-              <p class="card__desc">
-                An architecture study: MVC for tanks and bullets, a generic singleton and object
-                pool, and a state machine driving enemy patrol, chase and attack.
-              </p>
-              <div class="tags">
-                <span class="tag tag--accent">C#</span><span class="tag">Unity</span><span class="tag">NavMesh</span>
-              </div>
-            </div>
-            <a class="card__link" href="program/program.html#battle-tank" aria-label="Battle Tank — read more"></a>
-          </article>
-
-          <article class="card brackets" data-cat="lab unreal" data-video="assets/previews/simple-shooter.mp4">
-            <div class="card__media">
-              <span class="card__pip card__pip--lab">Prototype</span>
-              <img src="program/Posters/Shooter.jpg" alt="Simple Shooter prototype: a character in a sci-fi corridor" loading="lazy" width="960" height="540">
-            </div>
-            <div class="card__body">
-              <h3 class="card__title">Simple Shooter</h3>
-              <p class="card__meta">Unreal Engine · C++</p>
-              <p class="card__desc">
-                Third-person movement and animation in Unreal, shooting mechanics, health and
-                death for player and enemies, and enemy AI built on behaviour trees.
-              </p>
-              <div class="tags">
-                <span class="tag tag--accent">C++</span><span class="tag">Unreal</span><span class="tag">Behaviour Trees</span>
-              </div>
-            </div>
-            <a class="card__link" href="program/program.html#simple-shooter" aria-label="Simple Shooter — read more"></a>
-          </article>
-
-          <article class="card brackets" data-cat="lab unreal">
-            <div class="card__media">
-              <span class="card__pip card__pip--lab">Prototype</span>
-              <img src="program/Posters/ToonTank.jpg" alt="Toon Tanks prototype: a cartoon tank in an arena" loading="lazy" width="960" height="540">
-            </div>
-            <div class="card__body">
-              <h3 class="card__title">Toon Tanks</h3>
-              <p class="card__meta">Unreal Engine · Blueprints</p>
-              <p class="card__desc">
-                Tank and turret movement, camera movement, AI-controlled enemy tanks, shooting for
-                player and enemy, and the game loop with win conditions.
-              </p>
-              <div class="tags">
-                <span class="tag">Unreal</span><span class="tag">Blueprints</span>
-              </div>
-            </div>
-            <a class="card__link" href="program/program.html#toon-tanks" aria-label="Toon Tanks — read more"></a>
-          </article>
-
-        </div>
-      </div>
-
-      <div class="btn-row" data-reveal>
-        <a class="btn btn--ghost" href="Projects/program.html">Shipped write-ups <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        <a class="btn btn--ghost btn--violet" href="program/program.html">The Lab write-ups <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== EXPERIENCE / QUEST LOG ===== -->
-  <section class="section" id="experience" aria-labelledby="experience-title">
-    <div class="wrap">
-      <div class="sec-head" data-reveal>
-        <p class="kicker">03 — Quest log</p>
-        <h2 id="experience-title">Experience</h2>
-        <p>Studios, freelance work and study, newest first.</p>
-      </div>
-
-      <div class="quest" data-timeline>
-        <div class="quest__track" aria-hidden="true"><span class="quest__fill"></span></div>
-
-        <ol class="quest__list">
-          <li class="quest__item is-current" data-reveal>
-            <span class="quest__node" aria-hidden="true"></span>
-            <div class="quest__card brackets">
-              <p class="quest__when"><span>Jul 2025 – Present</span><span class="quest__status">Active quest</span></p>
-              <h3 class="quest__title">Unity Developer <span>· Appy Monkeys</span></h3>
-              <p class="quest__where">Bengaluru, India</p>
-              <p class="quest__lead">Lokko — Sony as publisher, open beta on PS5, Steam and iOS, showcased at BitSummit.</p>
-              <ul class="card__points">
-                <li>Owned the full <strong>iOS architecture</strong>, including touch controls across every gameplay mechanic.</li>
-                <li>Engineered a reusable <strong>local PvP framework</strong> (new levels need only level design) and a wave-based enemy spawner with difficulty scaling.</li>
-                <li>Developed the <strong>two-player co-op robot level</strong> end to end — PS5 couch co-op, a pilot and a gunner whose blocks snap into platforms.</li>
-                <li>Optimised the in-game <strong>Level Editor</strong> and adapted it into a separate iOS project.</li>
-                <li>Platform-specific player and camera configs (speed, jump, roll) for iOS and console, using ScriptableObject-Architecture.</li>
-                <li>Build tools that apply iOS or console <strong>animation sets automatically at build time</strong>, with a per-player animation report.</li>
-                <li>AWS Cognito auth (email OTP, account deletion via SES) and the in-game wallet.</li>
-                <li>Mentor junior developers through code reviews and lead knowledge-transfer sessions.</li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="quest__item" data-reveal>
-            <span class="quest__node" aria-hidden="true"></span>
-            <div class="quest__card brackets">
-              <p class="quest__when"><span>Sep 2024 – Jun 2025</span><span class="quest__status">Complete</span></p>
-              <h3 class="quest__title">Software Development Engineer I <span>· LightFury Games</span></h3>
-              <p class="quest__where">Bengaluru, India</p>
-              <ul class="card__points">
-                <li>Owned the entire Unity side of Gambit, a from-scratch project for a US client, including all UI and spin mechanics.</li>
-                <li>Architected the <strong>leaderboard system</strong> and match summary screens; led gameplay bug fixing and UI work.</li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="quest__item" data-reveal>
-            <span class="quest__node" aria-hidden="true"></span>
-            <div class="quest__card brackets">
-              <p class="quest__when"><span>Jun 2024 – Aug 2024</span><span class="quest__status">Complete</span></p>
-              <h3 class="quest__title">Game Developer <span>· Freelance</span></h3>
-              <p class="quest__where">Remote</p>
-              <ul class="card__points">
-                <li>Built <strong>6 educational games</strong> from scratch.</li>
-                <li>Built a <strong>runtime level-authoring scene</strong> for former employer CYMPL Studios, letting designers lay out 3D levels in play mode.</li>
-              </ul>
-            </div>
-          </li>
-
-          <li class="quest__item quest__item--edu" data-reveal>
-            <span class="quest__node" aria-hidden="true"></span>
-            <div class="quest__card brackets">
-              <p class="quest__when"><span>Jan 2024 – Apr 2024</span><span class="quest__status">Training</span></p>
-              <h3 class="quest__title">Game Programming Fast Track</h3>
-              <p class="quest__where">Scarborough, Canada · Education</p>
-            </div>
-          </li>
-
-          <li class="quest__item" data-reveal>
-            <span class="quest__node" aria-hidden="true"></span>
-            <div class="quest__card brackets">
-              <p class="quest__when"><span>Mar 2021 – Nov 2023</span><span class="quest__status">Complete</span></p>
-              <h3 class="quest__title">Game Programmer <span>· CYMPL Studios</span></h3>
-              <p class="quest__where">Pune, India (Remote)</p>
-              <ul class="card__points">
-                <li><strong>Retention systems</strong> — tiered achievements, energy, notifications, milestone rewards, rate-us — with Firebase, UniRx and DOTween.</li>
-                <li>Owned and refactored the <strong>Story Narration module</strong>; built tools that import Google Sheets dialogue into ScriptableObjects.</li>
-                <li>Audited the codebase and refactored several gameplay modules.</li>
-              </ul>
-              <p class="quest__links">
-                <a href="Projects/program.html#chef-diary">Chef Diary</a>
-                <a href="Projects/program.html#pet-shelter">Pet Shelter Mania</a>
-                <a href="Projects/program.html#crowd-sort">Crowd Sort</a>
-              </p>
-            </div>
-          </li>
-
-          <li class="quest__item quest__item--edu" data-reveal>
-            <span class="quest__node" aria-hidden="true"></span>
-            <div class="quest__card brackets">
-              <p class="quest__when"><span>2015 – 2019</span><span class="quest__status">Education</span></p>
-              <h3 class="quest__title">B.Tech Computer Science</h3>
-              <p class="quest__where">Graphic Era University, Dehradun</p>
-            </div>
-          </li>
-        </ol>
-      </div>
-
-      <aside class="side-quest brackets" data-reveal aria-label="Publication">
-        <p class="side-quest__label">Side quest · Publication</p>
-        <p class="side-quest__title">
-          <a href="https://ieeexplore.ieee.org/document/9215233" target="_blank" rel="noopener noreferrer">“Neural Networks based Hand-crafted Genetic Learning Approach to Simulate Space Mario Game” <svg aria-hidden="true"><use href="#i-external"/></svg></a>
-        </p>
-        <p class="side-quest__meta">IEEE · ICOSEC 2020 · Co-author</p>
-      </aside>
-    </div>
-  </section>
-
-  <!-- ===== SKILLS / LOADOUT ===== -->
-  <section class="section" id="skills" aria-labelledby="skills-title">
-    <div class="wrap">
-      <div class="sec-head" data-reveal>
-        <p class="kicker">04 — Loadout</p>
-        <h2 id="skills-title">Tools of the <em>trade</em></h2>
-        <p>Engines, patterns and services I've used to ship and prototype. Unity is the main weapon.</p>
-      </div>
-
-      <div class="loadout">
-        <div class="loadout__slot brackets" data-reveal>
-          <span class="loadout__rule" aria-hidden="true"></span>
-          <span class="loadout__idx">Slot 01</span>
-          <h3>Core</h3>
-          <div class="loadout__chips">
-            <span class="tag tag--accent">C#</span><span class="tag tag--accent">C++</span>
-            <span class="tag tag--accent">Unity (primary)</span><span class="tag">Unreal Engine 5 (familiar)</span>
-            <span class="tag">PS5</span><span class="tag">iOS</span><span class="tag">Android</span><span class="tag">PC</span>
-          </div>
-        </div>
-
-        <div class="loadout__slot brackets" data-reveal>
-          <span class="loadout__rule" aria-hidden="true"></span>
-          <span class="loadout__idx">Slot 02</span>
-          <h3>Unity</h3>
-          <div class="loadout__chips">
-            <span class="tag">New Input System</span><span class="tag">Cinemachine</span><span class="tag">ScriptableObjects</span>
-            <span class="tag">Particle Systems</span><span class="tag">Unity Notifications</span>
-          </div>
-        </div>
-
-        <div class="loadout__slot brackets" data-reveal>
-          <span class="loadout__rule" aria-hidden="true"></span>
-          <span class="loadout__idx">Slot 03</span>
-          <h3>Plugins</h3>
-          <div class="loadout__chips">
-            <span class="tag">Odin Inspector</span><span class="tag">DOTween</span><span class="tag">PrimeTween</span>
-            <span class="tag">UniRx</span><span class="tag">ScriptableObject-Architecture</span>
-          </div>
-        </div>
-
-        <div class="loadout__slot brackets" data-reveal>
-          <span class="loadout__rule" aria-hidden="true"></span>
-          <span class="loadout__idx">Slot 04</span>
-          <h3>Patterns</h3>
-          <div class="loadout__chips">
-            <span class="tag">MVC</span><span class="tag">State Machine</span><span class="tag">Observer</span>
-            <span class="tag">Command</span><span class="tag">Object Pooling</span>
-          </div>
-        </div>
-
-        <div class="loadout__slot brackets" data-reveal>
-          <span class="loadout__rule" aria-hidden="true"></span>
-          <span class="loadout__idx">Slot 05</span>
-          <h3>Backend</h3>
-          <div class="loadout__chips">
-            <span class="tag">Firebase</span><span class="tag">AWS Cognito</span><span class="tag">Amazon SES</span>
-          </div>
-        </div>
-
-        <div class="loadout__slot brackets" data-reveal>
-          <span class="loadout__rule" aria-hidden="true"></span>
-          <span class="loadout__idx">Slot 06</span>
-          <h3>Tools</h3>
-          <div class="loadout__chips">
-            <span class="tag">Visual Studio</span><span class="tag">Git &amp; GitHub</span><span class="tag">Sourcetree</span>
-            <span class="tag">Perforce</span><span class="tag">Claude (AI coding)</span><span class="tag">ComfyUI (AI images)</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== CONTACT / READY PLAYER TWO ===== -->
-  <section class="section section--close" id="contact" aria-labelledby="contact-title">
-    <div class="wrap">
-      <div class="cta brackets" data-reveal>
-        <div class="cta__aura" aria-hidden="true"></div>
-
-        <p class="kicker" style="justify-content:center">05 — Contact</p>
-        <h2 id="contact-title">Ready Player <em>Two?</em></h2>
-        <p>Love video games? Let's talk about how good they are — and write some code while we're at it.</p>
-        <p class="cta__avail"><span class="hero__dot" aria-hidden="true"></span><span>Open to Unity / gameplay programming roles · Bengaluru, India (IST, UTC+5:30)</span></p>
-
-        <div class="email-copy">
-          <a class="email-copy__addr" href="mailto:viditrawatv68@gmail.com">viditrawatv68@gmail.com</a>
-          <button class="email-copy__btn" type="button" data-copy="viditrawatv68@gmail.com">
-            <svg aria-hidden="true"><use href="#i-copy"/></svg><span data-copy-label>Copy</span>
-          </button>
-          <span class="sr-only" aria-live="polite" data-copy-status></span>
-        </div>
-
-        <div class="btn-row">
-          <a class="btn btn--glass" href="mailto:viditrawatv68@gmail.com"><svg aria-hidden="true"><use href="#i-mail"/></svg> Press start — email me</a>
-          <a class="btn btn--glass is-secondary" href="Resume/ViditRawat_Resume.pdf" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-download"/></svg> Résumé</a>
-        </div>
-
-        <div class="cta__direct">
-          <a href="https://www.linkedin.com/in/vidit-rawat-baa13816b/"><svg aria-hidden="true"><use href="#i-linkedin"/></svg> LinkedIn</a>
-          <a href="https://github.com/Viditv68"><svg aria-hidden="true"><use href="#i-github"/></svg> GitHub</a>
-          <a href="Contact/contact.html"><svg aria-hidden="true"><use href="#i-arrow"/></svg> Contact form</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<footer class="footer">
-  <div class="wrap footer__inner">
-    <p class="footer__note">&copy; <span data-year>2024</span> Vidit Rawat · <a href="mailto:viditrawatv68@gmail.com">viditrawatv68@gmail.com</a></p>
-    <div class="socials">
-      <a href="https://www.linkedin.com/in/vidit-rawat-baa13816b/" aria-label="LinkedIn"><svg><use href="#i-linkedin"/></svg></a>
-      <a href="https://github.com/Viditv68" aria-label="GitHub"><svg><use href="#i-github"/></svg></a>
-      <a href="Resume/ViditRawat_Resume.pdf" target="_blank" rel="noopener" aria-label="Résumé (PDF)"><svg><use href="#i-download"/></svg></a>
-      <a href="mailto:viditrawatv68@gmail.com" aria-label="Email"><svg><use href="#i-mail"/></svg></a>
-    </div>
+<section class="hero"><div class="wrap hero__grid">
+  <div>
+    <div class="who"><img src="assets/avatar.jpg" alt="Vidit Rawat" width="400" height="400"><p class="status"><span class="dot" aria-hidden="true"></span><span><b>Open to Unity and gameplay roles</b><br>Bengaluru, India (IST)</span></p></div>
+    <h1>Vidit Rawat</h1>
+    <p class="hero__role">Unity Developer · Gameplay &amp; Tools</p>
+    <p class="hero__pitch">5+ years building gameplay systems and designer tools across console, mobile and PC. Currently on <strong>Lokko, with Sony as publisher</strong>, in open beta on PS5, Steam and iOS.</p>
+    <div class="row"><a class="btn btn--primary" href="#work">See my work <svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-arrow"/></svg></a><a class="btn" href="mailto:viditrawatv68@gmail.com"><svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-mail"/></svg> Email me</a><a class="btn" href="Resume/ViditRawat_Resume.pdf" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-download"/></svg> Résumé</a></div>
   </div>
-</footer>
-
+  <div class="stage">
+    <canvas class="hero__mascot" aria-hidden="true"></canvas>
+    <div class="reel" data-clips='[{"yt": "rm1nxBrbVCo", "name": "Lokko, official PlayStation trailer", "dur": 25000}, {"src": "assets/previews/crowd-sort.mp4", "name": "Crowd Sort \u00b7 gameplay"}, {"src": "assets/previews/chef-diary.mp4", "name": "Chef Diary \u00b7 gameplay"}, {"src": "assets/previews/pet-shelter.mp4", "name": "Pet Shelter Mania \u00b7 gameplay"}]'>
+      <img src="https://i.ytimg.com/vi/rm1nxBrbVCo/maxresdefault.jpg" alt="Lokko, still from the PlayStation trailer" width="1280" height="720">
+      <video muted playsinline preload="none" aria-hidden="true"></video><video muted playsinline preload="none" aria-hidden="true"></video>
+      <span class="reel__cap">Gameplay reel</span><span class="reel__bar" aria-hidden="true"><i></i></span>
+    </div>
+    <p class="reel__credit">Lokko trailer © Sony Interactive Entertainment. <a href="https://www.youtube.com/watch?v=rm1nxBrbVCo" target="_blank" rel="noopener noreferrer">Watch with sound on YouTube</a></p>
+  </div>
+</div></section>
+<div class="proof-wrap"><div class="wrap proof">
+  <div><b>5+ years</b><span>Professional game development</span></div>
+  <div><b>4 titles</b><span>Commercial games worked on</span></div>
+  <div><b>PS5 · iOS · Android · PC</b><span>Platforms I have built for</span></div>
+  <div><b>Unity</b><span>Primary engine, C#, with UE5 C++ familiarity</span></div>
+</div></div>
+<section class="sec" id="work"><div class="wrap">
+  <div class="sec__head" data-up><div><span class="label">SELECTED WORK</span><h2>Games I helped ship</h2><p>What I personally built on each title.</p></div>
+    <div class="ctrl"><button type="button" data-prev aria-label="Previous project">←</button><output>01 / 04</output><button type="button" data-next aria-label="Next project">→</button></div></div>
+  <div class="slider" role="region" aria-roledescription="carousel" aria-label="Selected work" tabindex="0"><article class="slide" role="group" aria-roledescription="slide" aria-label="1 of 4: Lokko">
+  <a class="slide__media" href="https://www.youtube.com/watch?v=rm1nxBrbVCo" target="_blank" rel="noopener noreferrer" aria-label="Watch the Lokko trailer on the official PlayStation channel (opens in a new tab)"><img src="https://i.ytimg.com/vi/rm1nxBrbVCo/maxresdefault.jpg" alt="Lokko, still from the PlayStation trailer" width="1280" height="720"><span class="play"><svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-play"/></svg></span></a>
+  <div class="slide__body">
+    <span class="pill">Open beta · Sony as publisher</span>
+    <h3>Lokko</h3>
+    <dl class="facts">
+      <div><dt>ROLE</dt><dd>Unity Developer, Appy Monkeys</dd></div><div><dt>ENGINE</dt><dd>Unity · C#</dd></div>
+      <div><dt>PLATFORM</dt><dd>PS5 · Steam · iOS</dd></div><div><dt>SHOWN AT</dt><dd>BitSummit</dd></div>
+    </dl>
+    <ul class="built"><li>Owned the full <strong>iOS architecture</strong>, including touch controls across every mechanic.</li><li>Built a reusable <strong>local PvP framework</strong>: new levels need only level design.</li><li>Developed the <strong>two-player co-op robot level</strong> end to end for PS5 couch co-op.</li></ul>
+    <div class="row"><a class="btn btn--sm btn--primary" href="Projects/program.html#lokko">Case study <svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-arrow"/></svg></a><a class="btn btn--sm" href="https://store.steampowered.com/app/1810630/Lokko/" target="_blank" rel="noopener noreferrer">Steam <svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-external"/></svg></a></div>
+  </div>
+</article><article class="slide" role="group" aria-roledescription="slide" aria-label="2 of 4: Crowd Sort">
+  <div class="slide__media"><img src="Projects/Posters/CrowdSort-card.jpg" alt="Crowd Sort gameplay" loading="lazy"><video muted loop playsinline preload="none" data-src="assets/previews/crowd-sort.mp4" aria-hidden="true"></video></div>
+  <div class="slide__body">
+    <span class="pill">Shipped · Google Play</span>
+    <h3>Crowd Sort</h3>
+    <dl class="facts">
+      <div><dt>ROLE</dt><dd>Sole developer, CYMPL Studios</dd></div><div><dt>ENGINE</dt><dd>Unity · C#</dd></div>
+      <div><dt>PLATFORM</dt><dd>Android</dd></div><div><dt>TEAM</dt><dd>4 people</dd></div>
+    </dl>
+    <ul class="built"><li>Built the whole game <strong>from scratch in 16 days</strong>.</li><li>Wrote an <strong>in-play level tool</strong>: designers set tiles, blockers and difficulty during play, saved automatically.</li><li>Integrated analytics and ads.</li></ul>
+    <div class="row"><a class="btn btn--sm btn--primary" href="Projects/program.html#crowd-sort">Case study <svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-arrow"/></svg></a><a class="btn btn--sm" href="https://play.google.com/store/apps/details?id=com.cympl.crowdsort&hl=en" target="_blank" rel="noopener noreferrer">Google Play <svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-external"/></svg></a></div>
+  </div>
+</article><article class="slide" role="group" aria-roledescription="slide" aria-label="3 of 4: Chef Diary">
+  <div class="slide__media"><img src="Projects/Posters/ChefDiary.jpg" alt="Chef Diary gameplay" loading="lazy"><video muted loop playsinline preload="none" data-src="assets/previews/chef-diary.mp4" aria-hidden="true"></video></div>
+  <div class="slide__body">
+    <span class="pill">Shipped · Google Play</span>
+    <h3>Chef Diary</h3>
+    <dl class="facts">
+      <div><dt>ROLE</dt><dd>Game Programmer, CYMPL Studios</dd></div><div><dt>ENGINE</dt><dd>Unity · C# · Firebase</dd></div>
+      <div><dt>PLATFORM</dt><dd>Android</dd></div><div><dt>FOCUS</dt><dd>Progression & narration tools</dd></div>
+    </dl>
+    <ul class="built"><li>Built <strong>tier 1–3 achievements</strong>, battle pass, piggy bank, chef streak and customer patience.</li><li>Owned and refactored the <strong>Story Narration module</strong>.</li><li>Built tools that import Google Sheets dialogue into ScriptableObjects.</li></ul>
+    <div class="row"><a class="btn btn--sm btn--primary" href="Projects/program.html#chef-diary">Case study <svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-arrow"/></svg></a><a class="btn btn--sm" href="https://play.google.com/store/apps/details?id=com.cympl.cooking.story&hl=en&gl=US&pli=1" target="_blank" rel="noopener noreferrer">Google Play <svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-external"/></svg></a></div>
+  </div>
+</article><article class="slide" role="group" aria-roledescription="slide" aria-label="4 of 4: Pet Shelter Mania">
+  <div class="slide__media"><img src="Projects/Posters/PetShelter-card.jpg" alt="Pet Shelter Mania gameplay" loading="lazy"><video muted loop playsinline preload="none" data-src="assets/previews/pet-shelter.mp4" aria-hidden="true"></video></div>
+  <div class="slide__body">
+    <span class="pill">Shipped · Google Play</span>
+    <h3>Pet Shelter Mania</h3>
+    <dl class="facts">
+      <div><dt>ROLE</dt><dd>Game Programmer, CYMPL Studios</dd></div><div><dt>ENGINE</dt><dd>Unity · C# · Firebase</dd></div>
+      <div><dt>PLATFORM</dt><dd>Android</dd></div><div><dt>FOCUS</dt><dd>Economy & live content</dd></div>
+    </dl>
+    <ul class="built"><li>Built <strong>energy and upgrade systems</strong>, spin wheel, IAP store and milestone rewards.</li><li>Worked with a senior developer on a <strong>rotating Battle Pass</strong>.</li><li>Drove level goals from <strong>CSV files imported from Firebase</strong>.</li></ul>
+    <div class="row"><a class="btn btn--sm btn--primary" href="Projects/program.html#pet-shelter">Case study <svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-arrow"/></svg></a><a class="btn btn--sm" href="https://play.google.com/store/apps/details?id=com.CYMPLSTUDIOS.Petscapes&hl=en_IN" target="_blank" rel="noopener noreferrer">Google Play <svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-external"/></svg></a></div>
+  </div>
+</article></div>
+  <p id="slide-live" class="skip" aria-live="polite"></p>
+</div></section>
+<section class="sec" style="padding-top:0"><div class="wrap">
+  <div class="sec__head" data-up><div><span class="label">WHAT I BRING</span><h2>How I help a team</h2></div></div>
+  <div class="value">
+    <article data-up><h3>Gameplay systems</h3><p>Co-op mechanics, enemy spawners, and progression and economy features, built so new content is cheap to add.</p><small>Lokko · Chef Diary · Pet Shelter Mania</small></article>
+    <article data-up><h3>Tools for designers</h3><p>Level editors and data pipelines that let designers tune a game without touching JSON or waiting on a programmer.</p><small>Crowd Sort · Lokko · Chef Diary</small></article>
+    <article data-up><h3>Platforms and backend</h3><p>iOS and console configurations, build-time automation, Firebase, and AWS Cognito authentication.</p><small>Lokko · Pet Shelter Mania</small></article>
+  </div>
+</div></section>
+<section class="sec" style="padding-top:0"><div class="wrap">
+  <div class="sec__head" data-up><div><span class="label">PROTOTYPES</span><h2>With source code</h2><p>Focused builds where you can read how I structure code.</p></div><div class="tabs" role="tablist" aria-label="Filter prototypes by engine"><span class="tabs__ind" aria-hidden="true"></span>
+  <button class="tab" role="tab" type="button" data-filter="all">All</button>
+  <button class="tab" role="tab" type="button" data-filter="unity">Unity</button>
+  <button class="tab" role="tab" type="button" data-filter="unreal">Unreal</button>
+</div></div>
+  <div class="grid"><article class="card" data-tags="unity" data-video="assets/previews/top-down-shooter.mp4">
+  <div class="card__m"><img src="program/Posters/Top-Down-Shooter-card.jpg" alt="Top-Down Shooter screenshot" loading="lazy"></div>
+  <div class="card__b"><h3>Top-Down Shooter</h3><span class="label">C# · Unity · Cinemachine</span><p>Weapon swapping on the new Input System, per-weapon camera framing, capped bullet spread, and single, auto and burst fire.</p>
+    <div class="row"><a class="btn btn--sm" href="program/program.html#top-down-shooter"><svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-play"/></svg> Watch</a><a class="btn btn--sm" href="https://github.com/Viditv68/Top-Down-Shooter" target="_blank" rel="noopener noreferrer"><svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-github"/></svg> Source</a></div>
+  </div>
+</article><article class="card" data-tags="unity" data-video="assets/previews/battle-tank.mp4">
+  <div class="card__m"><img src="program/Posters/BattleTank.jpg" alt="Battle Tank screenshot" loading="lazy"></div>
+  <div class="card__b"><h3>Battle Tank</h3><span class="label">C# · Unity · NavMesh</span><p>MVC for tanks and bullets, a generic object pool, and a state machine driving enemy patrol, chase and attack.</p>
+    <div class="row"><a class="btn btn--sm" href="program/program.html#battle-tank"><svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-play"/></svg> Watch</a><a class="btn btn--sm" href="https://github.com/Viditv68/battle-tank-game" target="_blank" rel="noopener noreferrer"><svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-github"/></svg> Source</a></div>
+  </div>
+</article><article class="card" data-tags="unreal" data-video="assets/previews/simple-shooter.mp4">
+  <div class="card__m"><img src="program/Posters/Shooter.jpg" alt="Simple Shooter screenshot" loading="lazy"></div>
+  <div class="card__b"><h3>Simple Shooter</h3><span class="label">C++ · Unreal · Behaviour Trees</span><p>Third-person movement and shooting in Unreal C++, with enemy AI built on behaviour trees.</p>
+    <div class="row"><a class="btn btn--sm" href="program/program.html#simple-shooter"><svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-play"/></svg> Watch</a><a class="btn btn--sm" href="https://github.com/Viditv68/SimpleShooter" target="_blank" rel="noopener noreferrer"><svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-github"/></svg> Source</a></div>
+  </div>
+</article></div>
+  <div class="row" style="margin-top:24px"><a class="btn" href="program/program.html">All prototypes <svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-arrow"/></svg></a></div>
+</div></section>
+<section class="sec" id="experience" style="padding-top:0"><div class="wrap">
+  <div class="sec__head" data-up><div><span class="label">EXPERIENCE</span><h2>Where I have worked</h2></div><a class="btn" href="Resume/ViditRawat_Resume.pdf" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-download"/></svg> Full résumé</a></div>
+  <div class="xp"><details open data-up><summary><time>Jul 2025 – Present</time><span><b>Unity Developer</b><em>Appy Monkeys · Bengaluru</em></span><span class="plus" aria-hidden="true">+</span></summary><ul class="built"><li>Lokko (Sony as publisher): full iOS architecture, local PvP framework, wave spawner, and the co-op robot level.</li><li>Build tools that apply iOS or console animation sets at build time, with a per-player report.</li><li>AWS Cognito authentication and the in-game wallet.</li><li>Mentored junior developers through code reviews and led knowledge-transfer sessions.</li></ul></details><details data-up><summary><time>Sep 2024 – Jun 2025</time><span><b>Software Development Engineer I</b><em>LightFury Games · Bengaluru</em></span><span class="plus" aria-hidden="true">+</span></summary><ul class="built"><li>Owned the entire Unity side of Gambit, a from-scratch project for a US client, including all UI and spin mechanics.</li><li>Architected the leaderboard system and match summary screens.</li></ul></details><details data-up><summary><time>Jun 2024 – Aug 2024</time><span><b>Game Developer</b><em>Freelance · Remote</em></span><span class="plus" aria-hidden="true">+</span></summary><ul class="built"><li>Built 6 educational games from scratch, and a runtime level-authoring scene for CYMPL Studios.</li></ul></details><details data-up><summary><time>Mar 2021 – Nov 2023</time><span><b>Game Programmer</b><em>CYMPL Studios · Pune (Remote)</em></span><span class="plus" aria-hidden="true">+</span></summary><ul class="built"><li>Retention systems: tiered achievements, energy, notifications and milestone rewards.</li><li>Owned and refactored the Story Narration module; built Google Sheets to ScriptableObject tools.</li></ul></details></div>
+  <p class="note" style="margin-top:16px">Co-author, <a href="https://ieeexplore.ieee.org/document/9215233" target="_blank" rel="noopener noreferrer">IEEE paper on genetic learning for a Space Mario game</a> (ICOSEC 2020). B.Tech Computer Science, Graphic Era University. Game Programming Fast Track, Scarborough, Canada.</p>
+</div></section>
+<section class="sec" style="padding-top:0"><div class="wrap"><div class="cta" data-up>
+  <span class="label">CONTACT</span><h2 style="margin-top:8px">Hiring for a Unity or gameplay role?</h2>
+  <p>Email is the fastest way to reach me. I am based in Bengaluru (IST).</p>
+  <div class="email"><a href="mailto:viditrawatv68@gmail.com">viditrawatv68@gmail.com</a><button class="btn btn--sm" type="button" data-copy="viditrawatv68@gmail.com" aria-live="polite"><svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-copy"/></svg> <span>Copy</span></button></div>
+  <div class="row"><a class="btn btn--primary" href="mailto:viditrawatv68@gmail.com"><svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-mail"/></svg> Email me</a><a class="btn" href="Resume/ViditRawat_Resume.pdf" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-download"/></svg> Résumé</a><a class="btn" href="https://www.linkedin.com/in/vidit-rawat-baa13816b/"><svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-linkedin"/></svg> LinkedIn</a><a class="btn" href="https://github.com/Viditv68"><svg class="i" aria-hidden="true"><use href="assets/sprite.svg#i-github"/></svg> GitHub</a></div>
+</div></div></section>
+</main>
+<footer class="foot"><div class="wrap">
+  <span>Vidit Rawat · Unity Developer · Bengaluru, India</span>
+  <span><a href="mailto:viditrawatv68@gmail.com">Email</a><a href="https://www.linkedin.com/in/vidit-rawat-baa13816b/">LinkedIn</a><a href="https://github.com/Viditv68">GitHub</a><a href="Resume/ViditRawat_Resume.pdf">Résumé</a></span>
+</div></footer>
 </body>
 </html>
